@@ -7,6 +7,19 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Planet Parade</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<script>
+// Offline, installable app when served over http(s). Never registered on file://, so the single
+// offline file keeps working exactly as before.
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+  addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').then(() => navigator.serviceWorker.ready)
+      .then(() => { document.documentElement.dataset.sw = 'ready'; }).catch(() => {});
+  });
+}
+</script>
 <script>window.PP_STANDALONE = true;</script>
 <style>
 /* Inlined fonts so the game works offline (latin + arabic subsets). */
