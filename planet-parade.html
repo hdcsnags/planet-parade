@@ -1,0 +1,2297 @@
+<title>Planet Parade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&family=Sniglet:wght@400;800&family=Vazirmatn:wght@500;800&display=swap">
+<style>
+  /* Planet Parade: one deliberate night-sky look, no light theme. */
+  :root{
+    --void:#0a0e2a; --deep:#161d4f; --panel:#141a46;
+    --ink:#f6f2ff; --muted:#b3b8ea;
+    --sun:#ffc93c; --pink:#ff7eb6; --mint:#6ef0c2; --peri:#9fb4ff;
+    --display:"Sniglet","Trebuchet MS","Comic Sans MS",system-ui,sans-serif;
+    --body:"Nunito","Trebuchet MS",system-ui,sans-serif;
+    --persian:"Vazirmatn",Tahoma,"Segoe UI",system-ui,sans-serif;
+    color-scheme:dark;
+  }
+  [hidden]{display:none!important}
+  html,body{height:100%}
+  body{
+    margin:0; background:var(--void); color:var(--ink); font-family:var(--body);
+    overflow:hidden; touch-action:none; user-select:none; -webkit-user-select:none;
+    -webkit-touch-callout:none; overscroll-behavior:none; -webkit-tap-highlight-color:transparent;
+  }
+  #stage{position:fixed; inset:0; width:100%; height:100%; display:block}
+
+  /* ---------- Menu ---------- */
+  .menu{
+    position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:clamp(14px,3.4vh,36px); padding-inline:16px;
+    padding-block:calc(env(safe-area-inset-top,0px) + 20px) calc(env(safe-area-inset-bottom,0px) + 20px);
+    pointer-events:none;
+  }
+  .menu > *{pointer-events:auto}
+  .brand{text-align:center}
+  h1{
+    margin:0; font-family:var(--display); font-weight:800; line-height:.95;
+    font-size:clamp(40px,min(9vw,11vh),100px); letter-spacing:.01em; text-wrap:balance;
+  }
+  h1 .w1{color:var(--sun); text-shadow:0 0 34px rgba(255,170,40,.45), 0 .06em 0 #b3541e}
+  h1 .w2 span{
+    display:inline-block; color:var(--c); text-shadow:0 .06em 0 rgba(0,0,0,.45), 0 0 26px color-mix(in srgb, var(--c) 40%, transparent);
+    animation:hop 2.6s ease-in-out infinite; animation-delay:calc(var(--d) * .14s);
+  }
+  @keyframes hop{0%,60%,100%{transform:translateY(0) rotate(0)} 30%{transform:translateY(-.14em) rotate(-4deg)}}
+  h1 .t-fa{display:none; font-family:var(--persian); font-weight:800; line-height:1.15}
+  body.lang-fa h1 .t-en{display:none}
+  body.lang-fa h1 .t-fa{display:inline}
+  h1 .t-fa .w3{
+    background:linear-gradient(90deg,#9fb4ff,#9fe3e6,#ff7eb6,#5ea8ff,#f2c48f,#ff8a5c);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter:drop-shadow(0 .05em 0 rgba(0,0,0,.45));
+  }
+  .sub{margin:10px 0 0; font-size:clamp(15px,2.1vw,19px); font-weight:800; color:var(--muted)}
+  .modes{display:grid; grid-template-columns:repeat(3,minmax(0,200px)); gap:clamp(12px,2.2vw,22px); width:100%; justify-content:center}
+  .mode{
+    appearance:none; cursor:pointer; color:var(--ink); background:rgba(22,29,79,.84);
+    border:3px solid var(--c); border-radius:32px; padding:10px 10px 14px;
+    display:flex; flex-direction:column; align-items:center; gap:4px;
+    font:800 clamp(17px,2.1vw,23px)/1.1 var(--display);
+    box-shadow:0 8px 0 rgba(0,0,0,.4), 0 0 28px color-mix(in srgb, var(--c) 28%, transparent);
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .mode:active{transform:translateY(5px) scale(.97); box-shadow:0 3px 0 rgba(0,0,0,.4)}
+  .mode:focus-visible,.hud-btn:focus-visible,.parent button:focus-visible{outline:4px solid var(--ink); outline-offset:3px}
+  .mode canvas{width:100%; max-width:min(132px,17vh); aspect-ratio:1; height:auto}
+  .mode small{font:700 clamp(12px,1.4vw,14px)/1.2 var(--body); color:var(--muted)}
+  @media (max-width:560px){
+    .modes{grid-template-columns:repeat(2,minmax(0,180px))}
+    .mode canvas{max-width:min(104px,12vh)}
+  }
+  @media (max-height:520px) and (orientation:landscape){
+    .modes{grid-template-columns:repeat(6,minmax(0,150px))}
+    .mode small{display:none}
+    .mode canvas{max-width:min(96px,24vh)}
+  }
+  body.lang-fa .mode,body.lang-fa .mode small,body.lang-fa .sub{font-family:var(--persian)}
+
+  /* ---------- HUD ---------- */
+  .hud-btn{
+    position:fixed; z-index:3; top:calc(env(safe-area-inset-top,0px) + 14px);
+    width:68px; height:68px; border-radius:50%; cursor:pointer; padding:0;
+    border:3px solid rgba(255,255,255,.22); background:rgba(22,29,79,.78); color:var(--ink);
+    display:grid; place-items:center;
+  }
+  .hud-btn svg{width:34px; height:34px}
+  .hud-btn:active{transform:scale(.94)}
+  #homeBtn{left:14px}
+  #langBtn{left:14px; font:800 22px/1 var(--display); border-color:rgba(110,240,194,.55)}
+  #langBtn.fa{font-family:var(--persian)}
+  body.in-game #langBtn{left:94px}
+  #repeatBtn{right:14px}
+  #findBtn{right:94px}
+  #songBtn{right:94px; font:800 36px/1 system-ui,sans-serif; color:var(--sun); border-color:rgba(255,201,60,.6); background:rgba(255,201,60,.14)}
+  #songBtn[aria-pressed="true"]{background:var(--sun); color:#2a1a00; box-shadow:0 0 24px rgba(255,201,60,.7)}
+  #gearBtn{
+    right:14px; width:54px; height:54px; border:none; --p:0;
+    background:conic-gradient(var(--mint) calc(var(--p) * 1turn), rgba(255,255,255,.16) 0);
+  }
+  #gearBtn .inner{width:46px; height:46px; border-radius:50%; background:var(--deep); display:grid; place-items:center; opacity:.8}
+  #gearBtn svg{width:26px; height:26px}
+
+  .caption{
+    position:fixed; z-index:2; left:50%; top:calc(env(safe-area-inset-top,0px) + 92px); transform:translateX(-50%);
+    max-width:min(88vw,760px); width:max-content; padding:10px 26px; border-radius:999px; text-align:center;
+    background:rgba(10,14,42,.8); border:2px solid rgba(255,255,255,.16);
+    font:800 clamp(20px,3.2vw,34px)/1.25 var(--display); pointer-events:none; text-wrap:balance;
+  }
+  .caption.fa{font-family:var(--persian); font-weight:800}
+  .caption.pop{animation:capPop .38s cubic-bezier(.3,1.7,.5,1)}
+  @keyframes capPop{from{transform:translateX(-50%) scale(.7); opacity:0} to{transform:translateX(-50%) scale(1); opacity:1}}
+
+  .stars{position:fixed; z-index:2; top:calc(env(safe-area-inset-top,0px) + 22px); left:50%; transform:translateX(-50%); display:flex; gap:6px; pointer-events:none}
+  .stars svg{width:clamp(26px,5.6vw,44px); height:clamp(26px,5.6vw,44px); fill:rgba(255,255,255,.1); stroke:rgba(255,255,255,.35); stroke-width:1.6}
+  .stars .on svg{fill:var(--sun); stroke:#fff3b0; filter:drop-shadow(0 0 8px rgba(255,200,60,.8)); animation:starPop .5s cubic-bezier(.3,1.8,.5,1)}
+  @keyframes starPop{from{transform:scale(.2) rotate(-90deg)} to{transform:scale(1) rotate(0)}}
+
+  /* ---------- Grown-ups panel ---------- */
+  .parent{position:fixed; z-index:5; inset:0; background:rgba(5,7,24,.72); display:grid; place-items:center; padding:16px; touch-action:auto}
+  .sheet{
+    width:min(560px,100%); max-height:88vh; overflow:auto; box-sizing:border-box;
+    background:var(--panel); border:2px solid rgba(255,255,255,.14); border-radius:28px; padding:24px;
+    display:flex; flex-direction:column; gap:14px;
+  }
+  .sheet h2{margin:0; font:800 30px/1.1 var(--display); color:var(--sun)}
+  .sheet p{margin:0; color:var(--muted); font-size:15px; line-height:1.5; max-width:62ch}
+  .sheet .note{color:#ffd98a; background:rgba(255,201,60,.08); border:1px solid rgba(255,201,60,.3); border-radius:14px; padding:10px 12px}
+  .opt{display:flex; justify-content:space-between; align-items:center; gap:16px; padding-block:8px; border-top:1px solid rgba(255,255,255,.08); flex-wrap:wrap}
+  .opt b{display:block; font-size:17px; color:var(--ink)}
+  .opt span{font-size:14px; color:var(--muted)}
+  .tog,.seg button,.act{
+    appearance:none; cursor:pointer; font:800 16px/1 var(--body); color:var(--ink);
+    height:44px; min-width:76px; padding:0 16px; border-radius:999px;
+    border:2px solid rgba(255,255,255,.22); background:rgba(255,255,255,.06);
+  }
+  .tog[aria-pressed="true"],.seg button[aria-pressed="true"]{background:var(--mint); color:#0a0e2a; border-color:var(--mint)}
+  .seg{display:flex; gap:6px; flex-wrap:wrap}
+  .seg button{min-width:48px}
+  .seg button[lang="fa"]{font-family:var(--persian)}
+  .acts{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+  .act.primary{background:var(--sun); color:#2a1a00; border-color:var(--sun)}
+
+  .parent select{font:700 15px/1 var(--body); color:var(--ink); background:#0f1440; border:2px solid rgba(255,255,255,.22); border-radius:12px; height:44px; padding:0 10px; max-width:min(320px,58vw)}
+  .today-list{font-size:14px; color:var(--muted); line-height:1.6; margin-top:2px}
+  .sheet.studio{width:min(760px,100%)}
+  .studio-list{display:flex; flex-direction:column; gap:6px; max-height:44vh; overflow:auto; padding-right:4px}
+  .srow{display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:14px; background:rgba(255,255,255,.04)}
+  .srow .txt{flex:1; min-width:0; font-size:15px; color:var(--ink); overflow-wrap:anywhere}
+  .srow .txt[dir="rtl"]{font-family:var(--persian); text-align:right}
+  .srow .dot{width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.18); flex:none}
+  .srow.has .dot{background:var(--mint)}
+  .srow.rec .dot{background:#ff5a6e; animation:recPulse 1s infinite}
+  .srow button{height:38px; min-width:44px; padding:0 12px; font:800 14px/1 var(--body); color:var(--ink); border-radius:999px; border:2px solid rgba(255,255,255,.22); background:rgba(255,255,255,.06); cursor:pointer; flex:none}
+  .srow button:disabled{opacity:.35; cursor:default}
+  label.act{display:inline-flex; align-items:center; cursor:pointer}
+  @keyframes recPulse{50%{opacity:.3}}
+  @media (prefers-reduced-motion: reduce){
+    h1 .w2 span,.caption.pop,.stars .on svg{animation:none}
+  }
+</style>
+
+<canvas id="stage" aria-label="Planet Parade play area"></canvas>
+
+<section id="menu" class="menu" aria-label="Choose a game">
+  <div class="brand">
+    <h1><span class="t-en"><span class="w1">Planet</span> <span class="w2"><span style="--d:0;--c:#ff8a5c">P</span><span style="--d:1;--c:#f2c48f">a</span><span style="--d:2;--c:#5ea8ff">r</span><span style="--d:3;--c:#ff7eb6">a</span><span style="--d:4;--c:#9fe3e6">d</span><span style="--d:5;--c:#9fb4ff">e</span></span></span><span class="t-fa" lang="fa" dir="rtl"><span class="w1">رژه‌ی</span> <span class="w3">سیاره‌ها</span></span></h1>
+    <p class="sub" data-i18n="sub">Six space games for little astronauts. Tap one to play.</p>
+  </div>
+  <div class="modes">
+    <button class="mode" data-mode="free" style="--c:#ffc93c"><canvas data-icon="free" width="300" height="300"></canvas><span data-i18n="m_free">Tap &amp; Hear</span><small data-i18n="m_free_s">Planets say hello</small></button>
+    <button class="mode" data-mode="find" style="--c:#6ef0c2"><canvas data-icon="find" width="300" height="300"></canvas><span data-i18n="m_find">Find It</span><small data-i18n="m_find_s">Where is Saturn?</small></button>
+    <button class="mode" data-mode="rocket" style="--c:#ff7eb6"><canvas data-icon="rocket" width="300" height="300"></canvas><span data-i18n="m_rocket">Rocket Trip</span><small data-i18n="m_rocket_s">Fly past all eight</small></button>
+    <button class="mode" data-mode="order" style="--c:#9fb4ff"><canvas data-icon="order" width="300" height="300"></canvas><span data-i18n="m_order">Line Up</span><small data-i18n="m_order_s">Put them in order</small></button>
+    <button class="mode" data-mode="count" style="--c:#ff9a5c"><canvas data-icon="count" width="300" height="300"></canvas><span data-i18n="m_count">Count &amp; Add</span><small data-i18n="m_count_s">Stars, rockets, moons</small></button>
+    <button class="mode" data-mode="words" style="--c:#c7a4ff"><canvas data-icon="words" width="300" height="300"></canvas><span data-i18n="m_words">Space Words</span><small data-i18n="m_words_s">Rocket, comet, moon</small></button>
+  </div>
+</section>
+
+<button id="homeBtn" class="hud-btn" aria-label="Back to games" hidden>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg>
+</button>
+<button id="langBtn" class="hud-btn" aria-label="Change language">EN</button>
+<button id="findBtn" class="hud-btn" aria-label="Play find the picture" hidden>
+  <svg id="findIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5.5 5.5"/></svg>
+  <svg id="gridIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" hidden><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>
+</button>
+<button id="songBtn" class="hud-btn" aria-label="Planet Song" aria-pressed="false" hidden>♪</button>
+<button id="repeatBtn" class="hud-btn" aria-label="Say it again" hidden>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6"/><path d="M18.3 6.3a8 8 0 0 1 0 11.4"/></svg>
+</button>
+<button id="gearBtn" class="hud-btn" aria-label="Grown-ups settings (press and hold)">
+  <span class="inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8"/></svg></span>
+</button>
+
+<div id="stars" class="stars" hidden aria-hidden="true"></div>
+<div id="caption" class="caption" hidden aria-live="polite"></div>
+
+<div id="parent" class="parent" hidden role="dialog" aria-modal="true" aria-labelledby="parentTitle">
+  <div class="sheet">
+    <h2 id="parentTitle">Grown-ups</h2>
+    <p>Planet Parade talks, chimes and never says "wrong". A wrong tap just gets a wiggle and the thing says its own name. Every fact it speaks is true.</p>
+    <div class="opt"><div><b>Language</b><span>Starting language. The EN / FR / فا button switches it any time.</span></div>
+      <div class="seg" id="segLang" role="group" aria-label="Language"><button data-lang="en">English</button><button data-lang="fr">Français</button><button data-lang="fa" lang="fa">فارسی</button></div></div>
+    <p id="voiceNote" class="note" hidden></p>
+    <div class="opt"><div><b>Voice</b><span>Speaks names, numbers and questions</span></div><button class="tog" data-k="voice">On</button></div>
+    <div class="opt"><div><b>Which voice</b><span id="voiceFor">Natural-sounding voices are listed first.</span></div>
+      <div class="seg"><select id="voicePick" aria-label="Voice for this language"></select><button class="act" id="voicePlay" aria-label="Play a sample">▶</button></div></div>
+    <div class="opt"><div><b>Planet facts</b><span>Adds one short fact after names</span></div><button class="tog" data-k="facts">On</button></div>
+    <div class="opt"><div><b>Friendly faces</b><span>Eyes that follow her finger</span></div><button class="tog" data-k="faces">On</button></div>
+    <div class="opt"><div><b>Sounds</b><span>Chimes, whooshes and pops</span></div><button class="tog" data-k="sound">On</button></div>
+    <div class="opt"><div><b>Choices</b><span>Pictures to pick from in Find It, Line Up and Space Words</span></div>
+      <div class="seg" id="segChoices" role="group" aria-label="Choices"><button data-n="2">2</button><button data-n="3">3</button><button data-n="4">4</button></div></div>
+    <div class="opt"><div><b>Highest number</b><span>For Count &amp; Add</span></div>
+      <div class="seg" id="segMax" role="group" aria-label="Highest number"><button data-m="3">3</button><button data-m="5">5</button><button data-m="10">10</button></div></div>
+    <div class="opt"><div><b>Adding and taking away</b><span>How many join or fly away each time</span></div>
+      <div class="seg" id="segStep" role="group" aria-label="Adding and taking away"><button data-s="1">Just 1</button><button data-s="3">Up to 3</button></div></div>
+    <div class="opt"><div><b>Play time</b><span>When time is up the planets yawn and say goodnight. Hold the gear to wake them.</span></div>
+      <div class="seg" id="segSession" role="group" aria-label="Play time"><button data-min="0">Off</button><button data-min="10">10 min</button><button data-min="15">15 min</button><button data-min="20">20 min</button></div></div>
+    <div class="opt"><div><b>Today</b><div class="today-list" id="todayText"></div></div></div>
+    <div class="acts"><button class="act" id="studioBtn" hidden>Recording Studio</button><button class="act" id="fsBtn">Full screen</button><button class="act primary" id="closeParent">Done</button></div>
+  </div>
+</div>
+
+<div id="studio" class="parent" hidden role="dialog" aria-modal="true" aria-labelledby="studioTitle">
+  <div class="sheet studio">
+    <h2 id="studioTitle">Recording Studio</h2>
+    <p>Record any line in your own voice. The game then plays your recording instead of the computer voice. Recordings stay on this device; use Export and Import to move them to another tablet.</p>
+    <p id="studioNote" class="note" hidden></p>
+    <div class="opt"><div><b>Language</b></div>
+      <div class="seg" id="studioLang" role="group" aria-label="Recording language"><button data-lang="en">English</button><button data-lang="fr">Français</button><button data-lang="fa" lang="fa">فارسی</button></div></div>
+    <div id="studioList" class="studio-list"></div>
+    <div class="acts"><button class="act" id="studioExport">Export recordings</button><label class="act" for="studioImport">Import recordings</label><input type="file" id="studioImport" accept=".json,application/json" hidden><button class="act primary" id="studioClose">Done</button></div>
+  </div>
+</div>
+
+<script>
+(() => {
+'use strict';
+const TAU = Math.PI * 2;
+const $ = s => document.querySelector(s);
+const rand = (a, b) => a + Math.random() * (b - a);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const randInt = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FONT = 'Sniglet, "Trebuchet MS", sans-serif';
+const PERSIAN_FONT = 'Vazirmatn, Tahoma, sans-serif';
+
+/* ---------- settings (per-device convenience only) ---------- */
+const settings = { voice: true, facts: true, faces: true, sound: true, choices: 3, maxNum: 5, step: 1, lang: 'en', session: 0, voiceNames: {}, countLvl: 0 };
+try { Object.assign(settings, JSON.parse(localStorage.getItem('planet-parade') || '{}')); } catch (e) {}
+const saveSettings = () => { try { localStorage.setItem('planet-parade', JSON.stringify(settings)); } catch (e) {} };
+
+/* ---------- "Today" for grown-ups: stored on this device only, never sent anywhere ---------- */
+const localDay = () => { const d = new Date(); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; };
+function loadToday() {
+  let d = null;
+  try { d = JSON.parse(localStorage.getItem('planet-parade-today') || 'null'); } catch (e) {}
+  if (!d || d.day !== localDay()) d = { day: localDay(), sec: 0, session: 0, modes: {}, nums: {}, words: {}, asleep: false };
+  return d;
+}
+let today = loadToday();
+const saveToday = () => { try { localStorage.setItem('planet-parade-today', JSON.stringify(today)); } catch (e) {} };
+const logUse = (bucket, key) => { today[bucket][key] = (today[bucket][key] || 0) + 1; };
+
+/* ---------- every word she hears, in English, French and Farsi ----------
+   One language per session, never mixed inside a sentence. French is Canadian-neutral;
+   Farsi is conversational Iranian Persian. Reviewed by two council seats, see TRANSLATIONS.md. */
+/*I18N-START*/
+const I18N = {
+  ui: {
+    hello: { en: 'Hello!', fr: 'Bonjour !', fa: 'سلام!' },
+    sub: { en: 'Six space games for little astronauts. Tap one to play.', fr: 'Six jeux de l’espace pour petits astronautes. Touche-en un pour jouer.', fa: 'شش تا بازی فضایی برای فضانوردهای کوچولو. یکی رو بزن تا بازی کنیم.' },
+    m_free: { en: 'Tap & Hear', fr: 'Touche et écoute', fa: 'بزن و گوش کن' },
+    m_free_s: { en: 'Planets say hello', fr: 'Les planètes disent bonjour', fa: 'سیاره‌ها سلام می‌کنن' },
+    m_find: { en: 'Find It', fr: 'Trouve-la', fa: 'پیداش کن' },
+    m_find_s: { en: 'Where is Saturn?', fr: 'Où est Saturne ?', fa: 'زحل کجاست؟' },
+    m_rocket: { en: 'Rocket Trip', fr: 'Voyage en fusée', fa: 'سفر با موشک' },
+    m_rocket_s: { en: 'Fly past all eight', fr: 'Visite les huit planètes', fa: 'برو پیش هر هشت تا' },
+    m_order: { en: 'Line Up', fr: 'En ordre', fa: 'به ترتیب' },
+    m_order_s: { en: 'Put them in order', fr: 'Mets-les en ordre', fa: 'به ترتیب بچینشون' },
+    m_count: { en: 'Count & Add', fr: 'Compte et ajoute', fa: 'بشمار و جمع کن' },
+    m_count_s: { en: 'Stars, rockets, moons', fr: 'Étoiles, fusées, lunes', fa: 'ستاره، موشک، ماه' },
+    m_words: { en: 'Space Words', fr: 'Mots de l’espace', fa: 'کلمه‌های فضایی' },
+    m_words_s: { en: 'Rocket, comet, moon', fr: 'Fusée, comète, lune', fa: 'موشک، ستاره‌ی دنباله‌دار، ماه' },
+    tapPlanet: { en: 'Tap a planet!', fr: 'Touche une planète !', fa: 'به یه سیاره دست بزن!' },
+    nameBang: { en: '{p}!', fr: '{p} !', fa: '{p}!' },
+    whereIs: { en: 'Where is {p}?', fr: 'Où est {p} ?', fa: '{p} کجاست؟' },
+    yesThats: { en: "Yes! That's {p}!", fr: 'Oui ! C’est {p} !', fa: 'آفرین! اینم {p}!' },
+    notThat: { en: "That's {p}. Where is {q}?", fr: 'Ça, c’est {p}. Où est {q} ?', fa: 'اینم {p}. {q} کجاست؟' },
+    fiveStars: { en: 'Five stars! Hooray!', fr: 'Cinq étoiles ! Bravo !', fa: 'پنج تا ستاره! هورا!' },
+    rocketGo: { en: 'Tap to fly the rocket!', fr: 'Touche pour faire voler la fusée !', fa: 'بزن تا موشک پرواز کنه!' },
+    homeSun: { en: 'Home to the Sun! Tap to fly again!', fr: 'Retour au Soleil ! Touche pour repartir !', fa: 'برگشتیم پیش خورشید! دوباره بزن تا پرواز کنیم!' },
+    allEight: { en: 'We visited all eight planets! Hooray!', fr: 'On a visité les huit planètes ! Youpi !', fa: 'به هر هشت تا سیاره سر زدیم! هورا!' },
+    lineUp: { en: "Let's line up the planets! Who comes first?", fr: 'On met les planètes en ordre ! Qui vient en premier ?', fa: 'بیا سیاره‌ها رو به ترتیب بچینیم! کی اول میاد؟' },
+    whoFirst: { en: 'Who comes first?', fr: 'Qui vient en premier ?', fa: 'کی اول میاد؟' },
+    whoNext: { en: 'Who comes next?', fr: 'Qui vient ensuite ?', fa: 'بعدی کیه؟' },
+    thatsP: { en: "That's {p}.", fr: 'Ça, c’est {p}.', fa: 'اینم {p}.' },
+    didIt: { en: 'You did it! All the planets are in order!', fr: 'Bravo ! Toutes les planètes sont en ordre !', fa: 'آفرین! همه‌ی سیاره‌ها رو به ترتیب چیدی!' },
+    countIntro: { en: "Let's count the {pl}! Tap each one.", fr: 'On compte les {pl} ! Touche chacune.', fa: 'بیا {pl} رو بشمریم! به هر کدوم دست بزن.' },
+    addOne: { en: '{a}… and one more! How many now?', fr: '{a}… et encore une ! Ça fait combien ?', fa: '{a}… و یکی دیگه! حالا چند تا شد؟' },
+    addMany: { en: '{a}… and {b} more! How many now?', fr: '{a}… et encore {b} ! Ça fait combien ?', fa: '{a}… و {b} تا دیگه! حالا چند تا شد؟' },
+    takeOne: { en: '{a}. One flies away! How many are left?', fr: '{a}. Une s’envole ! Combien en reste-t-il ?', fa: '{a}. یکی پرواز کرد! چند تا موند؟' },
+    takeMany: { en: '{a}. {b} fly away! How many are left?', fr: '{a}. {b} s’envolent ! Combien en reste-t-il ?', fa: '{a}. {b} تا پرواز کردن! چند تا موند؟' },
+    countDone: { en: '{a}! Great counting!', fr: '{a} ! Bravo !', fa: '{a}! آفرین!' },
+    countYes: { en: 'Yes! {a}!', fr: 'Oui ! {a} !', fa: 'آفرین! {a}!' },
+    tapToCount: { en: 'Tap them to count!', fr: 'Touche-les pour compter !', fa: 'بهشون دست بزن تا بشمریم!' },
+    wordsIntro: { en: 'Tap a picture to hear its name!', fr: 'Touche une image pour entendre son nom !', fa: 'به یه عکس دست بزن تا اسمش رو بشنوی!' },
+    findWord: { en: 'Find the {w}!', fr: 'Trouve {w} !', fa: '{w} رو پیدا کن!' },
+    yesWord: { en: "Yes! That's the {w}!", fr: 'Oui ! C’est {w} !', fa: 'آفرین! {w}!' },
+    thatsWord: { en: "That's the {w}.", fr: 'Ça, c’est {w}.', fa: 'اینم {w}.' },
+    // round 3 (unreviewed, see TRANSLATIONS.md)
+    whichMore: { en: 'Which side has more {pl}?', fr: 'De quel côté il y a plus de {pl} ?', fa: 'کدوم طرف {pl} بیشتره؟' },
+    moreYes: { en: 'Yes! This side has more!', fr: 'Oui ! Ce côté-ci en a plus !', fa: 'آفرین! این طرف بیشتره!' },
+    song: { en: 'The planet song!', fr: 'La chanson des planètes !', fa: 'آهنگ سیاره‌ها!' },
+    // round 4 (unreviewed, see TRANSLATIONS.md)
+    whereLMR: { en: 'Where is {p}? On the left, in the middle, or on the right?', fr: 'Où est {p} ? À gauche, au milieu ou à droite ?', fa: '{p} کجاست؟ سمت چپ، وسط، یا سمت راست؟' },
+    whichAt: { en: 'Which planet is {pos}?', fr: 'Quelle planète est {pos} ?', fa: 'کدوم سیاره {pos}ه؟' },
+    isAt: { en: '{p} is {pos}!', fr: '{p} est {pos} !', fa: '{p} {pos}ه!' },
+    yesAt: { en: 'Yes! {p} is {pos}!', fr: 'Oui ! {p} est {pos} !', fa: 'آفرین! {p} {pos}ه!' },
+    thatsAt: { en: "That's {p}, {pos}.", fr: 'Ça, c’est {p}, {pos}.', fa: 'اینم {p}، {pos}.' },
+    whichOneAt: { en: 'Which one is {pos}?', fr: 'Laquelle est {pos} ?', fa: 'کدومش {pos}ه؟' },
+    yesTheAt: { en: 'Yes! The {w} is {pos}!', fr: 'Oui ! {W} est {pos} !', fa: 'آفرین! {w} {pos}ه!' },
+    thatsTheAt: { en: "That's the {w}, {pos}.", fr: 'Ça, c’est {w}, {pos}.', fa: 'اینم {w}، {pos}.' },
+    eatOne: { en: '{a}. The space whale eats one! How many are left?', fr: '{a}. La baleine de l’espace en mange une ! Combien en reste-t-il ?', fa: '{a}. نهنگ فضایی یکی رو خورد! چند تا موند؟' },
+    eatMany: { en: '{a}. The space whale eats {b}! How many are left?', fr: '{a}. La baleine de l’espace en mange {b} ! Combien en reste-t-il ?', fa: '{a}. نهنگ فضایی {b} تا رو خورد! چند تا موند؟' },
+    rollOne: { en: '{a}. One rolls away! How many are left?', fr: '{a}. Une roule et s’en va ! Combien en reste-t-il ?', fa: '{a}. یکی قل خورد و رفت! چند تا موند؟' },
+    rollMany: { en: '{a}. {b} roll away! How many are left?', fr: '{a}. {b} roulent et s’en vont ! Combien en reste-t-il ?', fa: '{a}. {b} تا قل خوردن و رفتن! چند تا موند؟' },
+    makeN: { en: 'Make {a}!', fr: 'Fais {a} !', fa: '{a} درست کن!' },
+    makeHint: { en: 'Tap the plus to add one. Tap one to send it away.', fr: 'Touche le plus pour en ajouter une. Touches-en une pour l’envoyer au loin.', fa: 'به بعلاوه بزن تا یکی اضافه شه. به یکی بزن تا بره.' },
+    goodnight: { en: 'The planets are going to sleep. Goodnight, astronaut!', fr: 'Les planètes vont dormir. Bonne nuit, astronaute !', fa: 'سیاره‌ها می‌خوان بخوابن. شب بخیر، فضانورد کوچولو!' },
+  },
+  // Left / middle / right are the child's REAL left and right on the screen. They are NEVER mirrored in
+  // Farsi (RTL) mode: index 0 is always the leftmost thing on screen. Only text direction flips.
+  positions: {
+    en: ['on the left', 'in the middle', 'on the right'],
+    fr: ['à gauche', 'au milieu', 'à droite'],
+    fa: ['سمت چپ', 'وسط', 'سمت راست'],
+  },
+  posShort: {
+    en: ['LEFT', 'MIDDLE', 'RIGHT'],
+    fr: ['GAUCHE', 'MILIEU', 'DROITE'],
+    fa: ['چپ', 'وسط', 'راست'],
+  },
+  // Space Words toys: a two-word phrase when a card comes alive (round 3, unreviewed).
+  acts: {
+    rocket: { en: 'Rocket flies!', fr: 'La fusée vole !', fa: 'موشک پرواز می‌کنه!' },
+    star: { en: 'Star twinkles!', fr: 'L’étoile brille !', fa: 'ستاره چشمک می‌زنه!' },
+    moon: { en: 'Moon bounces!', fr: 'La lune saute !', fa: 'ماه می‌پره!' },
+    sun: { en: 'Sun shines!', fr: 'Le soleil brille !', fa: 'خورشید می‌تابه!' },
+    planet: { en: 'Planet spins!', fr: 'La planète tourne !', fa: 'سیاره می‌چرخه!' },
+    astronaut: { en: 'Astronaut waves!', fr: 'L’astronaute fait coucou !', fa: 'فضانورد دست تکون می‌ده!' },
+    comet: { en: 'Comet zooms!', fr: 'La comète file !', fa: 'ستاره‌ی دنباله‌دار تند می‌ره!' },
+    telescope: { en: 'Telescope looks!', fr: 'Le télescope regarde !', fa: 'تلسکوپ نگاه می‌کنه!' },
+    satellite: { en: 'Satellite spins!', fr: 'Le satellite tourne !', fa: 'ماهواره می‌چرخه!' },
+    ring: { en: 'Ring spins!', fr: 'L’anneau tourne !', fa: 'حلقه می‌چرخه!' },
+  },
+  planets: {
+    sun: { en: { name: 'The Sun', label: 'Sun', fact: 'The Sun is a star!' }, fr: { name: 'le Soleil', label: 'Soleil', fact: 'Le Soleil est une étoile !' }, fa: { name: 'خورشید', label: 'خورشید', fact: 'خورشید یه ستاره‌ست!' } },
+    mercury: { en: { name: 'Mercury', label: 'Mercury', fact: 'Mercury is the closest planet to the Sun.' }, fr: { name: 'Mercure', label: 'Mercure', fact: 'Mercure est la planète la plus proche du Soleil.' }, fa: { name: 'عطارد', label: 'عطارد', fact: 'عطارد از همه به خورشید نزدیک‌تره.' } },
+    venus: { en: { name: 'Venus', label: 'Venus', fact: 'Venus is the hottest planet.' }, fr: { name: 'Vénus', label: 'Vénus', fact: 'Vénus est la planète la plus chaude.' }, fa: { name: 'زهره', label: 'زهره', fact: 'زهره داغ‌ترین سیاره‌ست.' } },
+    earth: { en: { name: 'Earth', label: 'Earth', fact: 'Earth is our home!' }, fr: { name: 'la Terre', label: 'Terre', fact: 'La Terre, c’est notre maison !' }, fa: { name: 'زمین', label: 'زمین', fact: 'زمین خونه‌ی ماست!' } },
+    mars: { en: { name: 'Mars', label: 'Mars', fact: 'Mars is the red planet.' }, fr: { name: 'Mars', label: 'Mars', fact: 'Mars est la planète rouge.' }, fa: { name: 'مریخ', label: 'مریخ', fact: 'مریخ سیاره‌ی سرخه.' } },
+    jupiter: { en: { name: 'Jupiter', label: 'Jupiter', fact: 'Jupiter is the biggest planet.' }, fr: { name: 'Jupiter', label: 'Jupiter', fact: 'Jupiter est la plus grosse planète.' }, fa: { name: 'مشتری', label: 'مشتری', fact: 'مشتری بزرگ‌ترین سیاره‌ست.' } },
+    saturn: { en: { name: 'Saturn', label: 'Saturn', fact: 'Saturn has beautiful rings.' }, fr: { name: 'Saturne', label: 'Saturne', fact: 'Saturne a de beaux anneaux.' }, fa: { name: 'زحل', label: 'زحل', fact: 'زحل حلقه‌های قشنگی داره.' } },
+    uranus: { en: { name: 'Uranus', label: 'Uranus', fact: 'Uranus spins on its side.' }, fr: { name: 'Uranus', label: 'Uranus', fact: 'Uranus tourne sur le côté.' }, fa: { name: 'اورانوس', label: 'اورانوس', fact: 'اورانوس به پهلو می‌چرخه.' } },
+    neptune: { en: { name: 'Neptune', label: 'Neptune', fact: 'Neptune is the windiest planet.' }, fr: { name: 'Neptune', label: 'Neptune', fact: 'Neptune est la planète la plus venteuse.' }, fa: { name: 'نپتون', label: 'نپتون', fact: 'نپتون پربادترین سیاره‌ست.' } },
+  },
+  numbers: {
+    en: ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'],
+    fr: ['zéro', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf', 'dix'],
+    fa: ['صفر', 'یک', 'دو', 'سه', 'چهار', 'پنج', 'شش', 'هفت', 'هشت', 'نه', 'ده'],
+  },
+  // [one, many]. All three French nouns are feminine, so "une" works for one of each.
+  objects: {
+    star: { en: ['star', 'stars'], fr: ['étoile', 'étoiles'], fa: ['ستاره', 'ستاره‌ها'] },
+    rocket: { en: ['rocket', 'rockets'], fr: ['fusée', 'fusées'], fa: ['موشک', 'موشک‌ها'] },
+    moon: { en: ['moon', 'moons'], fr: ['lune', 'lunes'], fa: ['ماه', 'ماه‌ها'] },
+  },
+  // French keeps its article so she hears the gender with each word.
+  words: {
+    rocket: { en: 'rocket', fr: 'la fusée', fa: 'موشک' },
+    star: { en: 'star', fr: 'l’étoile', fa: 'ستاره' },
+    moon: { en: 'moon', fr: 'la lune', fa: 'ماه' },
+    sun: { en: 'sun', fr: 'le soleil', fa: 'خورشید' },
+    planet: { en: 'planet', fr: 'la planète', fa: 'سیاره' },
+    astronaut: { en: 'astronaut', fr: 'l’astronaute', fa: 'فضانورد' },
+    comet: { en: 'comet', fr: 'la comète', fa: 'ستاره‌ی دنباله‌دار' },
+    telescope: { en: 'telescope', fr: 'le télescope', fa: 'تلسکوپ' },
+    satellite: { en: 'satellite', fr: 'le satellite', fa: 'ماهواره' },
+    ring: { en: 'ring', fr: 'l’anneau', fa: 'حلقه' },
+  },
+};
+/*I18N-END*/
+const LANGS = ['en', 'fr', 'fa'];
+let LANG = LANGS.includes(settings.lang) ? settings.lang : 'en';
+const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
+const faDigits = s => String(s).replace(/\d/g, d => FA_DIGITS[d]);
+const fmt = (n, lang = LANG) => lang === 'fa' ? faDigits(n) : String(n);
+const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+const bang = (lang = LANG) => lang === 'fr' ? ' !' : '!';
+function t(key, vars = {}, lang = LANG) {
+  const e = I18N.ui[key];
+  const s = e ? (e[lang] ?? e.en) : key;
+  return s.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
+}
+const pinfo = (p, lang = LANG) => I18N.planets[p.id][lang];
+const pname = (p, lang = LANG) => pinfo(p, lang).name;
+const plabel = (p, lang = LANG) => pinfo(p, lang).label;
+const pfact = (p, lang = LANG) => pinfo(p, lang).fact;
+const num = (n, lang = LANG) => I18N.numbers[lang][n] ?? fmt(n, lang);
+const plural = (kind, lang = LANG) => I18N.objects[kind][lang][1];
+function qty(n, kind, lang = LANG) {
+  const [one, many] = I18N.objects[kind][lang];
+  if (lang === 'fa') return n === 1 ? `یه ${one}` : `${num(n, lang)} تا ${one}`;
+  if (lang === 'fr') return `${n === 1 ? 'une' : num(n, lang)} ${n === 1 ? one : many}`;
+  return `${num(n, lang)} ${n === 1 ? one : many}`;
+}
+const word = (id, lang = LANG) => I18N.words[id][lang];
+// i: 0 = screen left, 1 = middle, 2 = screen right (never mirrored for RTL).
+const posWord = (i, lang = LANG) => I18N.positions[lang][i];
+const posLabel = (i, lang = LANG) => I18N.posShort[lang][i];
+const fontFor = () => LANG === 'fa' ? PERSIAN_FONT : FONT;
+
+/* ---------- the planets ---------- */
+const PLANETS = [
+  { id: 'mercury', r: .62, base: '#b8b0a6', light: '#ece6de', dark: '#5f5850' },
+  { id: 'venus', r: .86, base: '#eec27a', light: '#fff0c8', dark: '#a8742f', atmo: '#ffe8b0' },
+  { id: 'earth', r: .9, base: '#3a8ee6', light: '#9fd3ff', dark: '#173f8f', atmo: '#9fd3ff' },
+  { id: 'mars', r: .72, base: '#e0663a', light: '#ffb48a', dark: '#8c3016' },
+  { id: 'jupiter', r: 1.3, base: '#dcae84', light: '#fbe6cc', dark: '#96623e' },
+  { id: 'saturn', r: 1.08, base: '#ecd294', light: '#fff4d0', dark: '#a8843f', wf: 2.05, faceY: -.14 },
+  { id: 'uranus', r: 1, base: '#98e0e4', light: '#e4fdff', dark: '#4a9aa8', atmo: '#d6fbff', wf: 1.15, hf: 1.5 },
+  { id: 'neptune', r: 1, base: '#4b78ee', light: '#a9c2ff', dark: '#1c3597', atmo: '#9fb8ff' },
+];
+PLANETS.forEach((p, i) => p.i = i);
+const SUN = { id: 'sun', r: 1, i: -1 };
+const MOON_P = { id: 'moon', r: 1, base: '#cfccc6', light: '#f5f3ee', dark: '#77736c' };
+// C major pentatonic: the Sun is the root, each planet one step up, so any tapping sounds musical.
+const SCALE = [261.63, 293.66, 329.63, 392.0, 440.0, 523.25, 587.33, 659.25, 783.99];
+
+/* ---------- canvas ---------- */
+const cv = $('#stage'), cx = cv.getContext('2d');
+let W = 0, H = 0, DPR = 1, T = 0, camX = 0;
+const pointer = { x: -999, y: -999, t: -99 };
+
+/* ---------- audio ---------- */
+let ac = null, master = null;
+function unlockAudio() {
+  if (!ac) {
+    try { ac = new (window.AudioContext || window.webkitAudioContext)(); master = ac.createGain(); master.gain.value = .55; master.connect(ac.destination); } catch (e) { ac = null; }
+  }
+  if (ac && ac.state === 'suspended') ac.resume().catch(() => {});
+}
+function tone(freq, dur = .4, { type = 'sine', vol = .3, delay = 0, slide = 0 } = {}) {
+  if (!ac || !settings.sound) return;
+  const t0 = ac.currentTime + delay, o = ac.createOscillator(), g = ac.createGain();
+  o.type = type; o.frequency.setValueAtTime(freq, t0);
+  if (slide) o.frequency.exponentialRampToValueAtTime(freq * slide, t0 + dur);
+  g.gain.setValueAtTime(.0001, t0); g.gain.exponentialRampToValueAtTime(vol, t0 + .015); g.gain.exponentialRampToValueAtTime(.0001, t0 + dur);
+  o.connect(g); g.connect(master); o.start(t0); o.stop(t0 + dur + .05);
+}
+function chime(f, delay = 0) { tone(f, .9, { vol: .22, delay }); tone(f * 2, .6, { vol: .07, delay, type: 'triangle' }); tone(f * 3.01, .3, { vol: .03, delay }); }
+const pop = () => tone(560, .14, { type: 'triangle', vol: .25, slide: .45 });
+const boop = () => { tone(330, .16, { vol: .18, slide: .7 }); tone(250, .22, { vol: .15, slide: .7, delay: .12 }); };
+const fanfare = () => [0, 4, 7, 12].forEach((s, i) => chime(523.25 * Math.pow(2, s / 12), i * .12));
+function whoosh(dur = 1.2) {
+  if (!ac || !settings.sound) return;
+  const len = Math.floor(ac.sampleRate * dur), buf = ac.createBuffer(1, len, ac.sampleRate), d = buf.getChannelData(0);
+  for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+  const src = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain(), t0 = ac.currentTime;
+  src.buffer = buf; f.type = 'bandpass'; f.Q.value = 1.4;
+  f.frequency.setValueAtTime(260, t0); f.frequency.exponentialRampToValueAtTime(2000, t0 + dur * .55); f.frequency.exponentialRampToValueAtTime(420, t0 + dur);
+  g.gain.setValueAtTime(.0001, t0); g.gain.exponentialRampToValueAtTime(.32, t0 + .2); g.gain.exponentialRampToValueAtTime(.0001, t0 + dur);
+  src.connect(f); f.connect(g); g.connect(master); src.start();
+}
+
+/* ---------- speech: one voice per language ---------- */
+const canSpeak = 'speechSynthesis' in window;
+const voices = { en: null, fr: null, fa: null };
+const voiceList = { en: [], fr: [], fa: [] };
+let voicesLoaded = false, capTimer = 0;
+// Natural/neural voices sound far less robotic: rank them first. Edge exposes "Microsoft Aria Online
+// (Natural)" etc., Android Chrome exposes Google's voices, Apple devices expose Siri/Enhanced voices.
+const NATURAL = /natural|neural|online|enhanced|premium|siri/i;
+function voiceScore(v, lang) {
+  let s = 0;
+  if (NATURAL.test(v.name)) s += 6;
+  if (/google/i.test(v.name)) s += 3;
+  if (lang === 'fr' && /fr[-_]ca/i.test(v.lang)) s += 2;
+  if (lang === 'en' && /en[-_](us|ca)/i.test(v.lang)) s += 1;
+  if (/aria|jenny|samantha|karen|moira|zira|amelie|sylvie|dilara/i.test(v.name)) s += .5;
+  return s;
+}
+function pickVoices() {
+  const vs = speechSynthesis.getVoices();
+  voicesLoaded = vs.length > 0;
+  const chosen = settings.voiceNames || {};
+  for (const l of LANGS) {
+    voiceList[l] = vs.filter(v => v.lang.toLowerCase().replace('_', '-').startsWith(l)).sort((a, b) => voiceScore(b, l) - voiceScore(a, l));
+    voices[l] = voiceList[l].find(v => v.name === chosen[l]) || voiceList[l][0] || null;
+  }
+  updateVoiceNote();
+  if (typeof syncVoicePicker === 'function' && !$('#parent').hidden) syncVoicePicker();
+}
+if (canSpeak) { pickVoices(); speechSynthesis.onvoiceschanged = pickVoices; }
+const LANG_NAME = { en: 'English', fr: 'French', fa: 'Farsi' };
+function updateVoiceNote() {
+  const el = $('#voiceNote');
+  if (!el) return;
+  const missing = LANGS.filter(l => !voices[l]);
+  if (!canSpeak) { el.textContent = 'This browser cannot speak. Captions only.'; el.hidden = false; return; }
+  if (!voicesLoaded || !missing.length) { el.hidden = true; return; }
+  el.textContent = missing.map(l => `No ${LANG_NAME[l]} voice on this device. Captions only.`).join(' ') + ' You can install one in Android Settings → Text-to-speech.';
+  el.hidden = false;
+}
+// Before the voice list loads, English can still use the browser default voice.
+const hasVoice = lang => settings.voice && canSpeak && !!(voices[lang] || (lang === 'en' && !voicesLoaded));
+function utter(text, lang, pitch) {
+  const v = voices[lang], u = new SpeechSynthesisUtterance(text);
+  if (v) { u.voice = v; u.lang = v.lang; } else u.lang = 'en-US';
+  // Natural voices already sound warm and get worse when pitched up: keep them at 1.0.
+  const nat = !!v && NATURAL.test(v.name);
+  u.rate = nat ? .95 : lang === 'en' ? .88 : .85;
+  u.pitch = pitch ?? (nat ? 1 : 1.12);
+  return u;
+}
+// Recorded clips (Recording Studio, standalone file only) beat any computer voice.
+const clips = new Map(); // `${lang}|${text}` -> object URL
+let currentAudio = null;
+function stopAudio() { if (currentAudio) { currentAudio.onended = currentAudio.onerror = null; try { currentAudio.pause(); } catch (e) {} currentAudio = null; } }
+// Android Chrome often drops an utterance spoken in the same tick as cancel(), so the new one
+// starts ~60 ms later. `onend` fires exactly once: when the voice finishes, or after a length-based
+// estimate when there is no voice. Anything newer (another say, hush) makes a stale onend a no-op.
+let speechGen = 0, speakTimer = 0, endTimer = 0;
+function speak(text, lang, onend, pitch) {
+  const gen = ++speechGen;
+  clearTimeout(speakTimer); clearTimeout(endTimer); stopAudio();
+  let done = false;
+  const finish = () => { if (done || gen !== speechGen) return; done = true; clearTimeout(endTimer); if (onend) onend(); };
+  const est = 1200 + text.length * 70;
+  const clip = settings.voice ? clips.get(`${lang}|${text}`) : null;
+  if (clip) {
+    try { if (canSpeak) speechSynthesis.cancel(); } catch (e) {}
+    const a = new Audio(clip); currentAudio = a;
+    a.onended = a.onerror = finish; a.play().catch(finish);
+    endTimer = setTimeout(finish, 15000);
+    return;
+  }
+  if (!hasVoice(lang)) { endTimer = setTimeout(finish, est); return; }
+  try { speechSynthesis.cancel(); } catch (e) {}
+  speakTimer = setTimeout(() => {
+    if (gen !== speechGen) return;
+    try { const u = utter(text, lang, pitch); u.onend = u.onerror = finish; speechSynthesis.speak(u); } catch (e) { finish(); return; }
+    endTimer = setTimeout(finish, est + 5000); // some engines never fire onend
+  }, 60);
+}
+function say(text, { lang = LANG, onend = null, persist = false, pitch } = {}) {
+  showCaption(text, lang, persist);
+  speak(text, lang, onend, pitch);
+}
+function sayQueue(items, onend) { // [{text, lang}] one after another, each in its own voice
+  const step = i => { if (i >= items.length) { if (onend) onend(); return; } say(items[i].text, { lang: items[i].lang || LANG, onend: () => step(i + 1) }); };
+  step(0);
+}
+function hush() {
+  speechGen++; clearTimeout(speakTimer); clearTimeout(endTimer); clearTimeout(capTimer); stopAudio();
+  $('#caption').hidden = true;
+  try { if (canSpeak) speechSynthesis.cancel(); } catch (e) {}
+}
+function showCaption(text, lang = LANG, persist = false) {
+  const el = $('#caption');
+  el.textContent = lang === 'fa' ? faDigits(text) : text;
+  el.dir = lang === 'fa' ? 'rtl' : 'ltr'; el.lang = lang; el.classList.toggle('fa', lang === 'fa');
+  el.hidden = false;
+  el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
+  clearTimeout(capTimer);
+  if (!persist) capTimer = setTimeout(() => { el.hidden = true; }, 2600 + text.length * 45);
+}
+
+/* ---------- timers owned by the current game ---------- */
+let timers = [];
+const after = (s, fn) => timers.push({ t: s, fn });
+function runTimers(dt) {
+  const due = [];
+  timers = timers.filter(k => { k.t -= dt; if (k.t <= 0) { due.push(k.fn); return false; } return true; });
+  due.forEach(fn => fn());
+}
+
+// A toddler's palm lands several times on one thing: each target ignores repeat taps for 250 ms.
+const lastTap = new WeakMap();
+function tapGate(o) { const t0 = lastTap.get(o); if (t0 !== undefined && T - t0 < .25) return false; lastTap.set(o, T); return true; }
+
+// Gradients are built in local (translated) coordinates, so one per context + radius can be reused.
+const gradCache = new WeakMap();
+function cachedGrad(c, key, make) {
+  let m = gradCache.get(c);
+  if (!m) { m = new Map(); gradCache.set(c, m); }
+  let g = m.get(key);
+  if (!g) { if (m.size > 400) m.clear(); g = make(); m.set(key, g); }
+  return g;
+}
+
+/* ---------- drawing: planets ---------- */
+const EARTH_LAND = [
+  { lon: 0, lat: .62, s: .3 }, { lon: .25, lat: .38, s: .22 }, { lon: .45, lat: .05, s: .12 }, { lon: .6, lat: -.25, s: .22 }, { lon: .65, lat: -.55, s: .14 },
+  { lon: 2.2, lat: .68, s: .18 }, { lon: 2.35, lat: .25, s: .28 }, { lon: 2.55, lat: -.15, s: .24 }, { lon: 2.6, lat: -.45, s: .12 },
+  { lon: 3.3, lat: .6, s: .32 }, { lon: 3.8, lat: .55, s: .3 }, { lon: 4.1, lat: .25, s: .2 }, { lon: 3.7, lat: .2, s: .16 }, { lon: 4.8, lat: -.45, s: .17 },
+];
+const EARTH_SAND = [{ lon: 2.38, lat: .3, s: .13 }, { lon: 3.55, lat: .5, s: .12 }, { lon: 4.8, lat: -.45, s: .08 }];
+const EARTH_CLOUD = [
+  { lon: .8, lat: .3, s: .1, w: 3, h: .6 }, { lon: 1.9, lat: -.35, s: .09, w: 3.5, h: .6 }, { lon: 3, lat: .05, s: .08, w: 3, h: .6 },
+  { lon: 4.4, lat: .45, s: .1, w: 2.6, h: .6 }, { lon: 5.5, lat: -.1, s: .1, w: 3, h: .6 }, { lon: 5.9, lat: .62, s: .08, w: 3, h: .6 },
+];
+const MARS_DARK = [{ lon: .5, lat: .1, s: .25, w: 1.6, h: .5 }, { lon: 1.8, lat: -.2, s: .2, w: 1.2 }, { lon: 3.2, lat: .25, s: .18, w: 1.8, h: .5 }, { lon: 4.5, lat: -.1, s: .22, w: 1.4, h: .6 }, { lon: 5.6, lat: .35, s: .12 }];
+const CRATERS = [{ lon: .3, lat: .3, s: .14 }, { lon: 1.1, lat: -.3, s: .18 }, { lon: 1.9, lat: .5, s: .1 }, { lon: 2.6, lat: -.1, s: .16 }, { lon: 3.4, lat: .35, s: .12 }, { lon: 4.2, lat: -.45, s: .1 }, { lon: 5, lat: .1, s: .17 }, { lon: 5.8, lat: -.25, s: .11 }];
+const BANDS = {
+  venus: [[-.75, -.45, 'rgba(255,246,215,.38)'], [-.12, .14, 'rgba(196,132,62,.28)'], [.42, .7, 'rgba(255,240,205,.32)']],
+  jupiter: [[-1, -.7, 'rgba(140,95,70,.45)'], [-.52, -.3, 'rgba(166,98,60,.55)'], [-.14, .06, 'rgba(255,244,222,.4)'], [.2, .4, 'rgba(155,90,55,.55)'], [.58, .74, 'rgba(166,115,82,.42)'], [.84, 1, 'rgba(140,95,70,.4)']],
+  saturn: [[-.62, -.42, 'rgba(192,152,92,.35)'], [-.1, .08, 'rgba(255,246,214,.35)'], [.3, .48, 'rgba(192,152,92,.3)']],
+  uranus: [[-.35, -.15, 'rgba(255,255,255,.14)'], [.4, .55, 'rgba(60,150,170,.18)']],
+  neptune: [[-.5, -.34, 'rgba(140,175,255,.35)'], [.18, .3, 'rgba(20,40,140,.3)']],
+};
+
+// Features sit on a rotating sphere: longitude scrolls, and they squash as they near the edge.
+function features(c, R, rot, list, color) {
+  c.fillStyle = color;
+  for (const f of list) {
+    const d = f.lon - rot, cz = Math.cos(d);
+    if (cz < -.15) continue;
+    c.beginPath();
+    c.ellipse(R * Math.cos(f.lat) * Math.sin(d), -R * Math.sin(f.lat), Math.max(.01, f.s * R * Math.max(.12, cz) * (f.w || 1)), f.s * R * (f.h || 1), 0, 0, TAU);
+    c.fill();
+  }
+}
+function bands(c, R, list, t, wav) {
+  const steps = 16, edge = (y, i) => y * R + Math.sin(i * .9 + t * .8 + y * 5) * R * wav;
+  for (const [a, b, col] of list) {
+    c.fillStyle = col; c.beginPath();
+    for (let i = 0; i <= steps; i++) c.lineTo(-R + 2 * R * i / steps, edge(a, i));
+    for (let i = steps; i >= 0; i--) c.lineTo(-R + 2 * R * i / steps, edge(b, i));
+    c.closePath(); c.fill();
+  }
+}
+function surface(c, p, R, t) {
+  switch (p.id) {
+    case 'mercury': features(c, R, t * .12, CRATERS, 'rgba(70,64,58,.35)'); break;
+    case 'moon': features(c, R, t * .08, CRATERS, 'rgba(90,86,80,.32)'); break;
+    case 'venus': bands(c, R, BANDS.venus, t, .07); break;
+    case 'earth':
+      features(c, R, t * .25, EARTH_LAND, '#49b36a'); features(c, R, t * .25, EARTH_SAND, '#d8c27a');
+      features(c, R, t * .34, EARTH_CLOUD, 'rgba(255,255,255,.72)');
+      c.fillStyle = 'rgba(255,255,255,.92)'; c.beginPath(); c.ellipse(0, -R * .96, R * .42, R * .12, 0, 0, TAU); c.ellipse(0, R * .97, R * .34, R * .1, 0, 0, TAU); c.fill();
+      break;
+    case 'mars':
+      features(c, R, t * .2, MARS_DARK, 'rgba(110,35,15,.35)');
+      c.fillStyle = 'rgba(255,250,245,.9)'; c.beginPath(); c.ellipse(0, -R * .95, R * .36, R * .12, 0, 0, TAU); c.ellipse(0, R * .97, R * .22, R * .08, 0, 0, TAU); c.fill();
+      break;
+    case 'jupiter': bands(c, R, BANDS.jupiter, t, .025); features(c, R, t * .35, [{ lon: 1, lat: -.38, s: .17, w: 1.5, h: .62 }], '#c8543a'); break;
+    case 'saturn': bands(c, R, BANDS.saturn, t, .015); break;
+    case 'uranus': bands(c, R, BANDS.uranus, t, 0); break;
+    case 'neptune': bands(c, R, BANDS.neptune, t, .02); features(c, R, t * .3, [{ lon: 2, lat: -.32, s: .13, w: 1.6, h: .6 }], 'rgba(20,35,120,.7)'); break;
+  }
+}
+function ring(c, R, p, half) {
+  const uranus = p.id === 'uranus', flat = uranus ? .2 : .3;
+  const list = uranus
+    ? [[1.55, 'rgba(210,245,255,.4)', R * .05], [1.72, 'rgba(210,245,255,.22)', R * .03]]
+    : [[1.35, 'rgba(210,180,130,.55)', R * .12], [1.55, 'rgba(240,215,160,.88)', R * .2], [1.78, 'rgba(200,165,110,.72)', R * .14], [1.98, 'rgba(235,210,160,.5)', R * .1]];
+  c.save(); c.rotate(uranus ? 1.35 : -.3);
+  for (const [k, col, lw] of list) {
+    c.strokeStyle = col; c.lineWidth = lw; c.beginPath();
+    c.ellipse(0, 0, k * R, k * R * flat, 0, half === 'back' ? Math.PI : 0, half === 'back' ? TAU : Math.PI);
+    c.stroke();
+  }
+  c.restore();
+}
+function drawFace(c, R, o, faceY = 0) {
+  const ink = '#1b1740', fy = faceY * R, ex = R * .33, ey = fy - R * .1, er = R * .16;
+  const lk = o.look || { x: 0, y: 0 }, bl = o.blink ?? 1;
+  for (const sd of [-1, 1]) {
+    const px = sd * ex + lk.x * er * .35, py = ey + lk.y * er * .35;
+    if (bl > .3) {
+      c.fillStyle = '#fff'; c.beginPath(); c.ellipse(sd * ex, ey, er * .9, er * bl, 0, 0, TAU); c.fill();
+      c.fillStyle = ink; c.beginPath(); c.ellipse(px, py, er * .58, er * .58 * bl, 0, 0, TAU); c.fill();
+      c.fillStyle = '#fff'; c.beginPath(); c.arc(px - er * .2, py - er * .22 * bl, er * .2, 0, TAU); c.fill();
+    } else {
+      c.strokeStyle = ink; c.lineWidth = R * .045; c.lineCap = 'round';
+      c.beginPath(); c.arc(sd * ex, ey - er * .3, er * .7, .2 * Math.PI, .8 * Math.PI); c.stroke();
+    }
+    c.fillStyle = 'rgba(255,110,150,.38)'; c.beginPath(); c.ellipse(sd * R * .55, fy + R * .14, R * .12, R * .08, 0, 0, TAU); c.fill();
+  }
+  const my = fy + R * .14;
+  if (o.yawn) { // a sleepy "oh"
+    c.fillStyle = ink; c.beginPath(); c.ellipse(0, my + R * .05, R * .1, R * .14, 0, 0, TAU); c.fill();
+  } else if (o.happy) {
+    c.fillStyle = ink; c.beginPath(); c.arc(0, my, R * .19, 0, Math.PI); c.closePath(); c.fill();
+    c.fillStyle = '#ff6f91'; c.beginPath(); c.ellipse(0, my + R * .12, R * .09, R * .05, 0, 0, TAU); c.fill();
+  } else {
+    c.strokeStyle = ink; c.lineWidth = R * .055; c.lineCap = 'round';
+    c.beginPath(); c.arc(0, my - R * .05, R * .17, .22 * Math.PI, .78 * Math.PI); c.stroke();
+  }
+}
+function drawPlanet(c, p, x, y, R, t, o = {}) {
+  c.save(); c.translate(x, y);
+  if (o.rot) c.rotate(o.rot);
+  if (o.sx) c.scale(o.sx, o.sy);
+  const ringed = p.id === 'saturn' || p.id === 'uranus';
+  if (ringed) ring(c, R, p, 'back');
+  c.save(); c.beginPath(); c.arc(0, 0, R, 0, TAU); c.clip();
+  const rk = R.toFixed(1);
+  c.fillStyle = cachedGrad(c, `pb|${p.id}|${rk}`, () => {
+    const g = c.createRadialGradient(-R * .38, -R * .42, R * .05, 0, 0, R * 1.05);
+    g.addColorStop(0, p.light); g.addColorStop(.55, p.base); g.addColorStop(1, p.dark);
+    return g;
+  });
+  c.fillRect(-R, -R, R * 2, R * 2);
+  surface(c, p, R, t);
+  c.fillStyle = cachedGrad(c, `ps|${rk}`, () => {
+    const s = c.createRadialGradient(-R * .45, -R * .5, R * .1, -R * .1, -R * .1, R * 1.35);
+    s.addColorStop(0, 'rgba(255,255,255,.22)'); s.addColorStop(.45, 'rgba(255,255,255,0)'); s.addColorStop(1, 'rgba(8,6,40,.55)');
+    return s;
+  });
+  c.fillRect(-R, -R, R * 2, R * 2);
+  c.restore();
+  if (p.atmo) { c.save(); c.globalAlpha *= .45; c.strokeStyle = p.atmo; c.lineWidth = R * .07; c.beginPath(); c.arc(0, 0, R * 1.01, 0, TAU); c.stroke(); c.restore(); }
+  if (o.face) drawFace(c, R, o, p.faceY || 0);
+  if (ringed) ring(c, R, p, 'front');
+  c.restore();
+}
+function drawSun(c, x, y, R, t, o = {}) {
+  c.save(); c.translate(x, y);
+  if (o.rot) c.rotate(o.rot);
+  if (o.sx) c.scale(o.sx, o.sy);
+  const rk = R.toFixed(1);
+  c.fillStyle = cachedGrad(c, `sg|${rk}`, () => {
+    const g = c.createRadialGradient(0, 0, R * .6, 0, 0, R * 2.1);
+    g.addColorStop(0, 'rgba(255,200,60,.5)'); g.addColorStop(1, 'rgba(255,120,40,0)');
+    return g;
+  });
+  c.beginPath(); c.arc(0, 0, R * 2.1, 0, TAU); c.fill();
+  c.save(); c.rotate(t * .12); c.fillStyle = 'rgba(255,210,90,.6)';
+  for (let i = 0, n = 14; i < n; i++) {
+    const a = i / n * TAU, l = R * (1.26 + .1 * Math.sin(t * 2 + i * 1.7));
+    c.beginPath(); c.moveTo(Math.cos(a - .1) * R * .95, Math.sin(a - .1) * R * .95); c.lineTo(Math.cos(a) * l, Math.sin(a) * l); c.lineTo(Math.cos(a + .1) * R * .95, Math.sin(a + .1) * R * .95); c.fill();
+  }
+  c.restore();
+  c.fillStyle = cachedGrad(c, `sb|${rk}`, () => {
+    const b = c.createRadialGradient(-R * .3, -R * .3, R * .1, 0, 0, R);
+    b.addColorStop(0, '#fff3b0'); b.addColorStop(.55, '#ffc93c'); b.addColorStop(1, '#ff8a1f');
+    return b;
+  });
+  c.beginPath(); c.arc(0, 0, R, 0, TAU); c.fill();
+  if (o.face) drawFace(c, R, o, 0);
+  c.restore();
+}
+function drawRocket(c, x, y, s, ang, t, thrust) {
+  c.save(); c.translate(x, y); c.rotate(ang);
+  if (thrust > 0) {
+    const fl = s * (.9 + .35 * Math.sin(t * 40)) * thrust;
+    const fg = c.createLinearGradient(-s * .65, 0, -s * .65 - fl * 1.7, 0);
+    fg.addColorStop(0, '#fff6c0'); fg.addColorStop(.4, '#ffb13c'); fg.addColorStop(1, 'rgba(255,80,40,0)');
+    c.fillStyle = fg; c.beginPath(); c.moveTo(-s * .65, -s * .2); c.quadraticCurveTo(-s * .65 - fl * 1.9, 0, -s * .65, s * .2); c.fill();
+  }
+  c.fillStyle = '#ff5a6e';
+  for (const sd of [-1, 1]) { c.beginPath(); c.moveTo(-s * .25, sd * s * .24); c.lineTo(-s * .78, sd * s * .62); c.lineTo(-s * .68, sd * s * .16); c.closePath(); c.fill(); }
+  c.beginPath(); c.moveTo(s * .9, 0);
+  c.bezierCurveTo(s * .6, -s * .38, -s * .4, -s * .34, -s * .7, -s * .22); c.lineTo(-s * .7, s * .22);
+  c.bezierCurveTo(-s * .4, s * .34, s * .6, s * .38, s * .9, 0); c.closePath();
+  const bg = c.createLinearGradient(0, -s * .32, 0, s * .32); bg.addColorStop(0, '#ffffff'); bg.addColorStop(1, '#c3caf2');
+  c.fillStyle = bg; c.fill();
+  c.save(); c.clip(); c.fillStyle = '#ff5a6e'; c.fillRect(s * .5, -s, s, s * 2); c.fillRect(-s * .5, -s, s * .1, s * 2); c.restore();
+  c.fillStyle = '#2b3a8f'; c.beginPath(); c.arc(s * .12, 0, s * .17, 0, TAU); c.fill();
+  c.strokeStyle = '#8fa0ff'; c.lineWidth = s * .06; c.stroke();
+  c.fillStyle = 'rgba(255,255,255,.75)'; c.beginPath(); c.arc(s * .07, -s * .06, s * .05, 0, TAU); c.fill();
+  c.restore();
+}
+function drawStar(c, x, y, r, rot) {
+  c.beginPath();
+  for (let i = 0; i < 10; i++) { const a = rot + i * Math.PI / 5 - Math.PI / 2, rr = i % 2 ? r * .45 : r; c.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); }
+  c.closePath(); c.fill();
+}
+function goldStar(c, x, y, r, t, face) {
+  const g = c.createRadialGradient(x - r * .2, y - r * .3, r * .1, x, y, r);
+  g.addColorStop(0, '#fff3b0'); g.addColorStop(.6, '#ffc93c'); g.addColorStop(1, '#f08a1c');
+  c.fillStyle = g; drawStar(c, x, y, r, 0);
+  if (face) { c.save(); c.translate(x, y + r * .1); drawFace(c, r * .42, face); c.restore(); }
+}
+function roundRect(c, x, y, w, h, r) {
+  c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r);
+  c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath();
+}
+function label(b) {
+  const size = clamp(b.R * .36, 14, 26);
+  cx.font = `800 ${size}px ${fontFor()}`; cx.textAlign = 'center'; cx.textBaseline = 'middle';
+  cx.fillStyle = 'rgba(246,242,255,.86)';
+  cx.fillText(plabel(b.p), b.x, b.y + b.R * (b.p.hf || 1) + size * 1.1);
+}
+
+/* ---------- position cues: a glowing arrow under a spot, a pulsing frame around a slot ---------- */
+function drawPosArrow(c, x, y, s, text, t) {
+  const a = .6 + .4 * Math.sin(t * 5);
+  c.save(); c.translate(x, y);
+  c.shadowColor = 'rgba(110,240,194,.95)'; c.shadowBlur = 26 * a;
+  c.fillStyle = '#6ef0c2';
+  c.beginPath(); c.moveTo(0, 0); c.lineTo(s * .55, s * .6); c.lineTo(s * .2, s * .6); c.lineTo(s * .2, s * 1.05);
+  c.lineTo(-s * .2, s * 1.05); c.lineTo(-s * .2, s * .6); c.lineTo(-s * .55, s * .6); c.closePath(); c.fill();
+  c.shadowBlur = 0;
+  c.fillStyle = '#f6f2ff'; c.font = `800 ${s * .44}px ${fontFor()}`; c.textAlign = 'center'; c.textBaseline = 'top';
+  c.fillText(text, 0, s * 1.16);
+  c.restore();
+}
+function drawSlotFrame(c, x, y, w, h, t) {
+  c.save(); c.lineWidth = 5; c.setLineDash([16, 10]); c.lineDashOffset = -t * 30;
+  c.strokeStyle = `rgba(110,240,194,${.55 + .4 * Math.sin(t * 5)})`;
+  roundRect(c, x - w / 2, y - h / 2, w, h, 28); c.stroke(); c.restore();
+}
+// A friendly space whale, swimming to the right.
+function drawWhale(c, x, y, R, t) {
+  c.save(); c.translate(x, y + Math.sin(t * 3) * R * .06);
+  const g = c.createLinearGradient(0, -R, 0, R); g.addColorStop(0, '#7f9dff'); g.addColorStop(1, '#4b5fd6');
+  c.fillStyle = g;
+  c.beginPath(); c.moveTo(-R * 1.45, 0); c.lineTo(-R * 2.1, -R * .55 + Math.sin(t * 6) * R * .1); c.lineTo(-R * 1.95, 0); c.lineTo(-R * 2.1, R * .5 + Math.sin(t * 6) * R * .1); c.closePath(); c.fill();
+  c.beginPath(); c.ellipse(0, 0, R * 1.55, R * .95, 0, 0, TAU); c.fill();
+  c.fillStyle = '#c9d6ff'; c.beginPath(); c.ellipse(R * .15, R * .45, R * 1.1, R * .42, 0, 0, Math.PI); c.fill();
+  c.fillStyle = '#1b1740'; c.beginPath(); c.arc(R * .85, -R * .2, R * .13, 0, TAU); c.fill();
+  c.fillStyle = '#fff'; c.beginPath(); c.arc(R * .81, -R * .25, R * .05, 0, TAU); c.fill();
+  c.strokeStyle = '#1b1740'; c.lineWidth = R * .07; c.lineCap = 'round';
+  c.beginPath(); c.arc(R * .95, R * .12, R * .28, .1 * Math.PI, .6 * Math.PI); c.stroke();
+  c.fillStyle = 'rgba(255,110,150,.45)'; c.beginPath(); c.ellipse(R * .62, R * .16, R * .13, R * .08, 0, 0, TAU); c.fill();
+  c.fillStyle = 'rgba(180,230,255,.85)';
+  for (let k = 0; k < 3; k++) { const ph = (t * 1.6 + k / 3) % 1; c.beginPath(); c.arc(R * .3 + (k - 1) * R * .2 * ph, -R * .95 - ph * R * .8, R * .09 * (1 - ph * .5), 0, TAU); c.fill(); }
+  c.restore();
+}
+
+/* ---------- pictures for Space Words ---------- */
+function drawAstronaut(c, x, y, s, t, wave = 0) {
+  c.save(); c.translate(x, y + Math.sin(t * 1.5) * s * .04);
+  c.fillStyle = '#9aa3c8'; roundRect(c, -s * .5, -s * .1, s * 1, s * .78, s * .16); c.fill();
+  c.fillStyle = '#f4f6ff'; roundRect(c, -s * .4, -s * .05, s * .8, s * .85, s * .24); c.fill();
+  c.strokeStyle = '#f4f6ff'; c.lineWidth = s * .2; c.lineCap = 'round';
+  // The right arm lifts and waves when she taps the card.
+  const arm = -.55 - wave * (1.1 + .45 * Math.sin(t * 14)), ax = s * .38, ay = s * .12, al = s * .42;
+  c.beginPath(); c.moveTo(-s * .38, s * .12); c.lineTo(-s * .66, s * .38); c.moveTo(ax, ay); c.lineTo(ax + Math.cos(arm) * al, ay + Math.sin(arm) * al); c.stroke();
+  c.fillStyle = '#ff7eb6'; c.fillRect(-s * .14, s * .2, s * .28, s * .18);
+  c.fillStyle = '#f4f6ff'; c.beginPath(); c.arc(0, -s * .38, s * .42, 0, TAU); c.fill();
+  const v = c.createLinearGradient(0, -s * .62, 0, -s * .14); v.addColorStop(0, '#5b6fd8'); v.addColorStop(1, '#1d2366');
+  c.fillStyle = v; c.beginPath(); c.ellipse(0, -s * .38, s * .31, s * .24, 0, 0, TAU); c.fill();
+  c.fillStyle = 'rgba(255,255,255,.7)'; c.beginPath(); c.ellipse(-s * .12, -s * .47, s * .09, s * .05, -.5, 0, TAU); c.fill();
+  c.restore();
+}
+function drawComet(c, x, y, s, t, zoom = 0) {
+  c.save(); c.translate(x, y);
+  c.rotate(-.55);
+  const tail = s * 1.6 * (1 + zoom * .9);
+  const g = c.createLinearGradient(0, 0, -tail, 0); g.addColorStop(0, 'rgba(160,240,255,.9)'); g.addColorStop(1, 'rgba(160,240,255,0)');
+  c.fillStyle = g; c.beginPath(); c.moveTo(0, -s * .3); c.quadraticCurveTo(-tail * .56, -s * .22, -tail, 0); c.quadraticCurveTo(-tail * .56, s * .22, 0, s * .3); c.fill();
+  const h = c.createRadialGradient(0, 0, 0, 0, 0, s * .45); h.addColorStop(0, '#ffffff'); h.addColorStop(.4, '#b8f4ff'); h.addColorStop(1, 'rgba(110,200,255,0)');
+  c.fillStyle = h; c.beginPath(); c.arc(0, 0, s * .45 * (1 + .05 * Math.sin(t * 4)), 0, TAU); c.fill();
+  c.restore();
+}
+function drawTelescope(c, x, y, s, ext = 0) {
+  c.save(); c.translate(x, y);
+  c.strokeStyle = '#c9b48a'; c.lineWidth = s * .09; c.lineCap = 'round';
+  c.beginPath(); c.moveTo(0, s * .05); c.lineTo(-s * .45, s * .8); c.moveTo(0, s * .05); c.lineTo(s * .45, s * .8); c.moveTo(0, s * .05); c.lineTo(0, s * .82); c.stroke();
+  c.rotate(-.5);
+  const slide = ext * s * .5; // a thinner inner tube slides out of the front when she taps
+  c.fillStyle = '#5b72d8'; roundRect(c, s * .4, -s * .13, s * .3 + slide, s * .26, s * .08); c.fill();
+  const g = c.createLinearGradient(0, -s * .2, 0, s * .2); g.addColorStop(0, '#7f9dff'); g.addColorStop(1, '#3b4fb0');
+  c.fillStyle = g; roundRect(c, -s * .75, -s * .17, s * 1.25, s * .34, s * .1); c.fill();
+  c.fillStyle = '#ffc93c'; c.fillRect(s * .2, -s * .19, s * .1, s * .38);
+  c.fillStyle = '#dff4ff'; c.beginPath(); c.ellipse(s * .7 + slide, 0, s * .07, s * .15, 0, 0, TAU); c.fill();
+  c.restore();
+}
+// A ring that reads as a ring: a thick tilted band with a little planet sitting inside it.
+function drawRingArt(c, x, y, s, spin) {
+  c.save(); c.translate(x, y); c.rotate(-.38 + Math.sin(spin) * .25);
+  const band = (a0, a1) => {
+    for (const [k, col, lw] of [[1, 'rgba(255,214,140,.95)', s * .16], [1.22, 'rgba(255,238,200,.7)', s * .08]]) {
+      c.strokeStyle = col; c.lineWidth = lw; c.beginPath(); c.ellipse(0, 0, s * k, s * k * .34, 0, a0, a1); c.stroke();
+    }
+  };
+  band(Math.PI, TAU);
+  c.rotate(.38 - Math.sin(spin) * .25);
+  drawPlanet(c, { id: 'ringplanet', r: 1, base: '#c7a4ff', light: '#efe2ff', dark: '#6d4fb8' }, 0, 0, s * .42, spin, {});
+  c.rotate(-.38 + Math.sin(spin) * .25);
+  band(0, Math.PI);
+  c.restore();
+}
+function drawSatellite(c, x, y, s, t) {
+  c.save(); c.translate(x, y); c.rotate(Math.sin(t * .8) * .12 - .2);
+  for (const sd of [-1, 1]) {
+    c.fillStyle = '#3b6fd6'; c.fillRect(sd > 0 ? s * .3 : -s * 1.05, -s * .22, s * .75, s * .44);
+    c.strokeStyle = 'rgba(200,230,255,.6)'; c.lineWidth = 1.5;
+    for (let i = 1; i < 4; i++) { const xx = (sd > 0 ? s * .3 : -s * 1.05) + s * .75 * i / 4; c.beginPath(); c.moveTo(xx, -s * .22); c.lineTo(xx, s * .22); c.stroke(); }
+    c.beginPath(); c.moveTo(sd > 0 ? s * .3 : -s * 1.05, 0); c.lineTo(sd > 0 ? s * 1.05 : -s * .3, 0); c.stroke();
+  }
+  const g = c.createLinearGradient(-s * .3, -s * .3, s * .3, s * .3); g.addColorStop(0, '#ffe08a'); g.addColorStop(1, '#c98a1c');
+  c.fillStyle = g; roundRect(c, -s * .3, -s * .3, s * .6, s * .6, s * .08); c.fill();
+  c.strokeStyle = '#e8ecff'; c.lineWidth = s * .05; c.beginPath(); c.moveTo(0, -s * .3); c.lineTo(0, -s * .5); c.stroke();
+  c.fillStyle = '#e8ecff'; c.beginPath(); c.arc(0, -s * .55, s * .12, Math.PI, TAU); c.fill();
+  c.restore();
+}
+// a: toy-animation progress 0..1 after a tap (0 = resting). ph rises and falls once.
+function drawWordArt(c, id, x, y, s, t, a = 0) {
+  const ph = Math.sin(a * Math.PI);
+  const face = settings.faces ? { blink: 1, happy: true, look: { x: 0, y: 0 } } : null;
+  const withFace = face ? { face: true, ...face } : {};
+  switch (id) {
+    case 'rocket': drawRocket(c, x, y - ph * s * 1.15, s * .95, -Math.PI / 2 + Math.sin(t * 2) * .05, t, a ? 1.2 : .7); break;
+    case 'star': c.save(); c.translate(x, y); c.rotate(a * TAU); c.scale(1 + ph * .25, 1 + ph * .25); goldStar(c, 0, 0, s * .9, t, face); c.restore(); break;
+    case 'moon': drawPlanet(c, MOON_P, x, y - Math.abs(Math.sin(a * Math.PI * 2)) * s * .35, s * .72, t, withFace); break;
+    case 'sun': c.save(); c.translate(x, y); c.scale(1 + ph * .28, 1 + ph * .28); drawSun(c, 0, 0, s * .55, t + a * 4, withFace); c.restore(); break;
+    case 'planet': drawPlanet(c, PLANETS[2], x, y, s * .72, t + a * 9, withFace); break;
+    case 'astronaut': drawAstronaut(c, x, y, s * .85, t, ph); break;
+    case 'comet': drawComet(c, x + s * .35 + Math.sin(a * TAU) * s * .45, y - s * .15 - Math.sin(a * TAU) * s * .3, s * .75, t, ph); break;
+    case 'telescope': drawTelescope(c, x, y - s * .2, s * .85, ph); break;
+    case 'satellite': c.save(); c.translate(x, y); c.rotate(a * TAU); drawSatellite(c, 0, 0, s * .72, t); c.restore(); break;
+    case 'ring': drawRingArt(c, x, y, s * .72, t * .6 + a * 7); break;
+  }
+}
+
+/* ---------- a planet on stage: springy, blinking, curious ---------- */
+function spring(o, dt) { o.sv += (-160 * (o.scale - 1) - 11 * o.sv) * dt; o.scale += o.sv * dt; }
+class Body {
+  constructor(p, x, y, R) {
+    Object.assign(this, { p, x, y, R, tx: x, ty: y, scale: 1, sv: 0, wob: 0, happy: 0, glow: 0, blinkT: rand(1, 4), blink: 1, phase: rand(0, TAU), alpha: 1, fly: null });
+    this.isSun = p.id === 'sun';
+  }
+  bounce(power = 4) { this.sv += power; this.happy = 1.4; }
+  wiggle() { this.wob = 1; }
+  update(dt) {
+    spring(this, dt);
+    this.wob = Math.max(0, this.wob - dt * 1.6);
+    this.happy = Math.max(0, this.happy - dt);
+    this.blinkT -= dt;
+    if (this.blinkT < 0) { this.blink = Math.max(0, this.blink - dt * 14); if (this.blink <= 0) this.blinkT = rand(2, 5.5); }
+    else this.blink = Math.min(1, this.blink + dt * 10);
+    if (!this.fly) { const k = Math.min(1, dt * 5); this.x += (this.tx - this.x) * k; this.y += (this.ty - this.y) * k; }
+  }
+  hit(x, y) {
+    const r = Math.max(this.R * this.scale * (this.isSun ? 1 : 1.2), 46) * (this.p.wf > 1.5 ? 1.3 : 1);
+    return Math.hypot(x - this.x, y - this.y) < r;
+  }
+  draw(c, t) {
+    if (this.alpha <= .01) return;
+    const bob = (reduced || this.fly) ? 0 : Math.sin(t * 1.4 + this.phase) * this.R * .05;
+    const x = this.x, y = this.y + bob;
+    if (this.glow > 0) {
+      const pulse = .55 + .45 * Math.sin(t * 5), gr = c.createRadialGradient(x, y, this.R * .9, x, y, this.R * 1.8);
+      gr.addColorStop(0, `rgba(110,240,194,${.6 * pulse})`); gr.addColorStop(1, 'rgba(110,240,194,0)');
+      c.fillStyle = gr; c.beginPath(); c.arc(x, y, this.R * 1.8, 0, TAU); c.fill();
+    }
+    let look;
+    if (T - pointer.t > 4) look = { x: Math.sin(t * .5 + this.phase) * .5, y: Math.cos(t * .37 + this.phase) * .3 };
+    else { const dx = pointer.x + camX - x, dy = pointer.y - y, d = Math.hypot(dx, dy) || 1, m = Math.min(1, d / (this.R * 2.5)); look = { x: dx / d * m, y: dy / d * m }; }
+    const s = Math.max(.001, this.scale), sq = clamp(this.sv * .02, -.15, .15);
+    const o = { face: settings.faces && this.R > 9, look, blink: this.sleep ? 0 : this.blink, yawn: this.yawn > 0, happy: this.happy > 0 && !this.sleep, sx: s * (1 + sq), sy: s * (1 - sq), rot: Math.sin(t * 28) * .16 * this.wob };
+    c.save(); c.globalAlpha = this.alpha;
+    if (this.isSun) drawSun(c, x, y, this.R, t, o); else drawPlanet(c, this.p, x, y, this.R, t, o);
+    c.restore();
+  }
+}
+
+/* ---------- particles ---------- */
+const parts = [];
+const COLORS = ['#ffc93c', '#ff7eb6', '#6ef0c2', '#9fb4ff', '#ffffff'];
+function burst(x, y, n = 24, colors = COLORS, power = 1) {
+  for (let i = 0; i < n && parts.length < 700; i++) {
+    const a = rand(0, TAU), sp = rand(120, 420) * power, life = rand(.9, 1.6);
+    parts.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 120 * power, life, max: life, col: colors[i % colors.length], s: rand(6, 13), rot: rand(0, TAU), vr: rand(-6, 6), star: Math.random() < .6, g: 380 });
+  }
+}
+const sparkle = (x, y, n = 8) => burst(x, y, n, COLORS, .5);
+function trail(x, y) {
+  if (parts.length > 700) return;
+  parts.push({ x, y, vx: rand(-30, 30), vy: rand(-30, 30), life: .6, max: .6, col: Math.random() < .5 ? '#ffb13c' : '#fff3b0', s: rand(4, 9), rot: 0, vr: 0, star: false, g: 0, shrink: true });
+}
+function fireworks(n = 6) {
+  for (let i = 0; i < n; i++) after(i * .32, () => { burst(camX + rand(W * .15, W * .85), rand(H * .15, H * .5), 36, COLORS, 1.2); tone(rand(600, 1000), .3, { type: 'triangle', vol: .1 }); });
+}
+function updateParts(dt) {
+  const drag = Math.pow(.35, dt);
+  for (let i = parts.length - 1; i >= 0; i--) {
+    const p = parts[i]; p.life -= dt;
+    if (p.life <= 0) { parts.splice(i, 1); continue; }
+    p.vx *= drag; p.vy = p.vy * drag + p.g * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.rot += p.vr * dt;
+  }
+}
+function drawParts() {
+  for (const p of parts) {
+    cx.globalAlpha = Math.min(1, p.life / .4); cx.fillStyle = p.col;
+    const s = p.shrink ? p.s * (p.life / p.max) : p.s;
+    if (p.star) drawStar(cx, p.x, p.y, s, p.rot); else { cx.beginPath(); cx.arc(p.x, p.y, s * .5, 0, TAU); cx.fill(); }
+  }
+  cx.globalAlpha = 1;
+}
+
+/* ---------- sky ---------- */
+let stars = [], shoot = null, nextShoot = 4;
+function makeStars() { stars = Array.from({ length: Math.round(W * H / 4500) }, () => ({ x: Math.random(), y: Math.random(), r: rand(.5, 1.8), tw: rand(0, TAU), sp: rand(.5, 2), d: rand(.2, 1) })); }
+// The gradient + nebula backdrop never changes between frames: paint it once per resize.
+const skyCv = document.createElement('canvas');
+function paintSkyBackdrop() {
+  skyCv.width = Math.max(1, Math.round(W * DPR)); skyCv.height = Math.max(1, Math.round(H * DPR));
+  const c = skyCv.getContext('2d');
+  c.setTransform(DPR, 0, 0, DPR, 0, 0);
+  const g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#0a0e2a'); g.addColorStop(1, '#1d1552');
+  c.fillStyle = g; c.fillRect(0, 0, W, H);
+  for (const [nx, ny, col] of [[.82, .2, 'rgba(255,126,182,.12)'], [.14, .86, 'rgba(110,240,194,.08)'], [.5, .55, 'rgba(159,180,255,.06)']]) {
+    const r = Math.max(W, H) * .5, ng = c.createRadialGradient(nx * W, ny * H, 0, nx * W, ny * H, r);
+    ng.addColorStop(0, col); ng.addColorStop(1, 'rgba(0,0,0,0)'); c.fillStyle = ng; c.fillRect(0, 0, W, H);
+  }
+}
+function drawSky(t, dt) {
+  cx.drawImage(skyCv, 0, 0, W, H);
+  cx.fillStyle = '#fff';
+  for (const s of stars) {
+    const x = (((s.x * W - camX * s.d * .3) % W) + W) % W;
+    cx.globalAlpha = reduced ? .8 : .3 + .7 * (.5 + .5 * Math.sin(t * s.sp + s.tw));
+    cx.fillRect(x, s.y * H, s.r, s.r);
+  }
+  cx.globalAlpha = 1;
+  if (reduced) return;
+  nextShoot -= dt;
+  if (!shoot && nextShoot < 0) { shoot = { x: rand(W * .2, W), y: rand(0, H * .4), life: 1 }; nextShoot = rand(5, 10); }
+  if (shoot) {
+    shoot.life -= dt * 1.4; shoot.x -= dt * W * .6; shoot.y += dt * W * .25;
+    const lg = cx.createLinearGradient(shoot.x, shoot.y, shoot.x + 90, shoot.y - 38);
+    lg.addColorStop(0, `rgba(255,255,255,${Math.max(0, shoot.life)})`); lg.addColorStop(1, 'rgba(255,255,255,0)');
+    cx.strokeStyle = lg; cx.lineWidth = 2; cx.beginPath(); cx.moveTo(shoot.x, shoot.y); cx.lineTo(shoot.x + 90, shoot.y - 38); cx.stroke();
+    if (shoot.life <= 0) shoot = null;
+  }
+}
+
+/* ---------- layout helpers ---------- */
+function rowsLayout(list, ax, ay, aw, ah, maxRows, gap, maxU) {
+  let best = null;
+  for (let r = 1; r <= maxRows; r++) {
+    const per = Math.ceil(list.length / r), rows = [];
+    for (let i = 0; i < list.length; i += per) rows.push(list.slice(i, i + per));
+    const rw = rows.map(row => row.reduce((s, p) => s + 2 * p.r * (p.wf || 1), 0) + (row.length - 1) * gap);
+    const rh = rows.map(row => Math.max(...row.map(p => 2 * p.r * (p.hf || 1))) + .6);
+    const totalH = rh.reduce((a, b) => a + b, 0) + (rows.length - 1) * gap;
+    const u = Math.min(aw / Math.max(...rw), ah / totalH, maxU);
+    if (!best || u > best.u) best = { u, rows, rw, rh, totalH };
+  }
+  const { u, rows, rw, rh, totalH } = best, out = [];
+  let y = ay + (ah - totalH * u) / 2;
+  rows.forEach((row, ri) => {
+    let x = ax + (aw - rw[ri] * u) / 2;
+    const cy = y + (rh[ri] - .6) * u / 2;
+    row.forEach(p => { const w = p.r * (p.wf || 1) * u; out.push({ x: x + w, y: cy, R: p.r * u }); x += 2 * w + gap * u; });
+    y += (rh[ri] + gap) * u;
+  });
+  return out;
+}
+function cells(n, top, bottom) {
+  const aw = W - 32, ah = Math.max(80, bottom - top);
+  let cols, rows;
+  if (W >= H * 1.1) { cols = n; rows = 1; }
+  else if (n === 4) { cols = 2; rows = 2; }
+  else if (aw / ah > .9) { cols = n; rows = 1; }
+  else { cols = 1; rows = n; }
+  const cw = aw / cols, ch = ah / rows;
+  return Array.from({ length: n }, (_, i) => ({ x: 16 + cw * (i % cols + .5), y: top + ch * (Math.floor(i / cols) + .5), w: cw, h: ch }));
+}
+const fitR = (p, cell, k) => Math.min(cell.w / (2 * (p.wf || 1)), cell.h / (2 * (p.hf || 1))) * k;
+// Best square-ish grid for n items with a width:height ratio of `ratio`, centered in the box.
+function gridFit(n, x0, y0, w, h, ratio = 1) {
+  if (!n) return [];
+  let best = null;
+  for (let c = 1; c <= n; c++) { const r = Math.ceil(n / c), s = Math.min(w / c, h / r / ratio); if (!best || s > best.s) best = { c, r, s }; }
+  const { c, r, s } = best;
+  return Array.from({ length: n }, (_, i) => {
+    const row = Math.floor(i / c), col = i % c, inRow = Math.min(c, n - row * c);
+    return { x: x0 + w / 2 + (col - (inRow - 1) / 2) * s, y: y0 + h / 2 + (row - (r - 1) / 2) * s * ratio, s };
+  });
+}
+
+/* ================= Game: menu backdrop ================= */
+function MenuMode() {
+  return {
+    layout() {},
+    // Deep-link helpers for screenshots and for grown-ups: #menu_grownups, #menu_studio
+    start(sub) { if (sub === 'grownups') openParent(); else if (sub === 'studio') openStudio(); },
+    update() {},
+    draw(t) {
+      const mx = W / 2, my = H * .5, m = Math.min(W, H), sr = m * .07, far = Math.max(W, H) * .56;
+      cx.save(); cx.globalAlpha = .6;
+      const pos = PLANETS.map((p, i) => {
+        const rx = sr * 2.2 + (i + 1) * (far - sr * 2.2) / 8, a = t * (.5 / Math.sqrt(i + 1)) + i * 1.7;
+        cx.strokeStyle = 'rgba(159,180,255,.12)'; cx.lineWidth = 1; cx.beginPath(); cx.ellipse(mx, my, rx, rx * .42, 0, 0, TAU); cx.stroke();
+        return { p, x: mx + Math.cos(a) * rx, y: my + Math.sin(a) * rx * .42, s: Math.sin(a), R: m * .022 * (.6 + p.r * .6) };
+      });
+      const drawQ = q => drawPlanet(cx, q.p, q.x, q.y, q.R * (1 + .15 * q.s), t, {});
+      pos.filter(q => q.s < 0).forEach(drawQ);
+      drawSun(cx, mx, my, sr, t, {});
+      pos.filter(q => q.s >= 0).forEach(drawQ);
+      cx.restore();
+    },
+  };
+}
+
+/* ================= Game 1: Tap & Hear ================= */
+function FreeMode() {
+  let sun = null, bodies = [], idle = 0, singing = false;
+  const taps = new Map();
+  // Planet Song: each planet lights up in order and sings its name on its own pentatonic note.
+  // The voice pitch climbs with the scale; the beat is slow enough to sing along, and it loops.
+  const BEAT = 1.35;
+  function sing(i) {
+    if (!singing) return;
+    if (i >= bodies.length) { after(1.8, () => sing(0)); return; }
+    const b = bodies[i];
+    b.bounce(5); b.glow = 1; chime(SCALE[i + 1]); sparkle(b.x, b.y - b.R * .8, 8);
+    say(cap(pname(b.p)) + bang(), { pitch: .85 + i * .09 });
+    after(BEAT, () => { b.glow = 0; sing(i + 1); });
+  }
+  function setSong(on) {
+    singing = on; $('#songBtn').setAttribute('aria-pressed', on);
+    bodies.forEach(b => { b.glow = 0; });
+    if (on) { say(t('song')); after(1.9, () => sing(0)); } else hush();
+  }
+  return {
+    song() { setSong(!singing); },
+    layout() {
+      if (!sun) sun = new Body(SUN, 0, 0, 10);
+      if (!bodies.length) bodies = PLANETS.map(p => new Body(p, 0, 0, 10));
+      let ax, ay, aw, ah;
+      if (W >= H * 1.05) { sun.R = H * .42; sun.x = sun.tx = -sun.R * .42; sun.y = sun.ty = H * .55; ax = sun.x + sun.R + 24; aw = W - ax - 20; ay = Math.max(H * .16, 100); ah = H - ay - 16; }
+      else { sun.R = W * .42; sun.x = sun.tx = W / 2; sun.y = sun.ty = -sun.R * .4; ay = sun.y + sun.R + 24; ah = H - ay - 20; ax = 16; aw = W - 32; }
+      rowsLayout(PLANETS, ax, ay, aw, ah, 4, .4, Math.min(W, H) * .14).forEach((q, i) => { const b = bodies[i]; b.R = q.R; b.x = b.tx = q.x; b.y = b.ty = q.y; });
+    },
+    start() {
+      say(t('tapPlanet'));
+      bodies.forEach((b, i) => after(.25 + i * .12, () => { b.bounce(3); tone(SCALE[i + 1], .35, { vol: .08 }); }));
+    },
+    repeat() { say(t('tapPlanet')); },
+    tap(x, y) {
+      idle = 0;
+      const b = [...bodies].reverse().find(o => o.hit(x, y)) || (sun.hit(x, y) ? sun : null);
+      if (!b) { sparkle(x, y, 6); tone(pick(SCALE) * 2, .3, { vol: .06, type: 'triangle' }); return; }
+      const rec = taps.get(b) || { n: 0, t: -9 };
+      if (T - rec.t < .35) return;
+      rec.n++; rec.t = T; taps.set(b, rec);
+      b.bounce(5); chime(SCALE[b.p.i + 1]); sparkle(b.x, b.y - b.R * .8, 10);
+      const name = t('nameBang', { p: cap(pname(b.p)) });
+      if (b.p.id !== 'sun') logUse('words', b.p.id);
+      // Name and fact are separate lines so each can use a recorded clip.
+      if (settings.facts && rec.n % 2 === 0) sayQueue([{ text: name }, { text: pfact(b.p) }]); else say(name);
+    },
+    update(dt) {
+      idle += dt; sun.update(dt); bodies.forEach(b => b.update(dt));
+      if (idle > 10 && !singing) { idle = 4; const b = pick(bodies); b.bounce(3); b.wiggle(); }
+    },
+    draw(t) { sun.draw(cx, t); bodies.forEach(b => { b.draw(cx, t); label(b); }); },
+  };
+}
+
+/* ================= Game 2: Find It ================= */
+// Round types: "Where is Saturn?", plus two spatial rounds with exactly three planets in one row:
+//   where: "Where is Mars? On the left, in the middle, or on the right?"
+//   which: "Which planet is in the middle?" (that slot pulses)
+// Spatial positions are the child's REAL screen left / middle / right. bodies[0] is always the leftmost
+// planet on screen, and this is NEVER mirrored in Farsi (RTL) mode. Only text direction changes.
+function FindMode() {
+  const TYPES = ['find', 'where', 'find', 'which'];
+  let bodies = [], target = null, last = null, wrong = 0, idle = 0, busy = false, stars = 0;
+  let type = 'find', roundNo = 0, framePos = -1, arrow = null, promptText = '';
+  const top = () => Math.max(H * .22, 160);
+  const targetBody = () => bodies.find(o => o.p === target);
+  const posOf = b => bodies.indexOf(b); // 0 = left, 1 = middle, 2 = right, on screen, never mirrored
+  const rowGeom = () => { const cw = (W - 32) / 3, area = H - 24 - top(); return { cw, y: top() + area * .38, ch: Math.max(120, area * .6) }; };
+  function layout() {
+    if (type === 'find') {
+      const cs = cells(bodies.length, top(), H - 24);
+      bodies.forEach((b, i) => { b.R = fitR(b.p, cs[i], .7) * (.86 + .14 * b.p.r / 1.3); b.tx = cs[i].x; b.ty = cs[i].y; });
+      return;
+    }
+    // One row across the screen, left to right, in portrait and in Farsi alike.
+    const { cw, y, ch } = rowGeom();
+    bodies.forEach((b, i) => { b.R = Math.min(cw / (2 * (b.p.wf || 1)), ch / (2 * (b.p.hf || 1))) * .64; b.tx = 16 + cw * (i + .5); b.ty = y; });
+  }
+  function ask() {
+    idle = 0;
+    if (type === 'find') { promptText = ''; say(t('whereIs', { p: pname(target) })); return; }
+    promptText = type === 'where' ? t('whereLMR', { p: pname(target) }) : t('whichAt', { pos: posWord(framePos) });
+    say(promptText, { persist: true });
+  }
+  const restorePrompt = () => { if (!busy && promptText) showCaption(promptText, LANG, true); };
+  function round(forced) {
+    type = forced || TYPES[roundNo % TYPES.length]; roundNo++;
+    const n = type === 'find' ? clamp(settings.choices, 2, 4) : 3;
+    target = pick(PLANETS.filter(p => p !== last));
+    const others = shuffle(PLANETS.filter(p => p !== target)).slice(0, n - 1);
+    bodies = shuffle([target, ...others]).map(p => { const b = new Body(p, W / 2, H / 2, 10); b.scale = .01; return b; });
+    framePos = -1; arrow = null;
+    if (type === 'which') { framePos = randInt(0, 2); target = bodies[framePos].p; }
+    last = target;
+    layout(); bodies.forEach(b => { b.x = b.tx; b.y = b.ty; });
+    wrong = 0; busy = false; ask();
+  }
+  function succeed(b) {
+    busy = true; b.bounce(7); b.glow = 0; fanfare(); burst(b.x, b.y, 44, COLORS, 1.1);
+    bodies.forEach(o => { if (o !== b) o.fade = true; });
+    stars++; setStars(stars); logUse('words', target.id);
+    promptText = '';
+    const lines = [];
+    if (type === 'find') lines.push(t('yesThats', { p: pname(target) }));
+    else {
+      arrow = { i: posOf(b) };
+      lines.push(t(type === 'where' ? 'isAt' : 'yesAt', { p: cap(pname(target)), pos: posWord(posOf(b)) }));
+    }
+    if (settings.facts) lines.push(pfact(target));
+    sayQueue(lines.map(text => ({ text })));
+    const wait = (settings.facts ? 3.8 : 2.4) + (type === 'find' ? 0 : 1);
+    if (stars >= 5) {
+      after(wait, () => { say(t('fiveStars')); fireworks(8); fanfare(); });
+      after(wait + 3.8, () => { stars = 0; setStars(0); round(); });
+    } else after(wait, () => round());
+  }
+  return {
+    layout, repeat: ask,
+    start(sub) { setStars(0); round(TYPES.includes(sub) ? sub : undefined); },
+    tap(x, y) {
+      if (busy) return;
+      idle = 0;
+      const b = [...bodies].reverse().find(o => o.hit(x, y));
+      if (!b || !tapGate(b)) return;
+      if (b.p === target) { succeed(b); return; }
+      b.wiggle(); boop(); wrong++;
+      if (type === 'find') say(t('notThat', { p: pname(b.p), q: pname(target) }));
+      else say(t('thatsAt', { p: pname(b.p), pos: posWord(posOf(b)) }), { onend: restorePrompt });
+      if (wrong >= 2) targetBody().glow = 1;
+    },
+    update(dt) {
+      idle += dt;
+      bodies.forEach(b => { b.update(dt); if (b.fade) b.alpha = Math.max(.18, b.alpha - dt * 2); });
+      if (!busy && idle > 9) { targetBody().glow = 1; ask(); }
+    },
+    draw(t) {
+      if (framePos >= 0 && !busy) { const { cw, y, ch } = rowGeom(); drawSlotFrame(cx, 16 + cw * (framePos + .5), y, cw * .9, ch * .95, t); }
+      bodies.forEach(b => b.draw(cx, t));
+      if (arrow) {
+        const b = bodies[arrow.i], s = clamp(b.R * .55, 34, 64);
+        drawPosArrow(cx, b.x, Math.min(b.y + b.R * (b.p.hf || 1) + 18, H - s * 1.9), s, posLabel(arrow.i), t);
+      }
+    },
+  };
+}
+
+/* ================= Game 3: Rocket Trip ================= */
+function RocketMode() {
+  let sun = null, pl = [], R0 = 0, sunR = 0, s = 0, at = -1, fl = null, orbitA = Math.PI, idle = 0, done = false;
+  const rk = { x: 0, y: 0, ang: -.15, thrust: .25 };
+  const orbitPos = (b, a) => { const k = b.p.wf > 1.5 ? 2.35 : 1.8; return { x: b.x + Math.cos(a) * b.R * k, y: b.y + Math.sin(a) * b.R * .6, dx: -Math.sin(a) * b.R * k, dy: Math.cos(a) * b.R * .6 }; };
+  const sunPark = () => ({ x: sun.x + sunR * 1.35, y: sun.y - sunR * .15 + Math.sin(T * 2) * sunR * .03 });
+  const dest = i => i < 0 ? sunPark() : orbitPos(pl[i], Math.PI);
+  function go(i) { fl = { to: i, t: 0, dur: i < 0 ? 2.8 : 1.7, x0: rk.x, y0: rk.y }; whoosh(fl.dur); }
+  function arrive(i) {
+    at = i; orbitA = Math.PI;
+    if (i < 0) { sun.bounce(4); chime(SCALE[0]); done = false; say(t('homeSun')); return; }
+    const b = pl[i];
+    b.bounce(6); chime(SCALE[i + 1]); burst(b.x, b.y - b.R * .2, 18, COLORS, .7);
+    sayQueue([{ text: t('nameBang', { p: cap(pname(b.p)) }) }, ...(settings.facts ? [{ text: pfact(b.p) }] : [])]);
+    if (i === 7) { done = true; after(settings.facts ? 3.2 : 1.6, () => { say(t('allEight')); fanfare(); fireworks(7); }); }
+  }
+  function drawShip(t) { drawRocket(cx, rk.x, rk.y, s, rk.ang, t, rk.thrust); }
+  return {
+    repeat() { if (at < 0) say(t('rocketGo')); else say(t('nameBang', { p: cap(pname(pl[at].p)) })); },
+    layout() {
+      R0 = Math.min(H * .16, W * .17); sunR = Math.min(H * .36, W * .3); s = R0 * .5;
+      if (!sun) sun = new Body(SUN, 0, 0, sunR);
+      sun.R = sunR; sun.x = sun.tx = W * .08; sun.y = sun.ty = H * .54;
+      if (!pl.length) pl = PLANETS.map(p => new Body(p, 0, 0, 10));
+      const spacing = Math.max(W * .5, R0 * 4.4);
+      pl.forEach((b, i) => { b.R = R0 * (.72 + .28 * b.p.r / 1.3); b.x = b.tx = sun.x + sunR * 1.25 + R0 * 2.2 + spacing * i; b.y = b.ty = H * .58 + Math.sin(i * 1.9 + .6) * H * .13; });
+      if (!fl) { const p = at < 0 ? sunPark() : orbitPos(pl[at], orbitA); rk.x = p.x; rk.y = p.y; }
+    },
+    start() { say(t('rocketGo')); },
+    tap(x, y) {
+      idle = 0;
+      if (fl) return;
+      if (at >= 0 && pl[at].hit(x, y)) { if (!tapGate(pl[at])) return; pl[at].bounce(5); chime(SCALE[at + 1]); say(t('nameBang', { p: cap(pname(pl[at].p)) })); return; }
+      go(done ? -1 : at + 1);
+    },
+    update(dt) {
+      idle += dt; sun.update(dt); pl.forEach(b => b.update(dt));
+      if (fl) {
+        fl.t += dt / fl.dur;
+        const e = ease(Math.min(1, fl.t)), d = dest(fl.to), u = 1 - e;
+        const qx = (fl.x0 + d.x) / 2, qy = Math.min(fl.y0, d.y) - H * (fl.to < 0 ? .38 : .3);
+        rk.x = u * u * fl.x0 + 2 * u * e * qx + e * e * d.x;
+        rk.y = u * u * fl.y0 + 2 * u * e * qy + e * e * d.y;
+        rk.ang = Math.atan2(2 * u * (qy - fl.y0) + 2 * e * (d.y - qy), 2 * u * (qx - fl.x0) + 2 * e * (d.x - qx));
+        rk.thrust = 1;
+        trail(rk.x - Math.cos(rk.ang) * s * .8, rk.y - Math.sin(rk.ang) * s * .8);
+        if (fl.t >= 1) { const to = fl.to; fl = null; arrive(to); }
+      } else if (at >= 0) {
+        orbitA -= dt * .8; // clockwise: glides down in front of the planet, then back behind it
+        const p = orbitPos(pl[at], orbitA);
+        rk.x = p.x; rk.y = p.y; rk.ang = Math.atan2(-p.dy, -p.dx); rk.thrust = .35;
+      } else {
+        const p = sunPark(); rk.x = p.x; rk.y = p.y;
+        const d = ((-.15 - rk.ang + Math.PI) % TAU + TAU) % TAU - Math.PI; rk.ang += d * Math.min(1, dt * 3); rk.thrust = .25;
+      }
+      const tgt = clamp(rk.x - W * .45, 0, pl[7].x + R0 * 3 - W);
+      camX += (tgt - camX) * Math.min(1, dt * 3);
+    },
+    draw(t) {
+      sun.draw(cx, t);
+      if (!fl) {
+        const d = dest(done ? -1 : at + 1), qx = (rk.x + d.x) / 2, qy = Math.min(rk.y, d.y) - H * .3;
+        cx.save(); cx.setLineDash([6, 12]); cx.lineDashOffset = -t * 30; cx.strokeStyle = 'rgba(255,255,255,.22)'; cx.lineWidth = 3; cx.lineCap = 'round';
+        cx.beginPath(); cx.moveTo(rk.x, rk.y); cx.quadraticCurveTo(qx, qy, d.x, d.y); cx.stroke(); cx.restore();
+      }
+      let drawn = false;
+      pl.forEach((b, i) => {
+        if (!drawn && !fl && i === at && Math.sin(orbitA) < 0) { drawShip(t); drawn = true; }
+        b.draw(cx, t); label(b);
+      });
+      if (!drawn) drawShip(t);
+      if (!fl && idle > 3.5) {
+        const d = dest(done ? -1 : at + 1), a = Math.atan2(d.y - rk.y, d.x - rk.x);
+        cx.save(); cx.strokeStyle = '#6ef0c2'; cx.lineWidth = s * .13; cx.lineCap = 'round'; cx.lineJoin = 'round';
+        for (let k = 0; k < 3; k++) {
+          const dist = s * 1.5 + k * s * .5, px = rk.x + Math.cos(a) * dist, py = rk.y + Math.sin(a) * dist;
+          cx.globalAlpha = .25 + .75 * Math.max(0, Math.sin(t * 6 - k * .9));
+          cx.save(); cx.translate(px, py); cx.rotate(a); cx.beginPath(); cx.moveTo(-s * .15, -s * .25); cx.lineTo(s * .1, 0); cx.lineTo(-s * .15, s * .25); cx.stroke(); cx.restore();
+        }
+        cx.restore();
+      }
+    },
+  };
+}
+
+/* ================= Game 4: Line Up ================= */
+function OrderMode() {
+  let sun = null, placed = 0, floating = [], placedB = [], flying = null, slots = [], slotR = 0, slotY = 0, wrong = 0, idle = 0, done = false, canReplay = false;
+  const slotSize = p => slotR * (p.id === 'saturn' ? .5 : p.id === 'uranus' ? .78 : .9) * (.78 + .22 * p.r / 1.3);
+  const nextBody = () => floating.find(o => o.p === PLANETS[placed]);
+  function layoutSlots() {
+    slotR = Math.min((W - 32) / (8 * 2.25 + 2), H * .075, 58);
+    slotY = H - Math.max(slotR * 1.6 + 28, H * .13);
+    const sunR = slotR * 1.9;
+    if (!sun) sun = new Body(SUN, 0, 0, sunR);
+    sun.R = sunR; sun.x = sun.tx = sunR * .35; sun.y = sun.ty = slotY;
+    const x0 = sun.x + sunR + slotR * 1.3, x1 = W - 16 - slotR * 1.1;
+    slots = PLANETS.map((p, i) => ({ x: x0 + (x1 - x0) * i / 7, y: slotY }));
+    if (LANG === 'fa') { sun.x = sun.tx = W - sun.x; slots.forEach(sl => { sl.x = W - sl.x; }); } // Farsi reads right-to-left: the Sun sits on the right
+    placedB.forEach((b, i) => { b.x = b.tx = slots[i].x; b.y = b.ty = slots[i].y; b.R = slotSize(b.p); });
+  }
+  function layoutFloats() {
+    if (!floating.length) return;
+    const cs = cells(floating.length, Math.max(H * .2, 150), slotY - slotR * 2.4);
+    floating.forEach((b, i) => { b.R = fitR(b.p, cs[i], .62); b.tx = cs[i].x + b.jx * cs[i].w * .08; b.ty = cs[i].y + b.jy * cs[i].h * .08; });
+  }
+  function spawn(p) { const b = new Body(p, W / 2, H * .4, 40); b.scale = .01; b.jx = rand(-1, 1); b.jy = rand(-1, 1); b.fresh = true; return b; }
+  const insertRandom = b => floating.splice(Math.floor(Math.random() * (floating.length + 1)), 0, b);
+  function refill() {
+    const remaining = PLANETS.slice(placed), next = PLANETS[placed];
+    const cap = Math.min(clamp(settings.choices, 2, 4), remaining.length);
+    if (next && !floating.some(b => b.p === next)) {
+      if (floating.length >= cap) floating.splice(Math.floor(Math.random() * floating.length), 1);
+      insertRandom(spawn(next));
+    }
+    while (floating.length < cap) insertRandom(spawn(pick(remaining.filter(p => !floating.some(b => b.p === p)))));
+    layoutFloats();
+    floating.forEach(b => { if (b.fresh) { b.x = b.tx; b.y = b.ty; b.fresh = false; } });
+  }
+  function prompt() { idle = 0; say(placed === 0 ? t('whoFirst') : t('whoNext')); }
+  function reset() {
+    placed = 0; floating = []; placedB = []; flying = null; done = false; canReplay = false; wrong = 0; idle = 0;
+    layoutSlots(); refill();
+    say(t('lineUp'));
+  }
+  function parade() {
+    done = true;
+    const names = PLANETS.map(p => pname(p)); names[0] = cap(names[0]);
+    placedB.forEach((b, i) => after(.3 + i * .5, () => { b.bounce(6); chime(SCALE[i + 1]); sparkle(b.x, b.y - b.R, 8); }));
+    // The finale waits for the name roll-call to finish instead of talking over it.
+    const finale = () => { if (canReplay) return; fanfare(); fireworks(8); say(t('didIt'), { onend: () => { canReplay = true; } }); };
+    say(names.join(LANG === 'fa' ? '، ' : ', ') + bang(), { onend: () => after(.4, finale) });
+    after(14, () => { canReplay = true; }); // safety net if a voice never reports that it finished
+  }
+  return {
+    repeat() { if (!done) prompt(); },
+    layout() { layoutSlots(); layoutFloats(); },
+    start: reset,
+    tap(x, y) {
+      idle = 0;
+      if (done) { if (canReplay) reset(); return; }
+      if (flying) return;
+      const b = [...floating].reverse().find(o => o.hit(x, y));
+      if (!b || !tapGate(b)) return;
+      if (b.p === PLANETS[placed]) {
+        floating.splice(floating.indexOf(b), 1);
+        b.glow = 0; b.fly = { t: 0, dur: .9, x0: b.x, y0: b.y, R0: b.R }; flying = b; wrong = 0;
+        pop(); say(t('nameBang', { p: cap(pname(b.p)) }));
+      } else {
+        b.wiggle(); boop(); wrong++;
+        say(t('thatsP', { p: pname(b.p) }));
+        if (wrong >= 2 && nextBody()) nextBody().glow = 1;
+      }
+    },
+    update(dt) {
+      idle += dt; sun.update(dt);
+      floating.forEach(b => b.update(dt)); placedB.forEach(b => b.update(dt));
+      if (flying) {
+        const b = flying, f = b.fly, sl = slots[placed];
+        f.t += dt / f.dur;
+        const e = ease(Math.min(1, f.t));
+        b.x = lerp(f.x0, sl.x, e); b.y = lerp(f.y0, sl.y, e) - Math.sin(e * Math.PI) * H * .12; b.R = lerp(f.R0, slotSize(b.p), e);
+        b.update(dt);
+        if (f.t >= 1) {
+          b.fly = null; b.tx = sl.x; b.ty = sl.y; placedB.push(b); flying = null; placed++;
+          b.bounce(5); chime(SCALE[placed]); burst(sl.x, sl.y, 22, COLORS, .7);
+          if (placed === 8) after(.6, parade); else { refill(); after(.9, prompt); }
+        }
+      }
+      if (!done && !flying && idle > 8) { if (nextBody()) nextBody().glow = 1; prompt(); }
+    },
+    draw(t) {
+      cx.save(); cx.strokeStyle = 'rgba(159,180,255,.16)'; cx.lineWidth = 3; cx.beginPath(); cx.moveTo(sun.x, slotY); cx.lineTo(slots[7].x, slotY); cx.stroke(); cx.restore();
+      slots.forEach((sl, i) => {
+        if (i < placed) return;
+        const isNext = i === placed && !flying;
+        cx.save(); cx.setLineDash([5, 7]);
+        cx.fillStyle = '#10163f'; cx.strokeStyle = isNext ? `rgba(110,240,194,${.55 + .45 * Math.sin(t * 5)})` : 'rgba(255,255,255,.28)';
+        cx.lineWidth = isNext ? 4 : 2.5;
+        cx.beginPath(); cx.arc(sl.x, sl.y, slotR * .9, 0, TAU); cx.fill(); cx.stroke(); cx.restore();
+      });
+      sun.draw(cx, t);
+      placedB.forEach(b => b.draw(cx, t));
+      if (slotR > 24) {
+        cx.font = `800 ${clamp(slotR * .34, 12, 18)}px ${fontFor()}`; cx.textAlign = 'center'; cx.textBaseline = 'middle'; cx.fillStyle = 'rgba(246,242,255,.8)';
+        placedB.forEach((b, i) => cx.fillText(plabel(b.p), slots[i].x, slotY + slotR * 1.35));
+      }
+      floating.forEach(b => b.draw(cx, t));
+      if (flying) flying.draw(cx, t);
+      if (canReplay) {
+        const r = Math.min(W, H) * .09, x = W / 2, y = Math.max(H * .2, 150) + (slotY - slotR * 2.4 - Math.max(H * .2, 150)) / 2, pulse = 1 + .06 * Math.sin(t * 4);
+        cx.save(); cx.translate(x, y); cx.scale(pulse, pulse);
+        cx.fillStyle = '#ffc93c'; cx.beginPath(); cx.arc(0, 0, r, 0, TAU); cx.fill();
+        cx.strokeStyle = '#2a1a00'; cx.lineWidth = r * .16; cx.lineCap = 'round';
+        cx.beginPath(); cx.arc(0, 0, r * .5, -.4 * Math.PI, 1.3 * Math.PI); cx.stroke();
+        cx.fillStyle = '#2a1a00'; cx.beginPath(); cx.moveTo(r * .1, -r * .78); cx.lineTo(r * .42, -r * .46); cx.lineTo(r * .02, -r * .28); cx.closePath(); cx.fill();
+        cx.restore();
+      }
+    },
+  };
+}
+
+/* ================= Game 5: Count & Add ================= */
+// Rounds cycle count → add → which has more → take away → make N → left/middle/right.
+// Objects are always on screen and a counting track along the bottom fills with pictures as she
+// counts. Wrong answers just name themselves; nothing ever says "wrong".
+// Gentle adaptive difficulty: `lvl` is the biggest number used right now. Three first-try wins in a
+// row step it up (never past the grown-ups' "highest number"); two misses step it back down.
+function CountMode() {
+  const KINDS = ['star', 'rocket', 'moon'], TYPES = ['count', 'add', 'more', 'take', 'make', 'lmr'];
+  let things = [], tiles = [], kind = 'star', type = 'count', answer = 0, busy = true, counted = 0, idle = 0, roundNo = 0;
+  let split = false, promptText = '', moreSide = 0, moreWrong = 0, panels = [], trackY = 0;
+  let takeStyle = 'fly', whale = null, ramp = null, plus = null, makeTarget = 0, lmrPos = -1, arrow = null, missed = false;
+  let lvl = clamp(settings.countLvl || Math.min(3, settings.maxNum), Math.min(2, settings.maxNum), settings.maxNum), streak = 0, missRun = 0;
+  function noteWin() {
+    if (!missed) { missRun = 0; if (++streak >= 3) { streak = 0; lvl = Math.min(settings.maxNum, lvl + 1); } }
+    settings.countLvl = lvl; saveSettings();
+  }
+  function noteMiss() {
+    missed = true; streak = 0;
+    if (++missRun >= 2) { missRun = 0; lvl = Math.max(Math.min(2, settings.maxNum), lvl - 1); settings.countLvl = lvl; saveSettings(); }
+  }
+  // ±1 by default; "up to 3" lets adaptive mode use ±2 (and ±3 once numbers are big).
+  const stepMax = () => settings.step === 3 ? (lvl >= 6 ? 3 : lvl >= 4 ? 2 : 1) : 1;
+  const top = () => Math.max(H * .2, 150);
+  const tileH = () => clamp(H * .17, 96, 150);
+  const plusR = () => clamp(Math.min(W, H) * .07, 38, 54);
+  const live = () => things.filter(o => !o.gone && !o.fly && !o.roll);
+  const hasTrack = () => type !== 'more' && type !== 'lmr';
+  const trackCount = () => type === 'make' ? Math.max(makeTarget, live().length) : live().length;
+  function mk(n, grp, k = kind) {
+    return Array.from({ length: n }, () => ({ kind: k, grp, x: W / 2, y: H / 2, tx: W / 2, ty: H / 2, R: 30, scale: .01, sv: 0, wob: 0, happy: 0, counted: 0, gone: false, fly: null, roll: null, hint: 0, phase: rand(0, TAU) }));
+  }
+  function place(list, x0, y0, w, h) {
+    const g = gridFit(list.length, x0, y0, w, h);
+    list.forEach((o, i) => { o.R = Math.min(g[i].s * .36, Math.min(W, H) * .13); o.tx = g[i].x; o.ty = g[i].y; });
+  }
+  function trackGeom(n) {
+    const room = W - 48;
+    let per = n, r = clamp(room / (n * 2.3), 18, 28);
+    if (n * r * 2.3 > room) { per = Math.ceil(n / 2); r = clamp(room / (per * 2.3), 18, 28); }
+    const rows = Math.ceil(n / per);
+    return { r, per, rows, h: rows * r * 2.3 + 14 };
+  }
+  function layout() {
+    const below = tiles.length ? tileH() + 30 : plus ? plusR() * 2 + 34 : 16;
+    const track = hasTrack() ? trackGeom(Math.max(1, trackCount())).h : 0;
+    const y0 = top(), y1 = H - below - track, x0 = 16, w = W - 32, h = Math.max(80, y1 - y0);
+    trackY = H - below - track / 2;
+    const L = live();
+    if (type === 'lmr') {
+      // Three things in one row, left to right on screen. Never mirrored for Farsi.
+      const cw = w / 3; panels = [];
+      L.forEach((o, i) => { o.R = Math.min(cw * .28, h * .28, Math.min(W, H) * .14); o.tx = x0 + cw * (i + .5); o.ty = y0 + h * .42; });
+    } else if (split || type === 'more') {
+      const hw = w * .5 - 12;
+      panels = [{ x: x0, y: y0, w: hw, h }, { x: x0 + w * .5 + 12, y: y0, w: hw, h }];
+      [0, 1].forEach(gi => place(L.filter(o => o.grp === gi), panels[gi].x + 10, y0 + 10, hw - 20, h - 20));
+    } else { panels = []; place(L, x0, y0, w, h); }
+    const th = tileH(), tw = Math.min(W * .36, th * 1.45);
+    tiles.forEach((tl, i) => { tl.w = tw; tl.h = th; tl.x = W / 2 + (i - (tiles.length - 1) / 2) * (tw + 28); tl.y = H - th / 2 - 22; });
+    if (plus) { plus.r = plusR(); plus.x = W / 2; plus.y = H - plus.r - 20; }
+  }
+  const snap = list => list.forEach(o => { o.x = o.tx; o.y = o.ty; });
+  function makeTiles() {
+    let d = answer + (Math.random() < .5 ? -1 : 1);
+    if (d < 1 || d > Math.max(lvl, answer + 1)) d = answer === 1 ? 2 : answer - 1;
+    tiles = shuffle([answer, d]).map(n => ({ n, x: W / 2, y: H, w: 10, h: 10, scale: .01, sv: 0, wob: 0, glow: 0 }));
+  }
+  // The question stays on screen while she thinks; a spoken number briefly replaces it, then it returns.
+  const ask = (text, extra) => { promptText = text; say(text, { persist: true, onend: extra }); };
+  const restorePrompt = () => { if (!busy && promptText) showCaption(promptText, LANG, true); };
+  function newRound(forced) {
+    busy = true; tiles = []; counted = 0; idle = 0; split = false; promptText = ''; moreWrong = 0; things = [];
+    whale = null; ramp = null; plus = null; lmrPos = -1; arrow = null; missed = false;
+    type = forced || TYPES[roundNo % TYPES.length]; roundNo++;
+    kind = pick(KINDS);
+    const M = Math.max(2, lvl), S = stepMax();
+    if (type === 'count') {
+      answer = randInt(1, M); things = mk(answer, 0); layout(); snap(things);
+      ask(t('countIntro', { pl: plural(kind) })); busy = false;
+    } else if (type === 'add') {
+      const b = randInt(1, Math.min(S, M - 1)), a = randInt(1, M - b); answer = a + b;
+      things = mk(a, 0); split = true; layout(); snap(things);
+      say(cap(qty(a, kind)) + bang());
+      after(1.5, () => {
+        const B = mk(b, 1); B.forEach(o => { o.x = W + 80; o.y = H * .45; }); things.push(...B); layout(); whoosh(.8);
+        ask(t(b === 1 ? 'addOne' : 'addMany', { a: cap(qty(a, kind)), b: num(b) }));
+      });
+      after(2.9, () => { split = false; makeTiles(); layout(); busy = false; restorePrompt(); });
+    } else if (type === 'take') {
+      const b = randInt(1, Math.min(S, M - 1)), a = randInt(b + 1, M); answer = a - b;
+      takeStyle = pick(['fly', 'whale', 'roll']);
+      things = mk(a, 0); layout(); snap(things);
+      say(cap(qty(a, kind)) + bang());
+      after(1.5, () => {
+        const going = shuffle(live()).slice(0, b).sort((p, q) => p.x - q.x);
+        if (takeStyle === 'fly') { going.forEach(o => { o.fly = { vy: -40, vx: rand(-60, 60) }; }); whoosh(.9); }
+        else if (takeStyle === 'whale') {
+          const R = Math.min(W, H) * .11;
+          whale = { x: -R * 2.4, y: going.reduce((s, o) => s + o.y, 0) / going.length, R, eat: going };
+          tone(110, .9, { vol: .12, slide: 1.6 });
+        } else {
+          const y0 = Math.max(...going.map(o => o.ty + o.R)), x0 = Math.min(...going.map(o => o.x)) - 20;
+          ramp = { x0, y0, slope: .22 };
+          going.forEach((o, k) => { o.roll = { vx: 0, delay: k * .22, spin: 0 }; });
+        }
+        const key = { fly: 'take', whale: 'eat', roll: 'roll' }[takeStyle] + (b === 1 ? 'One' : 'Many');
+        const bWord = takeStyle === 'whale' || LANG === 'fa' ? num(b) : cap(num(b));
+        ask(t(key, { a: cap(qty(a, kind)), b: bWord }));
+      });
+      after(3.6, () => { makeTiles(); layout(); busy = false; restorePrompt(); });
+    } else if (type === 'make') {
+      makeTarget = randInt(1, M);
+      let k = randInt(0, M); if (k === makeTarget) k = makeTarget === 1 ? 2 : makeTarget - 1;
+      things = mk(k, 0); plus = { x: W / 2, y: H, r: 40, scale: 1, sv: 0 }; layout(); snap(things);
+      ask(t('makeN', { a: qty(makeTarget, kind) }), () => say(t('makeHint'), { onend: restorePrompt }));
+      busy = false;
+    } else if (type === 'lmr') {
+      lmrPos = randInt(0, 2);
+      things = shuffle(KINDS).map(k => mk(1, 0, k)[0]); layout(); snap(things);
+      ask(t('whichOneAt', { pos: posWord(lmrPos) })); busy = false;
+    } else { // which has more: no numerals, just two groups side by side
+      const hi = Math.max(3, Math.min(M + 1, 6)), gap = hi >= 4 ? 2 : 1;
+      let a, b;
+      do { a = randInt(1, hi); b = randInt(1, hi); } while (Math.abs(a - b) < gap);
+      moreSide = a > b ? 0 : 1; answer = Math.max(a, b);
+      things = [...mk(a, 0), ...mk(b, 1)]; layout(); snap(things);
+      ask(t('whichMore', { pl: plural(kind) })); busy = false;
+    }
+  }
+  function win(line) {
+    busy = true; fanfare(); burst(W / 2, H * .45, 44, COLORS, 1.1);
+    live().forEach(o => { if (type !== 'more' || o.grp === moreSide) { o.sv += 5; o.happy = 1.6; } });
+    noteWin(); promptText = '';
+    const n = type === 'make' ? makeTarget : answer;
+    if (type !== 'more' && type !== 'lmr') logUse('nums', n);
+    say(line || (type === 'more' ? t('moreYes') : type === 'count' ? t('countDone', { a: cap(qty(n, kind)) }) : t('countYes', { a: qty(n, kind) })));
+    after(3.4, () => newRound());
+  }
+  function checkMake() {
+    const n = live().length;
+    say(cap(num(n)) + bang(), { onend: restorePrompt });
+    if (n === makeTarget) { busy = true; after(.7, () => win()); }
+  }
+  function addOne() {
+    if (live().length >= 10) { plus.sv += 2; boop(); return; }
+    const o = mk(1, 0)[0]; o.x = plus.x; o.y = plus.y; things.push(o);
+    plus.sv += 4; chime(SCALE[Math.min(8, live().length)]); layout(); checkMake();
+  }
+  function drawThing(c, o, t) {
+    const s = Math.max(.001, o.scale), bob = (reduced || o.fly || o.roll) ? 0 : Math.sin(t * 1.6 + o.phase) * o.R * .05;
+    const face = settings.faces ? { blink: 1, happy: o.happy > 0, look: { x: 0, y: 0 } } : null;
+    c.save(); c.translate(o.x, o.y + bob); c.rotate(Math.sin(t * 28) * .16 * o.wob + (o.roll ? o.roll.spin : 0)); c.scale(s, s);
+    if (o.counted || o.hint) {
+      const al = o.counted ? .45 : .35 + .3 * Math.sin(t * 5), g = c.createRadialGradient(0, 0, o.R * .6, 0, 0, o.R * 1.5);
+      g.addColorStop(0, `rgba(110,240,194,${al})`); g.addColorStop(1, 'rgba(110,240,194,0)');
+      c.fillStyle = g; c.beginPath(); c.arc(0, 0, o.R * 1.5, 0, TAU); c.fill();
+    }
+    if (o.kind === 'star') goldStar(c, 0, 0, o.R * 1.05, t, face);
+    else if (o.kind === 'rocket') drawRocket(c, 0, 0, o.R * 1.05, -Math.PI / 2, t, o.fly ? 1 : .35);
+    else drawPlanet(c, MOON_P, 0, 0, o.R * .82, t, face ? { face: true, ...face } : {});
+    c.restore();
+    if (o.counted && !o.fly) {
+      const r = Math.max(16, o.R * .32), bx = o.x, by = o.y + bob - o.R * 1.2;
+      c.fillStyle = '#6ef0c2'; c.beginPath(); c.arc(bx, by, r, 0, TAU); c.fill();
+      c.fillStyle = '#0a0e2a'; c.font = `800 ${r * 1.25}px ${fontFor()}`; c.textAlign = 'center'; c.textBaseline = 'middle';
+      c.fillText(fmt(o.counted), bx, by + r * .06);
+    }
+  }
+  // One slot per object (at least 36 px across, two rows if needed), filling with the object's own
+  // picture as she counts, left-to-right (right-to-left in Farsi). In Make N the slots show the target;
+  // extra objects beyond it show as pink slots.
+  function drawTrack(c, t) {
+    const n = trackCount();
+    if (!n) return;
+    const { r, per, rows } = trackGeom(n), gap = r * 2.3, have = live().length;
+    for (let i = 0; i < n; i++) {
+      const row = Math.floor(i / per), col = i % per, inRow = Math.min(per, n - row * per);
+      let x = W / 2 + (col - (inRow - 1) / 2) * gap;
+      if (LANG === 'fa') x = W - x; // reading order only; this is a count, not a left/right answer
+      const y = trackY + (row - (rows - 1) / 2) * gap;
+      const filled = type === 'make' ? i < have : i < counted, extra = type === 'make' && i >= makeTarget;
+      c.save();
+      if (filled) {
+        c.fillStyle = extra ? 'rgba(255,126,182,.3)' : 'rgba(110,240,194,.28)'; c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill();
+        c.lineWidth = 3; c.strokeStyle = extra ? '#ff7eb6' : '#6ef0c2'; c.stroke();
+        if (kind === 'star') goldStar(c, x, y, r * .72, t, null);
+        else if (kind === 'rocket') drawRocket(c, x, y, r * .72, -Math.PI / 2, t, 0);
+        else drawPlanet(c, MOON_P, x, y, r * .62, t, {});
+      } else {
+        c.setLineDash([5, 6]); c.lineWidth = 3;
+        const next = type === 'make' ? i === have : i === counted;
+        c.strokeStyle = next && !busy ? `rgba(110,240,194,${.5 + .4 * Math.sin(t * 5)})` : 'rgba(255,255,255,.34)';
+        c.beginPath(); c.arc(x, y, r, 0, TAU); c.stroke();
+      }
+      c.restore();
+    }
+  }
+  function drawTile(c, tl, t) {
+    const s = Math.max(.001, tl.scale), w = tl.w, h = tl.h;
+    c.save(); c.translate(tl.x, tl.y); c.rotate(Math.sin(t * 28) * .1 * tl.wob); c.scale(s, s);
+    roundRect(c, -w / 2, -h / 2, w, h, h * .22);
+    c.fillStyle = 'rgba(22,29,79,.94)'; c.fill();
+    c.lineWidth = 4; c.strokeStyle = tl.glow ? `rgba(110,240,194,${.55 + .45 * Math.sin(t * 5)})` : 'rgba(255,255,255,.3)'; c.stroke();
+    c.fillStyle = '#ffc93c'; c.font = `800 ${h * .42}px ${fontFor()}`; c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillText(fmt(tl.n), 0, -h * .13);
+    const perRow = Math.min(tl.n, 5), rows = Math.ceil(tl.n / 5), dr = Math.min(h * .065, w / (perRow * 2.8));
+    for (let i = 0; i < tl.n; i++) {
+      const row = Math.floor(i / 5), col = i % 5, inRow = Math.min(5, tl.n - row * 5);
+      c.fillStyle = '#6ef0c2'; c.beginPath();
+      c.arc((col - (inRow - 1) / 2) * dr * 2.8, h * .24 + (row - (rows - 1) / 2) * dr * 2.6, dr, 0, TAU); c.fill();
+    }
+    c.restore();
+  }
+  function drawPlus(c, t) {
+    const s = Math.max(.001, plus.scale), r = plus.r;
+    c.save(); c.translate(plus.x, plus.y); c.scale(s, s);
+    c.shadowColor = 'rgba(110,240,194,.8)'; c.shadowBlur = 18;
+    c.fillStyle = '#6ef0c2'; c.beginPath(); c.arc(0, 0, r, 0, TAU); c.fill(); c.shadowBlur = 0;
+    c.strokeStyle = '#0a0e2a'; c.lineWidth = r * .2; c.lineCap = 'round';
+    c.beginPath(); c.moveTo(-r * .45, 0); c.lineTo(r * .45, 0); c.moveTo(0, -r * .45); c.lineTo(0, r * .45); c.stroke();
+    c.restore();
+  }
+  function drawRamp(c) {
+    const x1 = W + 40, y1 = ramp.y0 + (x1 - ramp.x0) * ramp.slope;
+    c.save(); c.lineCap = 'round';
+    c.strokeStyle = '#ff7eb6'; c.lineWidth = 12; c.beginPath(); c.moveTo(ramp.x0, ramp.y0); c.lineTo(x1, y1); c.stroke();
+    c.strokeStyle = '#fff3b0'; c.lineWidth = 12; c.setLineDash([14, 14]); c.beginPath(); c.moveTo(ramp.x0, ramp.y0); c.lineTo(x1, y1); c.stroke();
+    c.restore();
+  }
+  function tapMore(x, y) {
+    const side = panels.findIndex(p => x >= p.x && x <= p.x + p.w && y >= p.y && y <= p.y + p.h);
+    if (side < 0 || !tapGate(panels[side])) return;
+    if (side === moreSide) { win(); return; }
+    const grp = live().filter(o => o.grp === side);
+    grp.forEach(o => { o.wob = 1; });
+    noteMiss(); moreWrong++;
+    if (moreWrong >= 2) live().forEach(o => { o.hint = o.grp === moreSide ? 1 : 0; });
+    say(cap(qty(grp.length, kind)) + '.', { onend: restorePrompt });
+  }
+  function tapLmr(o) {
+    const i = things.indexOf(o); // 0 = screen left, 1 = middle, 2 = screen right (never mirrored)
+    if (i === lmrPos) {
+      arrow = { i };
+      win(t('yesTheAt', { w: word(o.kind), W: cap(word(o.kind)), pos: posWord(i) }));
+    } else {
+      o.wob = 1; noteMiss();
+      say(t('thatsTheAt', { w: word(o.kind), pos: posWord(i) }), { onend: restorePrompt });
+    }
+  }
+  return {
+    layout,
+    start(sub) { newRound(TYPES.includes(sub) ? sub : undefined); },
+    repeat() { if (promptText) ask(promptText); },
+    tap(x, y) {
+      if (busy) return;
+      idle = 0;
+      if (type === 'more') { tapMore(x, y); return; }
+      if (plus && Math.hypot(x - plus.x, y - plus.y) < plus.r + 14) { if (tapGate(plus)) addOne(); return; }
+      const tl = tiles.find(q => Math.abs(x - q.x) < q.w / 2 && Math.abs(y - q.y) < q.h / 2);
+      if (tl) {
+        if (!tapGate(tl)) return;
+        if (tl.n === answer) win();
+        else { tl.wob = 1; noteMiss(); say(cap(num(tl.n)) + bang(), { onend: restorePrompt }); }
+        return;
+      }
+      const o = [...live()].reverse().find(q => Math.hypot(x - q.x, y - q.y) < Math.max(q.R * 1.25, 44));
+      if (!o || !tapGate(o)) return;
+      if (type === 'lmr') { tapLmr(o); return; }
+      if (type === 'make') { o.fly = { vy: -80, vx: rand(-320, 320) }; pop(); checkMake(); return; }
+      if (o.counted) { // already counted: bounce and say its number again
+        o.sv += 4; o.happy = 1; chime(SCALE[Math.min(8, o.counted)]);
+        say(cap(num(o.counted)) + bang(), { onend: restorePrompt });
+        return;
+      }
+      counted++; o.counted = counted; o.sv += 5; o.happy = 1.4; logUse('nums', counted);
+      chime(SCALE[Math.min(8, counted)]); sparkle(o.x, o.y - o.R, 8);
+      say(cap(num(counted)) + bang(), { onend: restorePrompt });
+      if (counted === live().length && counted === answer) { busy = true; after(.8, () => win()); }
+    },
+    update(dt) {
+      idle += dt;
+      let relayout = false;
+      for (const o of things) {
+        spring(o, dt); o.wob = Math.max(0, o.wob - dt * 1.6); o.happy = Math.max(0, o.happy - dt);
+        if (o.fly) {
+          o.fly.vy -= 1300 * dt; o.x += o.fly.vx * dt; o.y += o.fly.vy * dt;
+          if (o.kind === 'rocket') trail(o.x, o.y + o.R); else if (Math.random() < .4) sparkle(o.x, o.y, 1);
+          if (o.y < -o.R * 3) { o.fly = null; o.gone = true; relayout = true; }
+        } else if (o.roll) {
+          o.roll.delay -= dt;
+          if (o.roll.delay <= 0) {
+            o.roll.vx += 900 * dt; const dx = o.roll.vx * dt;
+            o.x += dx; o.y += dx * ramp.slope; o.roll.spin += dx / o.R;
+            if (o.x > W + o.R * 2) { o.roll = null; o.gone = true; relayout = true; }
+          }
+        } else if (!o.gone) { const k = Math.min(1, dt * 5); o.x += (o.tx - o.x) * k; o.y += (o.ty - o.y) * k; }
+      }
+      if (whale) {
+        whale.x += W * .7 * dt;
+        for (const o of whale.eat) if (!o.gone && whale.x + whale.R * 1.2 >= o.x) { o.gone = true; tone(220, .18, { vol: .18, slide: .5 }); sparkle(o.x, o.y, 6); }
+        if (whale.x > W + whale.R * 2.5) { whale = null; relayout = true; }
+      }
+      if (ramp && !things.some(o => o.roll)) ramp = null;
+      if (relayout) layout();
+      tiles.forEach(tl => { spring(tl, dt); tl.wob = Math.max(0, tl.wob - dt * 1.6); });
+      if (plus) spring(plus, dt);
+      if (!busy && idle > 9) {
+        idle = 0;
+        if (tiles.length) { const c = tiles.find(q => q.n === answer); if (c) c.glow = 1; }
+        if (type === 'more') live().forEach(o => { o.hint = o.grp === moreSide ? 1 : 0; });
+        if (type === 'lmr') { const o = things[lmrPos]; if (o) o.hint = 1; }
+        if (promptText) ask(promptText); else say(t('tapToCount'));
+      }
+    },
+    draw(t) {
+      panels.forEach(p => {
+        cx.save(); roundRect(cx, p.x, p.y, p.w, p.h, 28);
+        cx.fillStyle = 'rgba(159,180,255,.06)'; cx.fill();
+        cx.setLineDash([6, 8]); cx.strokeStyle = 'rgba(159,180,255,.22)'; cx.lineWidth = 2; cx.stroke(); cx.restore();
+      });
+      if (type === 'lmr' && lmrPos >= 0 && !busy) {
+        const o = things[lmrPos], cw = (W - 32) / 3;
+        if (o) drawSlotFrame(cx, 16 + cw * (lmrPos + .5), o.ty, cw * .86, o.R * 3.2, t);
+      }
+      if (ramp) drawRamp(cx);
+      things.forEach(o => { if (!o.gone) drawThing(cx, o, t); });
+      if (whale) drawWhale(cx, whale.x, whale.y, whale.R, t);
+      if (arrow) { const o = things[arrow.i]; if (o) { const s = clamp(o.R * .6, 34, 64); drawPosArrow(cx, o.x, Math.min(o.y + o.R * 1.3, H - s * 1.9), s, posLabel(arrow.i), t); } }
+      if (hasTrack()) drawTrack(cx, t);
+      tiles.forEach(tl => drawTile(cx, tl, t));
+      if (plus) drawPlus(cx, t);
+    },
+  };
+}
+
+/* ================= Game 6: Space Words ================= */
+// Four big cards at a time with arrows to page through the ten words. A tapped card comes alive as a
+// toy and says a two-word phrase; the globe replays the word in the other two languages.
+const WORD_IDS = ['rocket', 'star', 'moon', 'sun', 'planet', 'astronaut', 'comet', 'telescope', 'satellite', 'ring'];
+const CARD_HUES = ['#ff7eb6', '#ffc93c', '#cfccc6', '#ff9a5c', '#5ea8ff', '#e8ecff', '#9fe3e6', '#9fb4ff', '#ffe08a', '#f2c48f'];
+const act = (id, lang = LANG) => I18N.acts[id][lang];
+function WordsMode() {
+  const PER = 4, PAGES = Math.ceil(WORD_IDS.length / PER), ANIM = 1.4;
+  let sub = 'explore', page = 0, cards = [], target = null, last = null, busy = false, wrong = 0, idle = 0, arrowsAt = [];
+  const pageIds = p => Array.from({ length: PER }, (_, k) => WORD_IDS[(p * PER + k) % WORD_IDS.length]);
+  const mkCards = ids => ids.map(id => ({ id, i: WORD_IDS.indexOf(id), x: W / 2, y: H / 2, tx: W / 2, ty: H / 2, w: 10, h: 10, scale: .01, sv: 0, wob: 0, glow: 0, alpha: 1, fade: false, animT: -9, gkey: {} }));
+  const arrowR = () => clamp(Math.min(W, H) * .065, 34, 50);
+  function layout() {
+    const find = sub === 'find', narrow = W < 640, r = arrowR();
+    const y0 = find ? Math.max(H * .22, 160) : Math.max(100, H * .13);
+    const y1 = H - 20 - (!find && narrow ? r * 2 + 16 : 0);
+    const side = !find && !narrow ? r * 2 + 20 : 0;
+    const g = gridFit(cards.length, 16 + side, y0, W - 32 - side * 2, y1 - y0, 1.12);
+    cards.forEach((cd, i) => { const s = Math.min(g[i].s, Math.min(W, H) * .55); cd.w = s * .9; cd.h = s * 1.12 * .9; cd.tx = g[i].x; cd.ty = g[i].y; });
+    arrowsAt = find ? [] : narrow
+      ? [{ dir: -1, x: W / 2 - r - 24, y: H - 20 - r, r }, { dir: 1, x: W / 2 + r + 24, y: H - 20 - r, r }]
+      : [{ dir: -1, x: 16 + r, y: (y0 + y1) / 2, r }, { dir: 1, x: W - 16 - r, y: (y0 + y1) / 2, r }];
+  }
+  const snap = () => cards.forEach(cd => { cd.x = cd.tx; cd.y = cd.ty; });
+  const globe = cd => { const r = clamp(cd.w * .12, 28, 40); return { x: cd.x + cd.w / 2 - r - 6, y: cd.y - cd.h / 2 + r + 6, r }; };
+  function setFindIcon() { $('#findIcon').hidden = sub === 'find'; $('#gridIcon').hidden = sub !== 'find'; }
+  function showPage(dir = 0) {
+    sub = 'explore'; busy = false; cards = mkCards(pageIds(page)); layout(); snap();
+    if (dir) cards.forEach(cd => { cd.x += dir * W * .35; });
+    setFindIcon();
+  }
+  function ask() { idle = 0; say(t('findWord', { w: word(target.id) })); }
+  function round() {
+    sub = 'find';
+    const n = clamp(settings.choices, 2, 4);
+    const tid = pick(WORD_IDS.filter(id => id !== last)); last = tid;
+    cards = mkCards(shuffle([tid, ...shuffle(WORD_IDS.filter(id => id !== tid)).slice(0, n - 1)]));
+    target = cards.find(cd => cd.id === tid);
+    layout(); snap(); wrong = 0; busy = false; setFindIcon(); ask();
+  }
+  function drawArrow(c, a, t) {
+    c.save(); c.translate(a.x, a.y);
+    c.fillStyle = 'rgba(22,29,79,.92)'; c.beginPath(); c.arc(0, 0, a.r, 0, TAU); c.fill();
+    c.lineWidth = 3; c.strokeStyle = `rgba(110,240,194,${.55 + .25 * Math.sin(t * 3)})`; c.stroke();
+    c.strokeStyle = '#f6f2ff'; c.lineWidth = a.r * .16; c.lineCap = 'round'; c.lineJoin = 'round';
+    c.beginPath(); c.moveTo(-a.dir * a.r * .15, -a.r * .38); c.lineTo(a.dir * a.r * .25, 0); c.lineTo(-a.dir * a.r * .15, a.r * .38); c.stroke();
+    c.restore();
+  }
+  function drawGlobe(c, g) {
+    c.save(); c.translate(g.x, g.y);
+    c.fillStyle = 'rgba(159,180,255,.95)'; c.beginPath(); c.arc(0, 0, g.r, 0, TAU); c.fill();
+    c.strokeStyle = '#0a0e2a'; c.lineWidth = Math.max(2, g.r * .09);
+    const k = g.r * .58;
+    c.beginPath(); c.arc(0, 0, k, 0, TAU); c.stroke();
+    c.beginPath(); c.ellipse(0, 0, k * .45, k, 0, 0, TAU); c.stroke();
+    c.beginPath(); c.moveTo(-k, 0); c.lineTo(k, 0); c.stroke();
+    c.restore();
+  }
+  function drawCard(c, cd, t) {
+    if (cd.alpha <= .01) return;
+    const s = Math.max(.001, cd.scale), w = cd.w, h = cd.h, hue = CARD_HUES[cd.i], a = clamp((T - cd.animT) / ANIM, 0, 1);
+    c.save(); c.globalAlpha = cd.alpha; c.translate(cd.x, cd.y); c.rotate(Math.sin(t * 28) * .1 * cd.wob); c.scale(s, s);
+    if (cd.glow) { c.shadowColor = 'rgba(110,240,194,.9)'; c.shadowBlur = 24 + 10 * Math.sin(t * 5); }
+    roundRect(c, -w / 2, -h / 2, w, h, Math.min(w, h) * .14);
+    const g = c.createLinearGradient(0, -h / 2, 0, h / 2); g.addColorStop(0, '#222c6e'); g.addColorStop(1, '#141a46');
+    c.fillStyle = g; c.fill(); c.shadowBlur = 0;
+    c.lineWidth = 3.5; c.strokeStyle = hue; c.stroke();
+    drawWordArt(c, cd.id, 0, -h * .1, Math.min(w, h) * .3, t, a < 1 ? a : 0);
+    const fs = clamp(w * .12, 16, 34);
+    c.fillStyle = '#f6f2ff'; c.font = `800 ${fs}px ${fontFor()}`; c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillText(word(cd.id), 0, h * .37, w * .92);
+    c.restore();
+    if (sub === 'explore') { c.save(); c.globalAlpha = cd.alpha; drawGlobe(c, globe(cd)); c.restore(); }
+  }
+  return {
+    layout,
+    start(subMode) { if (subMode === 'find') round(); else { showPage(); say(t('wordsIntro')); } },
+    repeat() { if (sub === 'find') ask(); else say(t('wordsIntro')); },
+    toggle() { if (sub === 'find') showPage(); else round(); },
+    tap(x, y) {
+      if (busy) return;
+      idle = 0;
+      if (sub === 'explore') {
+        const ar = arrowsAt.find(q => Math.hypot(x - q.x, y - q.y) < q.r + 12);
+        if (ar) { if (!tapGate(ar)) return; pop(); page = (page + ar.dir + PAGES) % PAGES; showPage(ar.dir); return; }
+        const gcard = cards.find(cd => { const g = globe(cd); return Math.hypot(x - g.x, y - g.y) < g.r + 8; });
+        if (gcard) {
+          if (!tapGate(gcard.gkey)) return;
+          gcard.sv += 3; pop();
+          sayQueue(LANGS.filter(l => l !== LANG).map(l => ({ text: cap(word(gcard.id, l)) + bang(l), lang: l })));
+          return;
+        }
+      }
+      const cd = cards.find(q => Math.abs(x - q.x) < q.w / 2 && Math.abs(y - q.y) < q.h / 2);
+      if (!cd || !tapGate(cd)) return;
+      if (sub === 'explore') {
+        cd.sv += 4; cd.animT = T; chime(SCALE[cd.i % 9]); sparkle(cd.x, cd.y - cd.h * .3, 10); logUse('words', cd.id);
+        if (cd.id === 'rocket' || cd.id === 'comet') whoosh(.9);
+        say(act(cd.id));
+      } else if (cd === target) {
+        busy = true; cd.sv += 7; cd.glow = 0; cd.animT = T; fanfare(); burst(cd.x, cd.y, 44, COLORS, 1.1);
+        cards.forEach(o => { if (o !== cd) o.fade = true; });
+        say(t('yesWord', { w: word(cd.id) }));
+        after(2.8, round);
+      } else {
+        cd.wob = 1; wrong++;
+        say(t('thatsWord', { w: word(cd.id) }));
+        if (wrong >= 2) target.glow = 1;
+      }
+    },
+    update(dt) {
+      idle += dt;
+      cards.forEach(cd => {
+        spring(cd, dt); cd.wob = Math.max(0, cd.wob - dt * 1.6);
+        if (cd.fade) cd.alpha = Math.max(.18, cd.alpha - dt * 2);
+        const k = Math.min(1, dt * 5); cd.x += (cd.tx - cd.x) * k; cd.y += (cd.ty - cd.y) * k;
+      });
+      if (sub === 'find' && !busy && idle > 9) { target.glow = 1; ask(); }
+    },
+    draw(t) {
+      cards.forEach(cd => drawCard(cx, cd, t));
+      arrowsAt.forEach(a => drawArrow(cx, a, t));
+    },
+  };
+}
+
+/* ================= Goodnight: the screen-time wind-down ================= */
+// When the grown-ups' play time is up, the planets yawn, the lights dim and a soft lullaby plays.
+// The game then rests here; only a grown-up's gear-hold (the parent panel) wakes it.
+function SleepMode() {
+  let sun = null, bodies = [], dim = .3, zs = [], zt = 0;
+  function lullaby(vol) { [392, 329.63, 261.63, 293.66, 261.63].forEach((f, i) => tone(f, 1.6, { vol, delay: i * .95 })); }
+  return {
+    layout() {
+      if (!sun) { sun = new Body(SUN, 0, 0, 10); bodies = PLANETS.map(p => new Body(p, 0, 0, 10)); [sun, ...bodies].forEach(b => { b.sleep = true; b.yawn = 3; }); }
+      sun.R = Math.min(W, H) * .12; sun.x = sun.tx = W / 2; sun.y = sun.ty = Math.max(H * .24, 150);
+      const ay = sun.y + sun.R * 1.6;
+      rowsLayout(PLANETS, 16, ay, W - 32, H - ay - 20, 2, .5, Math.min(W, H) * .1).forEach((q, i) => { const b = bodies[i]; b.R = q.R; b.x = b.tx = q.x; b.y = b.ty = q.y; });
+    },
+    start() {
+      after(.8, () => say(t('goodnight'), { persist: true }));
+      lullaby(.08); after(9, () => lullaby(.05)); after(18, () => lullaby(.03));
+    },
+    tap() {},
+    update(dt) {
+      dim = Math.min(.62, dim + dt * .08);
+      [sun, ...bodies].forEach(b => { b.update(dt); b.yawn = Math.max(0, (b.yawn || 0) - dt); });
+      zt -= dt;
+      if (zt < 0 && !reduced) { zt = 1.1; const b = pick([sun, ...bodies]); zs.push({ x: b.x + b.R * .6, y: b.y - b.R * .6, life: 3, s: clamp(b.R * .5, 14, 34) }); }
+      zs = zs.filter(z => (z.life -= dt) > 0);
+      zs.forEach(z => { z.y -= 22 * dt; z.x += Math.sin(z.life * 3) * 12 * dt; });
+    },
+    draw(t) {
+      sun.draw(cx, t); bodies.forEach(b => b.draw(cx, t));
+      cx.fillStyle = `rgba(3,4,18,${dim})`; cx.fillRect(0, 0, W, H);
+      cx.save(); cx.fillStyle = '#c7d2ff'; cx.textAlign = 'center';
+      zs.forEach(z => { cx.globalAlpha = Math.min(1, z.life / 1.2) * .85; cx.font = `800 ${z.s}px ${FONT}`; cx.fillText('z', z.x, z.y); });
+      cx.restore();
+    },
+  };
+}
+
+/* ---------- mode switching + HUD ---------- */
+const MODES = { menu: MenuMode, free: FreeMode, find: FindMode, rocket: RocketMode, order: OrderMode, count: CountMode, words: WordsMode, sleep: SleepMode };
+const MODE_LABEL = { free: 'Tap & Hear', find: 'Find It', rocket: 'Rocket Trip', order: 'Line Up', count: 'Count & Add', words: 'Space Words' };
+let M = null, modeName = 'menu';
+function setStars(n) { [...$('#stars').children].forEach((el, i) => el.classList.toggle('on', i < n)); }
+$('#stars').innerHTML = Array.from({ length: 5 }, () => '<span><svg viewBox="0 0 24 24"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z" stroke-linejoin="round"/></svg></span>').join('');
+function setMode(name, sub) {
+  hush(); // also makes any pending onend from the previous game a no-op
+  timers = []; parts.length = 0; camX = 0; modeName = name;
+  M = MODES[name](); M.layout();
+  const inMenu = name === 'menu', asleep = name === 'sleep';
+  if (MODE_LABEL[name]) logUse('modes', name);
+  document.body.classList.toggle('in-game', !inMenu);
+  $('#menu').hidden = !inMenu; $('#homeBtn').hidden = inMenu || asleep; $('#gearBtn').hidden = !(inMenu || asleep);
+  $('#langBtn').hidden = asleep;
+  $('#repeatBtn').hidden = !M.repeat; $('#stars').hidden = name !== 'find'; $('#findBtn').hidden = name !== 'words';
+  $('#songBtn').hidden = name !== 'free'; $('#songBtn').setAttribute('aria-pressed', false);
+  if (M.start) M.start(sub);
+}
+function goToSleep() { today.asleep = true; saveToday(); $('#parent').hidden = true; $('#studio').hidden = true; setMode('sleep'); }
+function applyLang() {
+  document.body.classList.toggle('lang-fa', LANG === 'fa');
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = t(el.dataset.i18n);
+    el.dir = LANG === 'fa' ? 'rtl' : 'ltr'; el.lang = LANG;
+  });
+  const lb = $('#langBtn');
+  lb.textContent = { en: 'EN', fr: 'FR', fa: 'فا' }[LANG];
+  lb.classList.toggle('fa', LANG === 'fa');
+  lb.setAttribute('aria-label', `Language: ${LANG_NAME[LANG]}. Tap to change.`);
+  if (LANG === 'fa' && document.fonts && document.fonts.load) document.fonts.load(`800 24px Vazirmatn`).then(drawIcons).catch(() => {});
+  drawIcons();
+}
+$('#langBtn').addEventListener('click', () => {
+  unlockAudio();
+  LANG = LANGS[(LANGS.indexOf(LANG) + 1) % LANGS.length];
+  applyLang(); M.layout(); // Line Up flips its reading direction for Farsi (left/right answers never flip)
+  say(t('hello'), { onend: () => { if (M.repeat && modeName !== 'menu') M.repeat(); } });
+});
+let wakeWanted = false, playing = false;
+function wakeLock() { wakeWanted = true; try { navigator.wakeLock && navigator.wakeLock.request('screen').catch(() => {}); } catch (e) {} }
+document.querySelectorAll('.mode').forEach(btn => btn.addEventListener('click', () => { unlockAudio(); wakeLock(); pop(); setMode(btn.dataset.mode); }));
+$('#homeBtn').addEventListener('click', () => { pop(); setMode('menu'); });
+$('#repeatBtn').addEventListener('click', () => { unlockAudio(); M.repeat && M.repeat(); });
+$('#findBtn').addEventListener('click', () => { unlockAudio(); pop(); M.toggle && M.toggle(); });
+$('#songBtn').addEventListener('click', () => { unlockAudio(); M.song && M.song(); });
+addEventListener('keydown', e => { if (e.key === 'Escape' && modeName !== 'menu' && modeName !== 'sleep') setMode('menu'); });
+addEventListener('pointerdown', () => { unlockAudio(); playing = true; }, true);
+addEventListener('contextmenu', e => e.preventDefault());
+// Only the primary pointer plays: the palm or thumb holding the tablet can't also tap.
+cv.addEventListener('pointerdown', e => {
+  if (!e.isPrimary) return;
+  pointer.x = e.clientX; pointer.y = e.clientY; pointer.t = T;
+  if (M.tap) M.tap(e.clientX + camX, e.clientY);
+});
+cv.addEventListener('pointercancel', () => { pointer.t = -99; }); // the system took the touch; eyes go back to wandering
+cv.addEventListener('pointermove', e => { pointer.x = e.clientX; pointer.y = e.clientY; pointer.t = T; });
+
+/* ---------- grown-ups panel: press and hold so little fingers stay out ---------- */
+const gear = $('#gearBtn');
+let holdStart = 0, holdRaf = 0, wakeOnClose = false;
+function cancelHold() { cancelAnimationFrame(holdRaf); gear.style.setProperty('--p', 0); }
+gear.addEventListener('pointerdown', e => {
+  e.preventDefault(); holdStart = performance.now();
+  const step = () => {
+    const p = (performance.now() - holdStart) / 1200;
+    gear.style.setProperty('--p', Math.min(1, p));
+    if (p >= 1) { cancelHold(); openParent(); return; }
+    holdRaf = requestAnimationFrame(step);
+  };
+  step();
+});
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => gear.addEventListener(ev, cancelHold));
+gear.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openParent(); } });
+function syncVoicePicker() {
+  const sel = $('#voicePick'), list = voiceList[LANG];
+  $('#voiceFor').textContent = `For ${LANG_NAME[LANG]}. Natural-sounding voices are listed first.`;
+  sel.innerHTML = '';
+  if (!list.length) { const o = document.createElement('option'); o.textContent = 'No voice on this device'; sel.appendChild(o); sel.disabled = true; $('#voicePlay').disabled = true; return; }
+  sel.disabled = false; $('#voicePlay').disabled = false;
+  list.forEach(v => {
+    const o = document.createElement('option');
+    o.value = v.name; o.textContent = (NATURAL.test(v.name) ? '★ ' : '') + v.name.replace(/^Microsoft /, '') + ` (${v.lang})`;
+    o.selected = voices[LANG] === v; sel.appendChild(o);
+  });
+}
+$('#voicePick').addEventListener('change', e => {
+  const v = voiceList[LANG].find(x => x.name === e.target.value);
+  if (!v) return;
+  voices[LANG] = v; settings.voiceNames = { ...(settings.voiceNames || {}), [LANG]: v.name }; saveSettings();
+  $('#voicePlay').click();
+});
+$('#voicePlay').addEventListener('click', () => { unlockAudio(); say(`${t('hello')} ${cap(pname(PLANETS[3]))}${bang()}`); });
+function syncToday() {
+  const mins = Math.round(today.sec / 60);
+  const modes = Object.entries(today.modes).map(([k, n]) => `${MODE_LABEL[k] || k} ×${n}`).join(', ') || 'none yet';
+  const nums = Object.keys(today.nums).map(Number).sort((a, b) => a - b).join(', ') || 'none yet';
+  const words = Object.keys(today.words).map(id => I18N.planets[id] ? I18N.planets[id].en.label : id).slice(0, 12).join(', ') || 'none yet';
+  $('#todayText').innerHTML = '';
+  [[`${mins} minute${mins === 1 ? '' : 's'} played`], [`Games: ${modes}`], [`Numbers: ${nums}`], [`Words: ${words}`], ['Kept on this device only. Nothing is sent anywhere.']].forEach(([line]) => {
+    const d = document.createElement('div'); d.textContent = line; $('#todayText').appendChild(d);
+  });
+}
+function syncParent() {
+  document.querySelectorAll('.tog').forEach(b => { const on = !!settings[b.dataset.k]; b.setAttribute('aria-pressed', on); b.textContent = on ? 'On' : 'Off'; });
+  document.querySelectorAll('#segChoices button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.n === settings.choices));
+  document.querySelectorAll('#segMax button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.m === settings.maxNum));
+  document.querySelectorAll('#segLang button').forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === settings.lang));
+  document.querySelectorAll('#segStep button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.s === settings.step));
+  document.querySelectorAll('#segSession button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.min === settings.session));
+  $('#studioBtn').hidden = !STANDALONE;
+  updateVoiceNote(); syncVoicePicker(); syncToday();
+}
+function openParent() {
+  // A grown-up opening the panel is what wakes the sleeping planets.
+  if (modeName === 'sleep') { today.asleep = false; today.session = 0; saveToday(); wakeOnClose = true; }
+  syncParent(); $('#parent').hidden = false;
+  $('#parent .sheet').scrollTop = 0; $('#closeParent').focus({ preventScroll: true }); // open at the top
+}
+document.querySelectorAll('.tog').forEach(b => b.addEventListener('click', () => { settings[b.dataset.k] = !settings[b.dataset.k]; saveSettings(); syncParent(); if (b.dataset.k === 'faces') drawIcons(); if (b.dataset.k === 'voice' && !settings.voice) hush(); }));
+document.querySelectorAll('#segChoices button').forEach(b => b.addEventListener('click', () => { settings.choices = +b.dataset.n; saveSettings(); syncParent(); }));
+document.querySelectorAll('#segMax button').forEach(b => b.addEventListener('click', () => { settings.maxNum = +b.dataset.m; settings.countLvl = 0; saveSettings(); syncParent(); }));
+document.querySelectorAll('#segStep button').forEach(b => b.addEventListener('click', () => { settings.step = +b.dataset.s; saveSettings(); syncParent(); }));
+document.querySelectorAll('#segSession button').forEach(b => b.addEventListener('click', () => { settings.session = +b.dataset.min; today.session = 0; saveToday(); saveSettings(); syncParent(); }));
+document.querySelectorAll('#segLang button').forEach(b => b.addEventListener('click', () => { settings.lang = LANG = b.dataset.lang; saveSettings(); syncParent(); applyLang(); }));
+$('#closeParent').addEventListener('click', () => {
+  $('#parent').hidden = true; gear.focus();
+  if (wakeOnClose) { wakeOnClose = false; setMode('menu'); }
+});
+const fsBtn = $('#fsBtn');
+if (!document.documentElement.requestFullscreen) fsBtn.hidden = true;
+fsBtn.addEventListener('click', () => {
+  const p = document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+  if (p && p.catch) p.catch(() => {});
+});
+
+/* ---------- Recording Studio: standalone file only (the artifact frame blocks the microphone) ---------- */
+// Grown-ups record any line; the game then plays that recording instead of the computer voice.
+// Clips live in this device's IndexedDB, keyed by language + the exact sentence. Export/Import moves
+// them between devices as one JSON file.
+const STANDALONE = !!window.PP_STANDALONE;
+const idb = (() => {
+  let dbp = null;
+  const open = () => dbp || (dbp = new Promise((res, rej) => {
+    const r = indexedDB.open('planet-parade-voice', 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('clips');
+    r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
+  }));
+  const write = (fn) => open().then(db => new Promise((res, rej) => { const tx = db.transaction('clips', 'readwrite'); fn(tx.objectStore('clips')); tx.oncomplete = () => res(); tx.onerror = () => rej(tx.error); }));
+  return {
+    put: (k, v) => write(st => st.put(v, k)),
+    del: k => write(st => st.delete(k)),
+    all: () => open().then(db => new Promise((res, rej) => {
+      const out = [], r = db.transaction('clips').objectStore('clips').openCursor();
+      r.onsuccess = () => { const c = r.result; if (c) { out.push([c.key, c.value]); c.continue(); } else res(out); };
+      r.onerror = () => rej(r.error);
+    })),
+  };
+})();
+function loadClips() {
+  if (!STANDALONE || !window.indexedDB) return Promise.resolve();
+  return idb.all().then(rows => { clips.forEach(u => URL.revokeObjectURL(u)); clips.clear(); rows.forEach(([k, b]) => clips.set(k, URL.createObjectURL(b))); }).catch(() => {});
+}
+// Every fixed sentence the game can say in a language (sentences with a changing number or name
+// are listed once per planet / number where that is how the game says them).
+function studioPhrases(lang) {
+  const out = new Set(), add = s => out.add(s);
+  Object.values(I18N.ui).forEach(e => { const s = e[lang]; if (s && !s.includes('{')) add(s); });
+  [SUN, ...PLANETS].forEach(p => { add(cap(pname(p, lang)) + bang(lang)); add(pfact(p, lang)); });
+  PLANETS.forEach(p => { add(t('whereIs', { p: pname(p, lang) }, lang)); add(t('yesThats', { p: pname(p, lang) }, lang)); });
+  for (let n = 1; n <= 10; n++) add(cap(num(n, lang)) + bang(lang));
+  WORD_IDS.forEach(id => { add(cap(word(id, lang)) + bang(lang)); add(act(id, lang)); });
+  return [...out];
+}
+let studioLang = 'en', recState = null;
+const canRecord = () => !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+function studioNote(text) { const n = $('#studioNote'); n.textContent = text; n.hidden = !text; }
+function openStudio() {
+  if (!STANDALONE) return;
+  studioLang = LANG; $('#parent').hidden = true; $('#studio').hidden = false;
+  studioNote(canRecord() ? '' : 'This browser can’t record here. Open this file in Chrome, or record on another device and use Import.');
+  renderStudio();
+}
+function renderStudio() {
+  document.querySelectorAll('#studioLang button').forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === studioLang));
+  const list = $('#studioList'); list.innerHTML = '';
+  studioPhrases(studioLang).forEach(text => {
+    const key = `${studioLang}|${text}`, has = clips.has(key);
+    const row = document.createElement('div'); row.className = 'srow' + (has ? ' has' : '');
+    row.innerHTML = '<span class="dot"></span><span class="txt"></span><button class="rec"></button><button class="play" aria-label="Play recording">▶</button><button class="del" aria-label="Delete recording">✕</button>';
+    const tx = row.querySelector('.txt'); tx.textContent = studioLang === 'fa' ? faDigits(text) : text; tx.dir = studioLang === 'fa' ? 'rtl' : 'ltr'; tx.lang = studioLang;
+    const rec = row.querySelector('.rec'); rec.textContent = has ? 'Re-record' : '● Record'; rec.disabled = !canRecord();
+    const play = row.querySelector('.play'), del = row.querySelector('.del'); play.disabled = del.disabled = !has;
+    rec.onclick = () => toggleRecord(key, row, rec);
+    play.onclick = () => { stopAudio(); const a = new Audio(clips.get(key)); currentAudio = a; a.play().catch(() => {}); };
+    del.onclick = () => idb.del(key).then(() => { URL.revokeObjectURL(clips.get(key)); clips.delete(key); renderStudio(); });
+    list.appendChild(row);
+  });
+}
+function toggleRecord(key, row, btn) {
+  if (recState) { const same = recState.key === key; recState.rec.stop(); if (same) return; }
+  navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+    const chunks = [], rec = new MediaRecorder(stream);
+    recState = { key, rec };
+    row.classList.add('rec'); btn.textContent = '■ Stop'; studioNote('');
+    rec.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+    rec.onstop = () => {
+      stream.getTracks().forEach(tr => tr.stop()); if (recState && recState.rec === rec) recState = null;
+      const blob = new Blob(chunks, { type: rec.mimeType || 'audio/webm' });
+      idb.put(key, blob).then(() => { if (clips.has(key)) URL.revokeObjectURL(clips.get(key)); clips.set(key, URL.createObjectURL(blob)); renderStudio(); })
+        .catch(() => { studioNote('Could not save that recording on this device.'); renderStudio(); });
+    };
+    rec.start();
+    setTimeout(() => { if (rec.state === 'recording') rec.stop(); }, 12000); // every line is short
+  }).catch(() => studioNote('The microphone was blocked. Allow it for this page in the browser settings, then try again.'));
+}
+const blobToDataURL = b => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result)); r.onerror = rej; r.readAsDataURL(b); });
+$('#studioBtn').addEventListener('click', openStudio);
+document.querySelectorAll('#studioLang button').forEach(b => b.addEventListener('click', () => { studioLang = b.dataset.lang; renderStudio(); }));
+$('#studioClose').addEventListener('click', () => { if (recState) recState.rec.stop(); $('#studio').hidden = true; openParent(); });
+$('#studioExport').addEventListener('click', () => {
+  idb.all().then(rows => Promise.all(rows.map(([k, b]) => blobToDataURL(b).then(data => ({ key: k, data }))))).then(items => {
+    const file = new Blob([JSON.stringify({ app: 'planet-parade', version: 1, clips: items })], { type: 'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(file); a.download = 'planet-parade-voices.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    studioNote(items.length ? `Exported ${items.length} recording${items.length === 1 ? '' : 's'}.` : 'There are no recordings to export yet.');
+  }).catch(() => studioNote('Export failed.'));
+});
+$('#studioImport').addEventListener('change', e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  f.text().then(txt => {
+    const j = JSON.parse(txt);
+    if (j.app !== 'planet-parade' || !Array.isArray(j.clips)) throw new Error('not ours');
+    return Promise.all(j.clips.map(c => fetch(c.data).then(r => r.blob()).then(b => idb.put(c.key, b)))).then(() => j.clips.length);
+  }).then(n => loadClips().then(() => { renderStudio(); studioNote(`Imported ${n} recording${n === 1 ? '' : 's'}.`); }))
+    .catch(() => studioNote('That file isn’t a Planet Parade recordings file.'));
+  e.target.value = '';
+});
+loadClips();
+
+/* ---------- menu tile art ---------- */
+function drawIcons() {
+  document.querySelectorAll('canvas[data-icon]').forEach(c => {
+    const g = c.getContext('2d'), P = id => PLANETS.find(p => p.id === id), f = settings.faces;
+    g.setTransform(2, 0, 0, 2, 0, 0); g.clearRect(0, 0, 150, 150);
+    switch (c.dataset.icon) {
+      case 'free':
+        drawPlanet(g, P('earth'), 68, 80, 44, 1.2, { face: f, happy: true, look: { x: .3, y: -.2 } });
+        g.strokeStyle = '#ffc93c'; g.lineWidth = 6; g.lineCap = 'round';
+        for (const r of [16, 30]) { g.beginPath(); g.arc(112, 44, r, -1.1, -.1); g.stroke(); }
+        break;
+      case 'find':
+        g.globalAlpha = .45; drawPlanet(g, P('neptune'), 28, 96, 18, 0, {}); drawPlanet(g, P('venus'), 124, 96, 18, 0, {}); g.globalAlpha = 1;
+        { const gr = g.createRadialGradient(76, 84, 26, 76, 84, 56); gr.addColorStop(0, 'rgba(110,240,194,.55)'); gr.addColorStop(1, 'rgba(110,240,194,0)'); g.fillStyle = gr; g.beginPath(); g.arc(76, 84, 56, 0, TAU); g.fill(); }
+        drawPlanet(g, P('mars'), 76, 84, 32, 0, { face: f, happy: true });
+        g.fillStyle = '#ffc93c'; drawStar(g, 114, 30, 12, .2); drawStar(g, 40, 38, 8, -.3);
+        break;
+      case 'rocket':
+        drawPlanet(g, P('saturn'), 108, 112, 18, 0, {});
+        g.fillStyle = '#fff'; drawStar(g, 30, 30, 5, 0); drawStar(g, 122, 34, 4, .4);
+        drawRocket(g, 66, 70, 50, -.7, 0, 1);
+        break;
+      case 'order': {
+        const rtl = LANG === 'fa'; // Farsi: the Sun sits on the right and the count runs right-to-left
+        g.save(); if (rtl) { g.translate(150, 0); g.scale(-1, 1); }
+        g.strokeStyle = 'rgba(159,180,255,.4)'; g.lineWidth = 3; g.beginPath(); g.moveTo(10, 92); g.lineTo(146, 92); g.stroke();
+        drawSun(g, -4, 92, 26, 0, {});
+        [['mercury', 38, 9], ['venus', 62, 12], ['earth', 90, 13], ['mars', 118, 10]].forEach(([id, x, r], i) => drawPlanet(g, P(id), x, 92 - i * 6 - (i === 2 ? 4 : 0), r, 0, {}));
+        g.restore();
+        g.fillStyle = '#6ef0c2'; g.font = `800 34px ${fontFor()}`; g.textAlign = 'center';
+        g.fillText(rtl ? `${fmt(3)} ${fmt(2)} ${fmt(1)}` : '1 2 3', 78, 46);
+        break;
+      }
+      case 'count':
+        goldStar(g, 36, 96, 22, 0, f ? { blink: 1, happy: true } : null);
+        goldStar(g, 76, 104, 22, 0, f ? { blink: 1, happy: true } : null);
+        goldStar(g, 116, 96, 22, 0, f ? { blink: 1, happy: true } : null);
+        g.fillStyle = '#ff9a5c'; g.font = `800 36px ${fontFor()}`; g.textAlign = 'center'; g.fillText(`${fmt(2)} + ${fmt(1)}`, 76, 50);
+        break;
+      case 'words':
+        drawAstronaut(g, 64, 88, 40, 0);
+        [['EN', 112, 34, '#6ef0c2'], ['FR', 124, 72, '#9fb4ff'], ['فا', 110, 110, '#ff7eb6']].forEach(([s, x, y, col]) => {
+          g.fillStyle = col; g.beginPath(); g.arc(x, y, 16, 0, TAU); g.fill();
+          g.fillStyle = '#0a0e2a'; g.font = `800 15px ${s === 'فا' ? PERSIAN_FONT : FONT}`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(s, x, y + 1);
+        });
+        break;
+    }
+  });
+}
+
+/* ---------- boot ---------- */
+function resize() {
+  DPR = Math.min(2, window.devicePixelRatio || 1); W = innerWidth; H = innerHeight;
+  cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+  cx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  makeStars(); paintSkyBackdrop();
+  if (M) M.layout();
+}
+addEventListener('resize', resize);
+resize();
+drawIcons();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawIcons);
+// Plain-token deep links: #rocket, #words_find, #count_more-fa (mode_sub-lang).
+const [deepMain, deepLang] = (location.hash || '').slice(1).split('-');
+const [deepMode, deepSub] = deepMain.split('_');
+if (LANGS.includes(deepLang)) LANG = deepLang;
+applyLang();
+// If play time ran out earlier today, the planets are still asleep until a grown-up wakes them.
+if (today.asleep) setMode('sleep');
+else setMode(MODES[deepMode] && deepMode !== 'menu' ? deepMode : 'menu', deepSub);
+
+// Play time: counted only after the first touch and while the page is visible. When the grown-ups'
+// session length is reached, the gentle goodnight begins (never an abrupt cut).
+let saveIn = 5;
+function tickPlayTime(dt) {
+  if (!playing || modeName === 'sleep') return;
+  today.sec += dt; today.session += dt;
+  if ((saveIn -= dt) <= 0) {
+    saveIn = 5;
+    if (today.day !== localDay()) today = loadToday();
+    saveToday();
+  }
+  if (settings.session && today.session >= settings.session * 60) goToSleep();
+}
+let last = performance.now(), raf = 0;
+function frame(now) {
+  const dt = Math.min(.05, (now - last) / 1000); last = now; T += dt;
+  runTimers(dt); M.update(dt); updateParts(dt); tickPlayTime(dt);
+  drawSky(T, dt);
+  cx.save(); cx.translate(-camX, 0); M.draw(T); drawParts(); cx.restore();
+  raf = requestAnimationFrame(frame);
+}
+raf = requestAnimationFrame(frame);
+// Hidden tab: stop drawing and talking. Back again: resume, and ask for the wake lock again,
+// since the browser releases it whenever the page is hidden.
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { cancelAnimationFrame(raf); raf = 0; hush(); }
+  else {
+    if (wakeWanted) wakeLock();
+    if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); }
+  }
+});
+})();
+</script>

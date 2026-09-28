@@ -1,0 +1,7 @@
+# convenience copy of the build; dist/index.html is the tracked output
+/index.html
+fonts/google-fonts.css
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
