@@ -44,7 +44,7 @@
       "station": "venus",
       "requires": [],
       "example": "Park the round pod in the round bay.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -200,7 +200,7 @@
         "space.1"
       ],
       "example": "Find the triangle, even when its point faces sideways.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -445,7 +445,7 @@
         "space.5"
       ],
       "example": "A planet is a sphere; the rocket nose is a cone.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }

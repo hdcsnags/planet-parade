@@ -24,7 +24,7 @@ const I18N = {
   words: byLang('words'), acts: byLang('acts'), positions: byLang('positions', true), posShort: byLang('posShort', true),
 };
 // Nested lookup for new content keys like "tpl.tenframe.fill" (falls back to English).
-function lookup(path, lang) {
+function lookup(path, lang = LANG) {
   const get = pk => path.split('.').reduce((o, k) => (o == null ? o : o[k]), pk);
   const v = get(LANG_PACKS[lang]);
   return v != null ? v : get(LANG_PACKS.en);

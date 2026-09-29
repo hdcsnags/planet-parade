@@ -419,6 +419,24 @@
       "look": "Regarde bien… le rideau va se fermer !",
       "changed": "Qu’est-ce qui a changé ?",
       "changedYes": "Oui ! Celle-là a changé !"
+    },
+    "shape": {
+      "names": {
+        "circle": "le cercle",
+        "square": "le carré",
+        "triangle": "le triangle",
+        "rectangle": "le rectangle",
+        "sphere": "la sphère",
+        "cube": "le cube",
+        "cylinder": "le cylindre",
+        "cone": "le cône"
+      },
+      "outline": "Gare la capsule dans la place qui a la même forme !",
+      "fits": "Ça rentre !",
+      "find": "Trouve {s} !",
+      "yes": "Oui ! Tu as trouvé {s} !",
+      "thats": "Ça, c’est {s}.",
+      "whichSolid": "C’est quelle forme ?"
     }
   },
   "strands": {

@@ -9,6 +9,7 @@ import { Pattern } from './pattern.js';
 import { PlaceScene } from './placescene.js';
 import { QuantityBalance } from './quantitybalance.js';
 import { RoverCode } from './rovercode.js';
+import { ShadowMatch } from './shadowmatch.js';
 import { Sort } from './sort.js';
 import { StorySequence } from './storysequence.js';
 import { Subitize } from './subitize.js';
@@ -41,4 +42,5 @@ export const TEMPLATES = {
   place_scene: PlaceScene,
   story_sequence: StorySequence,
   math_circle: MathCircle,
+  shadow_match: ShadowMatch,
 };

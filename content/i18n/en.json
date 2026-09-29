@@ -380,6 +380,24 @@
       "look": "Look carefully… the curtain will close!",
       "changed": "What changed?",
       "changedYes": "Yes! That one changed!"
+    },
+    "shape": {
+      "names": {
+        "circle": "circle",
+        "square": "square",
+        "triangle": "triangle",
+        "rectangle": "rectangle",
+        "sphere": "sphere",
+        "cube": "cube",
+        "cylinder": "cylinder",
+        "cone": "cone"
+      },
+      "outline": "Park the pod in the bay with the same shape!",
+      "fits": "It fits!",
+      "find": "Find the {s}!",
+      "yes": "Yes! You found the {s}!",
+      "thats": "That’s the {s}.",
+      "whichSolid": "Which shape is this?"
     }
   },
   "strands": {
