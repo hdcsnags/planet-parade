@@ -34,7 +34,7 @@
       "station": "uranus",
       "requires": [],
       "example": "Boom, boom, boom, boom with the pulsar.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -64,7 +64,7 @@
       "station": "uranus",
       "requires": [],
       "example": "Which planet drum was louder?",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -98,7 +98,7 @@
       "station": "uranus",
       "requires": [],
       "example": "Fast rocket beat or slow drifting-asteroid beat?",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -132,7 +132,7 @@
         "music.1"
       ],
       "example": "Ta ta: your turn.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -163,7 +163,7 @@
       "station": "uranus",
       "requires": [],
       "example": "Tiny satellite chime or big gas-giant rumble: which was higher?",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -198,7 +198,7 @@
         "music.4"
       ],
       "example": "Ta, ta-ti, ta.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -231,7 +231,7 @@
         "music.5"
       ],
       "example": "Rocket climbing (do-mi-sol) or landing (sol-mi-do)?",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -265,7 +265,7 @@
         "music.6"
       ],
       "example": "Ta, ta, (rest), ta.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -299,7 +299,7 @@
         "music.8"
       ],
       "example": "Mercury, Venus, Earth keys: play it back.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }

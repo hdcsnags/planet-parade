@@ -57,6 +57,8 @@ export const current = pack => pack.levels.find(l => !satisfied(l.id) && playabl
 export function commitVisit(lv, res, transferWins) {
   if (!res.length) return false;
   const st = lvState(lv.id), m = lv.mastery || {};
+  // exploration (rule X) is never assessed: one visit simply places it, so it never blocks the next step
+  if (m.rule === 'X') { if (!st.status) st.status = 'placed'; save(); return false; }
   st.visits.push({ day: localDay(), res, transfer: transferWins });
   if (st.visits.length > 12) st.visits.shift();
   let newly = false;

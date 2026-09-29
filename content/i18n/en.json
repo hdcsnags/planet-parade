@@ -451,6 +451,28 @@
         "full": "full moon",
         "lastQuarter": "last quarter moon"
       }
+    },
+    "echo": {
+      "beat": "Tap along with the star’s beat!",
+      "beatDone": "Great drumming!",
+      "cmp": {
+        "loudnessA": "Listen! Which drum was louder?",
+        "loudnessB": "Listen! Which drum was softer?",
+        "tempoA": "Listen! Which beat was faster?",
+        "tempoB": "Listen! Which beat was slower?",
+        "pitchA": "Listen! Which sound was higher?",
+        "pitchB": "Listen! Which sound was lower?",
+        "contourA": "Listen! Which tune goes up?",
+        "contourB": "Listen! Which tune goes down?"
+      },
+      "yes": "Yes! You heard it!",
+      "listenAgain": "Tap the ear to listen again.",
+      "listen": "Listen…",
+      "turn": "Your turn! Tap the star.",
+      "echoYes": "Just the same!",
+      "again": "Let’s listen again.",
+      "melodyListen": "Listen to the planets sing…",
+      "melodyTurn": "Your turn! Play it back."
     }
   },
   "strands": {

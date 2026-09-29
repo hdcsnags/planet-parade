@@ -3,6 +3,7 @@ import { Bond } from './bond.js';
 import { Compare } from './compare.js';
 import { CountingTray } from './countingtray.js';
 import { Dial } from './dial.js';
+import { Echo } from './echo.js';
 import { FindHear } from './findhear.js';
 import { LineUp } from './lineup.js';
 import { MathCircle } from './mathcircle.js';
@@ -49,4 +50,5 @@ export const TEMPLATES = {
   find_hear: FindHear,
   line_up: LineUp,
   dial: Dial,
+  echo: Echo,
 };

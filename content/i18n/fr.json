@@ -490,6 +490,28 @@
         "full": "la pleine lune",
         "lastQuarter": "le dernier quartier"
       }
+    },
+    "echo": {
+      "beat": "Tape en rythme avec l’étoile !",
+      "beatDone": "Bravo, super rythme !",
+      "cmp": {
+        "loudnessA": "Écoute ! Quel tambour était le plus fort ?",
+        "loudnessB": "Écoute ! Quel tambour était le plus doux ?",
+        "tempoA": "Écoute ! Quel rythme était le plus rapide ?",
+        "tempoB": "Écoute ! Quel rythme était le plus lent ?",
+        "pitchA": "Écoute ! Quel son était le plus aigu ?",
+        "pitchB": "Écoute ! Quel son était le plus grave ?",
+        "contourA": "Écoute ! Quelle mélodie monte ?",
+        "contourB": "Écoute ! Quelle mélodie descend ?"
+      },
+      "yes": "Oui ! Tu l’as entendu !",
+      "listenAgain": "Touche l’oreille pour réécouter.",
+      "listen": "Écoute…",
+      "turn": "À toi ! Tape sur l’étoile.",
+      "echoYes": "Pareil !",
+      "again": "On réécoute.",
+      "melodyListen": "Écoute les planètes chanter…",
+      "melodyTurn": "À toi ! Rejoue-la."
     }
   },
   "strands": {
