@@ -204,7 +204,7 @@
       "station": "earth",
       "requires": [],
       "example": "Wooden block: guess, drop, watch. What happened? (never 'heavy things sink')",
-      "status": "planned",
+      "status": "lab",
       "generator": {
         "kind": "random"
       }
@@ -236,7 +236,7 @@
         "science.6"
       ],
       "example": "Lamp moves to the left: where is the rover's shadow now?",
-      "status": "planned",
+      "status": "lab",
       "generator": {
         "kind": "random"
       }
@@ -433,7 +433,7 @@
         "science.7"
       ],
       "example": "Same ice cubes, same trays, one in sun and one in shade: which melted first?",
-      "status": "planned",
+      "status": "lab",
       "generator": {
         "kind": "random"
       }

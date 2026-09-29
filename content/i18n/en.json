@@ -473,6 +473,35 @@
       "again": "Let’s listen again.",
       "melodyListen": "Listen to the planets sing…",
       "melodyTurn": "Your turn! Play it back."
+    },
+    "observe": {
+      "will": "Will {o} sink or float? Guess!",
+      "findOut": "Let’s find out!",
+      "what": "What happened? Did it sink or float?",
+      "floats": "It floats!",
+      "sinks": "It sinks!",
+      "obj": {
+        "log": "the big wooden log",
+        "pebble": "the tiny pebble",
+        "apple": "the apple",
+        "coin": "the coin",
+        "duck": "the rubber duck",
+        "key": "the metal key"
+      },
+      "lamp": {
+        "left": "The lamp will move to the left. Where will the rover’s shadow be? Guess!",
+        "right": "The lamp will move to the right. Where will the rover’s shadow be? Guess!",
+        "top": "The lamp will go right above. Where will the rover’s shadow be? Guess!"
+      },
+      "shadowWhat": "Where is the shadow now?",
+      "shadow": {
+        "left": "The shadow is on the left, away from the lamp!",
+        "right": "The shadow is on the right, away from the lamp!",
+        "under": "The lamp is right above, so the shadow is small, under the rover!"
+      },
+      "iceWill": "The same ice cubes: one in the sun, one in the shade. Which will melt first? Guess!",
+      "iceWhat": "Which one melted first?",
+      "iceYes": "Yes! The one in the sun melted first. The sun warmed it!"
     }
   },
   "strands": {

@@ -512,6 +512,35 @@
       "again": "On réécoute.",
       "melodyListen": "Écoute les planètes chanter…",
       "melodyTurn": "À toi ! Rejoue-la."
+    },
+    "observe": {
+      "will": "Est-ce que {o} va couler ou flotter ? Devine !",
+      "findOut": "On va voir !",
+      "what": "Qu’est-ce qui s’est passé ? Ça a coulé ou flotté ?",
+      "floats": "Ça flotte !",
+      "sinks": "Ça coule !",
+      "obj": {
+        "log": "le gros morceau de bois",
+        "pebble": "le petit caillou",
+        "apple": "la pomme",
+        "coin": "la pièce",
+        "duck": "le canard en plastique",
+        "key": "la clé en métal"
+      },
+      "lamp": {
+        "left": "La lampe va aller à gauche. Où sera l’ombre du rover ? Devine !",
+        "right": "La lampe va aller à droite. Où sera l’ombre du rover ? Devine !",
+        "top": "La lampe va aller juste au-dessus. Où sera l’ombre du rover ? Devine !"
+      },
+      "shadowWhat": "Où est l’ombre maintenant ?",
+      "shadow": {
+        "left": "L’ombre est à gauche, loin de la lampe !",
+        "right": "L’ombre est à droite, loin de la lampe !",
+        "under": "La lampe est juste au-dessus : l’ombre est petite, sous le rover !"
+      },
+      "iceWill": "Les mêmes glaçons : un au soleil, un à l’ombre. Lequel va fondre en premier ? Devine !",
+      "iceWhat": "Lequel a fondu en premier ?",
+      "iceYes": "Oui ! Celui au soleil a fondu en premier. Le soleil l’a réchauffé !"
     }
   },
   "strands": {

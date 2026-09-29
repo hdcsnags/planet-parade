@@ -9,6 +9,7 @@ import { LineUp } from './lineup.js';
 import { MathCircle } from './mathcircle.js';
 import { NumberLine } from './numberline.js';
 import { NumberString } from './numberstring.js';
+import { ObserveChange } from './observechange.js';
 import { Pattern } from './pattern.js';
 import { PlaceScene } from './placescene.js';
 import { QuantityBalance } from './quantitybalance.js';
@@ -51,4 +52,5 @@ export const TEMPLATES = {
   line_up: LineUp,
   dial: Dial,
   echo: Echo,
+  observe_change: ObserveChange, // lab (facts need reviewed sources before it leaves Family Lab)
 };

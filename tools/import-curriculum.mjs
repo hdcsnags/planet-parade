@@ -8,7 +8,7 @@ import { readFileSync, writeFileSync, readdirSync, unlinkSync } from 'node:fs';
 import { roverSolve } from '../src/templates/rover-solve.js';
 
 const C = JSON.parse(readFileSync('content/curriculum/curriculum.json', 'utf8'));
-const registry = [...readFileSync('src/templates/index.js', 'utf8').matchAll(/^\s+(\w+): \w+,?\s*(?:\/\/\s*(lab))?$/gm)].map(m => [m[1], m[2] ? 'lab' : 'ready']);
+const registry = [...readFileSync('src/templates/index.js', 'utf8').matchAll(/^\s+(\w+): \w+,?\s*(?:\/\/\s*(lab)\b.*)?$/gm)].map(m => [m[1], m[2] ? 'lab' : 'ready']);
 const BUILT = Object.fromEntries(registry);
 const ORDER = { number: 1, space: 2, logic: 3, science: 4, language: 5, music: 6 };
 
