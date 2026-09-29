@@ -240,7 +240,7 @@
         "space.2"
       ],
       "example": "Line up three rockets from shortest to tallest.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }

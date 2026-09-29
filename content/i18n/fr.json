@@ -437,6 +437,44 @@
       "yes": "Oui ! Tu as trouvé {s} !",
       "thats": "Ça, c’est {s}.",
       "whichSolid": "C’est quelle forme ?"
+    },
+    "find": {
+      "yes": "Oui, c’est ça !",
+      "two": "Touche {a}, puis {b} !",
+      "thatsSky": "Ça, c’est {w}.",
+      "sky": {
+        "sun": "Où est le Soleil ?",
+        "moon": "Où est la Lune ?",
+        "cloud": "Où est le nuage ?",
+        "rain": "Où est la pluie ?",
+        "snow": "Où est la neige ?",
+        "rainbow": "Où est l’arc-en-ciel ?"
+      },
+      "skyName": {
+        "sun": "le Soleil",
+        "moon": "la Lune",
+        "cloud": "le nuage",
+        "rain": "la pluie",
+        "snow": "la neige",
+        "rainbow": "l’arc-en-ciel"
+      },
+      "opp": {
+        "big": "Cette étoile est grande. Touche la petite !",
+        "small": "Cette étoile est petite. Touche la grande !",
+        "up": "Cette fusée monte. Touche celle qui descend !",
+        "down": "Cette fusée descend. Touche celle qui monte !",
+        "full": "Ce réservoir est plein. Touche celui qui est vide !",
+        "empty": "Ce réservoir est vide. Touche celui qui est plein !",
+        "fast": "Cette fusée est rapide. Touche la lente !",
+        "slow": "Cette fusée est lente. Touche la rapide !"
+      }
+    },
+    "lineup": {
+      "length": "Range-les du plus petit au plus grand ! Touche d’abord le plus petit.",
+      "size": "Du plus petit au plus gros ! Touche d’abord le plus petit.",
+      "next": "Maintenant le suivant !",
+      "lengthDone": "Du plus petit au plus grand !",
+      "sizeDone": "Du plus petit au plus gros !"
     }
   },
   "strands": {

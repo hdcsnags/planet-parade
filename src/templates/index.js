@@ -2,6 +2,8 @@ import { BeadFrame } from './beadframe.js';
 import { Bond } from './bond.js';
 import { Compare } from './compare.js';
 import { CountingTray } from './countingtray.js';
+import { FindHear } from './findhear.js';
+import { LineUp } from './lineup.js';
 import { MathCircle } from './mathcircle.js';
 import { NumberLine } from './numberline.js';
 import { NumberString } from './numberstring.js';
@@ -43,4 +45,6 @@ export const TEMPLATES = {
   story_sequence: StorySequence,
   math_circle: MathCircle,
   shadow_match: ShadowMatch,
+  find_hear: FindHear,
+  line_up: LineUp,
 };

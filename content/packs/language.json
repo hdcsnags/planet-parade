@@ -40,7 +40,7 @@
       "station": "neptune",
       "requires": [],
       "example": "Where is the comet?",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -114,7 +114,7 @@
         "language.1"
       ],
       "example": "The rocket goes up. Now tap the one going down.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -148,7 +148,7 @@
         "language.2"
       ],
       "example": "Tap the rocket, then the Moon.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }

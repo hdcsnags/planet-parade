@@ -398,6 +398,44 @@
       "yes": "Yes! You found the {s}!",
       "thats": "That’s the {s}.",
       "whichSolid": "Which shape is this?"
+    },
+    "find": {
+      "yes": "Yes, that’s it!",
+      "two": "Tap the {a}, then the {b}!",
+      "thatsSky": "That’s the {w}.",
+      "sky": {
+        "sun": "Where is the Sun?",
+        "moon": "Where is the Moon?",
+        "cloud": "Where is the cloud?",
+        "rain": "Where is the rain?",
+        "snow": "Where is the snow?",
+        "rainbow": "Where is the rainbow?"
+      },
+      "skyName": {
+        "sun": "Sun",
+        "moon": "Moon",
+        "cloud": "cloud",
+        "rain": "rain",
+        "snow": "snow",
+        "rainbow": "rainbow"
+      },
+      "opp": {
+        "big": "This star is big. Tap the small one!",
+        "small": "This star is small. Tap the big one!",
+        "up": "This rocket goes up. Tap the one going down!",
+        "down": "This rocket goes down. Tap the one going up!",
+        "full": "This tank is full. Tap the empty one!",
+        "empty": "This tank is empty. Tap the full one!",
+        "fast": "This rocket is fast. Tap the slow one!",
+        "slow": "This rocket is slow. Tap the fast one!"
+      }
+    },
+    "lineup": {
+      "length": "Line them up from shortest to tallest! Tap the shortest first.",
+      "size": "From smallest to biggest! Tap the smallest first.",
+      "next": "Now the next one!",
+      "lengthDone": "Shortest to tallest!",
+      "sizeDone": "Smallest to biggest!"
     }
   },
   "strands": {

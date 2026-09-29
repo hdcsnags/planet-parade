@@ -70,7 +70,7 @@
       "station": "earth",
       "requires": [],
       "example": "Where is the rain?",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -167,7 +167,7 @@
       "station": "moon",
       "requires": [],
       "example": "Where is Saturn?",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
