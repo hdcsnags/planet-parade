@@ -154,7 +154,7 @@
         "logic.1"
       ],
       "example": "Three rockets and a moon: which is different?",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -587,7 +587,7 @@
       "example": "Which pod is odd, and why: colour, stripes or size?",
       "evidence": "anecdotal-moderate (Zvonkin, per Kimi); low risk",
       "raise": "math circle",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }

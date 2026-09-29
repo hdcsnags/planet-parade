@@ -367,6 +367,19 @@
           "Winter: bare branches and snow."
         ]
       }
+    },
+    "circle": {
+      "odd": "Which one is different?",
+      "oddYes": "Yes! That one is different!",
+      "why": "Why is it different? Colour, shape or size?",
+      "because": {
+        "color": "Yes, it’s a different colour!",
+        "kind": "Yes, it’s a different shape!",
+        "size": "Yes, it’s a different size!"
+      },
+      "look": "Look carefully… the curtain will close!",
+      "changed": "What changed?",
+      "changedYes": "Yes! That one changed!"
     }
   },
   "strands": {

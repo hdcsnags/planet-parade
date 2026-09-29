@@ -406,6 +406,19 @@
           "L’hiver : des branches nues et de la neige."
         ]
       }
+    },
+    "circle": {
+      "odd": "Laquelle est différente ?",
+      "oddYes": "Oui ! Celle-là est différente !",
+      "why": "Pourquoi ? La couleur, la forme ou la taille ?",
+      "because": {
+        "color": "Oui, elle n’a pas la même couleur !",
+        "kind": "Oui, elle n’a pas la même forme !",
+        "size": "Oui, elle n’a pas la même taille !"
+      },
+      "look": "Regarde bien… le rideau va se fermer !",
+      "changed": "Qu’est-ce qui a changé ?",
+      "changedYes": "Oui ! Celle-là a changé !"
     }
   },
   "strands": {

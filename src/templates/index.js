@@ -2,6 +2,7 @@ import { BeadFrame } from './beadframe.js';
 import { Bond } from './bond.js';
 import { Compare } from './compare.js';
 import { CountingTray } from './countingtray.js';
+import { MathCircle } from './mathcircle.js';
 import { NumberLine } from './numberline.js';
 import { NumberString } from './numberstring.js';
 import { Pattern } from './pattern.js';
@@ -39,4 +40,5 @@ export const TEMPLATES = {
   counting_tray: CountingTray,
   place_scene: PlaceScene,
   story_sequence: StorySequence,
+  math_circle: MathCircle,
 };
