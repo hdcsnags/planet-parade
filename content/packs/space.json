@@ -1,0 +1,537 @@
+{
+  "$schema": "../schema/pack.schema.json",
+  "id": "space",
+  "strand": "space",
+  "station": "venus",
+  "order": 2,
+  "name": {
+    "en": "Measuring & Shapes",
+    "fr": "Mesures et formes",
+    "fa": "اندازه‌گیری و شکل‌ها"
+  },
+  "name_key": "strands.space",
+  "levels": [
+    {
+      "id": "space.1",
+      "n": 1,
+      "track": "basic",
+      "age": "2",
+      "band": "2-3",
+      "skill": "shape-match",
+      "objective": "Matches circles, squares and triangles to identical outlines.",
+      "template": "shadow_match",
+      "params": {
+        "mode": "outline",
+        "shapes": [
+          "circle",
+          "square",
+          "triangle"
+        ],
+        "rotate": [
+          0,
+          0
+        ],
+        "choices": 3
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "venus",
+      "requires": [],
+      "example": "Park the round pod in the round bay.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "space.2",
+      "n": 2,
+      "track": "basic",
+      "age": "2-2.5",
+      "band": "2-3",
+      "skill": "compare-length",
+      "objective": "Chooses the longer, shorter or taller of two objects standing on the same baseline.",
+      "template": "quantity_balance",
+      "params": {
+        "mode": "compare",
+        "attribute": [
+          "length",
+          "height"
+        ],
+        "items": 2,
+        "ratioMin": 1.5,
+        "alignedBase": true
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "venus",
+      "requires": [],
+      "example": "Which antenna is longer?",
+      "evidence": "moderate (Davydov; Sol, Kimi)",
+      "raise": "measurement-first",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "space.3",
+      "n": 3,
+      "track": "basic",
+      "age": "2.5-3",
+      "band": "2-3",
+      "skill": "position-in-on-under",
+      "objective": "Places an object in, on, under or beside a visible reference.",
+      "template": "place_scene",
+      "params": {
+        "relations": [
+          "in",
+          "on",
+          "under",
+          "beside"
+        ],
+        "steps": 1,
+        "zones": 3
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "venus",
+      "requires": [],
+      "example": "Put the rover under the bridge.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "space.4",
+      "n": 4,
+      "track": "basic",
+      "age": "3",
+      "band": "2-3",
+      "skill": "compare-mass-volume",
+      "objective": "Tells heavier/lighter on a pan balance and fuller/emptier between two same-size containers.",
+      "template": "quantity_balance",
+      "params": {
+        "mode": "compare",
+        "items": 2,
+        "ratioMin": 1.5
+      },
+      "variants": [
+        {
+          "attribute": "mass"
+        },
+        {
+          "attribute": "volume"
+        }
+      ],
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "venus",
+      "requires": [
+        "space.2"
+      ],
+      "example": "The balance tips: which moon rock is heavier? Which fuel tank is fuller?",
+      "evidence": "moderate (Davydov)",
+      "raise": "measurement-first",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "space.5",
+      "n": 5,
+      "track": "basic",
+      "age": "3-3.5",
+      "band": "2-3",
+      "skill": "shape-invariance",
+      "objective": "Finds a named circle, triangle, square or rectangle across size, rotation and non-typical forms.",
+      "template": "shadow_match",
+      "params": {
+        "mode": "named",
+        "shapes": [
+          "circle",
+          "square",
+          "triangle",
+          "rectangle"
+        ],
+        "rotate": [
+          0,
+          90
+        ],
+        "nonPrototypical": true,
+        "choices": 3
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "venus",
+      "requires": [
+        "space.1"
+      ],
+      "example": "Find the triangle, even when its point faces sideways.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "space.6",
+      "n": 6,
+      "track": "basic",
+      "age": "3-4",
+      "band": "2-3",
+      "skill": "order-3",
+      "objective": "Lines up three objects from shortest to longest (or smallest to biggest).",
+      "template": "line_up",
+      "params": {
+        "count": 3,
+        "attribute": "length",
+        "minRatio": 1.25
+      },
+      "variants": [
+        {
+          "attribute": "length"
+        },
+        {
+          "attribute": "size"
+        }
+      ],
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "venus",
+      "requires": [
+        "space.2"
+      ],
+      "example": "Line up three rockets from shortest to tallest.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "space.7",
+      "n": 7,
+      "track": "basic",
+      "age": "3.5-4",
+      "band": "2-3",
+      "skill": "left-middle-right",
+      "objective": "Finds and places things on the left, in the middle, on the right and between, using real screen sides in every language.",
+      "template": "place_scene",
+      "params": {
+        "relations": [
+          "left",
+          "middle",
+          "right",
+          "between"
+        ],
+        "steps": 1,
+        "zones": 3,
+        "mirrorRTL": false
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "venus",
+      "requires": [
+        "space.3"
+      ],
+      "example": "Put the satellite between the two moons.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "space.8",
+      "n": 8,
+      "track": "advanced",
+      "age": "3.5+",
+      "band": "2-3",
+      "skill": "equalize",
+      "objective": "Makes two paths or tanks equal by adding or removing, and says which needed more.",
+      "template": "quantity_balance",
+      "params": {
+        "mode": "equalize",
+        "maxUnits": 8
+      },
+      "variants": [
+        {
+          "attribute": "length"
+        },
+        {
+          "attribute": "volume"
+        }
+      ],
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "venus",
+      "requires": [
+        "space.4",
+        "space.6"
+      ],
+      "example": "Make the two rover tracks the same length.",
+      "evidence": "moderate (Davydov, Grade 1; adapted as play per Sol)",
+      "raise": "measurement-first",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "space.9",
+      "n": 9,
+      "track": "advanced",
+      "age": "4+",
+      "band": "4-5",
+      "skill": "compose-shapes",
+      "objective": "Fills a simple silhouette with 2-3 pieces (no rotation needed).",
+      "template": "tangram",
+      "params": {
+        "pieces": [
+          2,
+          3
+        ],
+        "rotation": 0,
+        "outline": "segmented",
+        "solutions": "any"
+      },
+      "mastery": {
+        "rule": "M4",
+        "window": 4,
+        "need": 3,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "venus",
+      "requires": [
+        "space.5"
+      ],
+      "example": "Join two triangles into a square solar panel.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "space.10",
+      "n": 10,
+      "track": "advanced",
+      "age": "4+",
+      "band": "4-5",
+      "skill": "measure-units",
+      "objective": "Measures with equal units end to end without gaps or overlaps, spots a flawed measurement, and sees smaller units give a bigger count.",
+      "template": "quantity_balance",
+      "params": {
+        "mode": "unitCount",
+        "attribute": "length",
+        "units": [
+          3,
+          8
+        ]
+      },
+      "variants": [
+        {
+          "flaw": "none"
+        },
+        {
+          "flaw": [
+            "gap",
+            "overlap"
+          ]
+        },
+        {
+          "unitSizes": 2
+        }
+      ],
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "venus",
+      "requires": [
+        "space.8",
+        "number.5"
+      ],
+      "example": "The landing strip is 6 tiles long. With half-size tiles, is it more or fewer?",
+      "evidence": "moderate (Davydov; Sol: smaller units give larger counts)",
+      "raise": "measurement-first",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "space.11",
+      "n": 11,
+      "track": "advanced",
+      "age": "4-4.5+",
+      "band": "4-5",
+      "skill": "3d-solids",
+      "objective": "Matches spheres, cubes, cylinders and cones across different views and everyday objects.",
+      "template": "shadow_match",
+      "params": {
+        "mode": "views",
+        "solids": [
+          "sphere",
+          "cube",
+          "cylinder",
+          "cone"
+        ],
+        "choices": 3
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "venus",
+      "requires": [
+        "space.5"
+      ],
+      "example": "A planet is a sphere; the rocket nose is a cone.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "space.12",
+      "n": 12,
+      "track": "advanced",
+      "age": "5+",
+      "band": "4-5",
+      "skill": "tangram-rotate",
+      "objective": "Fills a silhouette with 4-5 tangram pieces, rotating pieces by quarter turns; any valid solution counts.",
+      "template": "tangram",
+      "params": {
+        "pieces": [
+          4,
+          5
+        ],
+        "rotation": 90,
+        "outline": "silhouette",
+        "solutions": "any"
+      },
+      "mastery": {
+        "rule": "M4",
+        "window": 4,
+        "need": 3,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "venus",
+      "requires": [
+        "space.9"
+      ],
+      "example": "Build a rocket from five pieces; tap a piece to turn it.",
+      "evidence": "strong for spatial training (Uttal et al. 2013, per Kimi); cultural-form claims UNVERIFIED",
+      "raise": "tangram (spatial)",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "space.13",
+      "n": 13,
+      "track": "advanced",
+      "age": "5+",
+      "band": "4-5",
+      "skill": "symmetry",
+      "objective": "Completes the mirror half of a dot-grid picture across a vertical, then horizontal, line.",
+      "template": "rangoli",
+      "params": {
+        "mode": "mirror",
+        "grid": [
+          5,
+          5
+        ],
+        "dots": true
+      },
+      "variants": [
+        {
+          "axis": "vertical"
+        },
+        {
+          "axis": "horizontal"
+        }
+      ],
+      "mastery": {
+        "rule": "M4",
+        "window": 4,
+        "need": 3,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "venus",
+      "requires": [
+        "space.9"
+      ],
+      "example": "Finish the butterfly nebula's other wing.",
+      "evidence": "content real, pedagogy anecdotal (Kimi, Sol)",
+      "raise": "rangoli/kolam",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    }
+  ]
+}

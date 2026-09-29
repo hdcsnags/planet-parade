@@ -1,20 +1,24 @@
 import { say } from '../audio/speech.js';
-import { packById, packForTemplate } from '../content/packs.js';
+import { PACKS } from '../content/packs.js';
 import { setMode } from '../hub/router.js';
 import { t } from '../i18n/i18n.js';
-import { applyProbe, packState, recordResult } from '../progress/progress.js';
+import { applyProbe, commitVisit, current, lastMasteredAt, nextAt, playable } from '../progress/progress.js';
 import { TEMPLATES } from '../templates/index.js';
 import { fireworks } from './particles.js';
 import { T } from './stage.js';
 import { after } from './timers.js';
 
-// A short play session at one station: the current level of that pack, round after round, until
-// mastery moves her up, a gentle step back, 5 rounds, or ~3 minutes, whichever comes first. Then a
-// shared celebration and back to the Space Map. The child never sees levels or scores.
+// One visit to a station, under ~3 minutes, then back to the Space Map with a shared celebration.
+//   warm-up: 1 round from the last level mastered here (never scored)
+//   main:    up to 4 rounds of the station's next level; variants cycle round by round and the
+//            last main round is the transfer item (a different representation)
+//   support: 3 misses inside the window → the rest of THIS visit plays the prerequisite; the next
+//            visit comes back to the same level. Mastery is never erased.
+// Mastery needs two passing visits on different days (progress.js), so a single visit never
+// "levels up" on the spot; the map shows a new moon when it happens.
 //
-// start(sub): 'tenframe'            → the pack's current level
-//             'tenframe.8'          → level 8, for the screenshot tour / grown-ups preview (no progress saved)
-//             'tenframe.probe'      → placement probe: 3 items two levels up ("Try harder?")
+// start(sub): 'station:mars' · 'probe:number' (prerequisite, target, transfer)
+//             'preview:number.7' · 'tpl:bond:min|max'  (tour / grown-ups preview: nothing is saved)
 
 
 
@@ -25,52 +29,99 @@ import { after } from './timers.js';
 
 
 
-const MAX_ROUNDS = 5, MAX_SECONDS = 180;
+const MAIN_ROUNDS = 4, MAX_SECONDS = 180;
+const levelById = id => { for (const p of PACKS) { const l = p.levels.find(x => x.id === id); if (l) return [p, l]; } return [null, null]; };
 
 export function SessionRunner() {
-  let pack = null, levelIdx = 0, tpl = null, rounds = 0, t0 = 0, preview = false, probe = null, ended = false;
-  function finish(change) {
+  let queue = [], qi = 0, tpl = null, tplLevel = null, t0 = 0, ended = false, backSub = '';
+  let pack = null, target = null, res = [], transferWins = 0, misses = [], stepped = false, probe = null, preview = false;
+  const prereqOf = lv => { const id = (lv.requires || [])[0]; const [, l] = id ? levelById(id) : [null, null]; return l && l.status !== 'planned' ? l : null; };
+  function roundFor(item) {
+    const lv = item.level, vs = lv.variants || [];
+    const variant = vs.length ? vs[(item.k || 0) % vs.length] : {};
+    if (!tpl || tplLevel !== lv) { const Tpl = TEMPLATES[lv.template]; tpl = new Tpl(run, lv); tplLevel = lv; }
+    tpl.p = { ...lv.params, ...variant };
+    tpl.transfer = !!item.transfer;
+    tpl.nextRound();
+  }
+  function finish(newly) {
     ended = true;
-    fireworks(change > 0 ? 8 : 4);
-    say(change > 0 ? t('hub.newMoon') : t('hub.back'));
-    after(3.2, () => setMode('hub', change > 0 ? `lit.${pack.id}` : pack.id));
+    fireworks(newly ? 8 : 4);
+    say(newly ? t('hub.newMoon') : t('hub.back'));
+    after(3.2, () => setMode('hub', newly && target ? `lit.${target.station}` : backSub));
+  }
+  function endVisit() {
+    let newly = false;
+    if (probe) applyProbe(target, probe);
+    else if (!preview && target) newly = commitVisit(target, res, transferWins);
+    finish(newly);
   }
   const run = {
     roundDone(firstTry) {
-      rounds++;
-      let change = 0;
-      if (probe) {
-        probe.results.push(firstTry);
-        if (probe.results.length >= 3) { change = applyProbe(pack, probe.level, probe.results) ? 1 : 0; after(2.6, () => finish(change)); return; }
-      } else if (!preview) change = recordResult(pack, firstTry);
+      const item = queue[qi];
+      if (item.role === 'main' && item.level === target) {
+        res.push(firstTry ? 1 : 0); if (item.transfer && firstTry) transferWins++;
+        misses.push(firstTry ? 0 : 1); if (misses.length > (target.mastery.window || 5)) misses.shift();
+        // struggling: for the rest of this visit, play the prerequisite instead (never saved)
+        if (!stepped && misses.reduce((a, b) => a + b, 0) >= (target.mastery.struggle || 3)) {
+          const pre = prereqOf(target);
+          if (pre) { stepped = true; queue = queue.slice(0, qi + 1).concat(queue.slice(qi + 1).map(q => ({ ...q, level: pre, role: 'support' }))); }
+        }
+      }
+      if (probe) probe.push(firstTry);
+      qi++;
       after(2.6, () => {
         if (ended) return;
-        if (change !== 0 || rounds >= MAX_ROUNDS || T - t0 > MAX_SECONDS) finish(change);
-        else tpl.nextRound();
+        if (qi >= queue.length || T - t0 > MAX_SECONDS) endVisit();
+        else roundFor(queue[qi]);
       });
     },
   };
+  function plan(sub) {
+    const [kind, a, b] = String(sub).split(':');
+    if (kind === 'tpl' || kind === 'preview') {
+      preview = true;
+      let lv = null;
+      if (kind === 'tpl') { const all = PACKS.flatMap(p => p.levels).filter(l => l.template === a && l.status !== 'planned'); lv = b === 'max' ? all[all.length - 1] : all[0]; }
+      else lv = levelById(a)[1];
+      if (!lv) return false;
+      [pack] = levelById(lv.id); target = lv; backSub = lv.station;
+      queue = Array.from({ length: MAIN_ROUNDS }, (_, k) => ({ level: lv, role: 'main', k, transfer: k === MAIN_ROUNDS - 1 }));
+      return true;
+    }
+    if (kind === 'probe') {
+      pack = PACKS.find(p => p.id === a); target = pack && current(pack);
+      if (!target) return false;
+      const pre = prereqOf(target) || target;
+      probe = []; backSub = target.station;
+      queue = [{ level: pre, role: 'probe', k: 0 }, { level: target, role: 'probe', k: 0 }, { level: target, role: 'probe', k: 1, transfer: true }];
+      return true;
+    }
+    // station visit
+    const station = a;
+    pack = PACKS.find(p => p.levels.some(l => l.station === station && playable(p, l)));
+    target = pack && nextAt(pack, station);
+    if (!target) return false;
+    backSub = station;
+    const warm = lastMasteredAt(pack, station);
+    queue = [];
+    if (warm && warm !== target) queue.push({ level: warm, role: 'warmup', k: 0 });
+    for (let k = 0; k < MAIN_ROUNDS; k++) queue.push({ level: target, role: 'main', k, transfer: k === MAIN_ROUNDS - 1 });
+    return true;
+  }
   return {
     start(sub = '') {
-      const [id, arg] = String(sub).split('.');
-      pack = packById(id) || packForTemplate(id);
-      if (!pack) { setMode('hub'); return; }
-      const st = packState(pack);
-      levelIdx = st.level;
-      if (arg === 'probe') { levelIdx = Math.min(pack.levels.length - 1, st.level + 2); probe = { level: levelIdx, results: [] }; }
-      else if (/^\d+$/.test(arg || '')) { levelIdx = Math.max(0, Math.min(pack.levels.length - 1, +arg - 1)); preview = true; }
-      const level = pack.levels[levelIdx], Tpl = TEMPLATES[level.template];
-      t0 = T;
-      tpl = new Tpl(run, level);
-      tpl.start();
+      if (!plan(sub)) { setMode('hub'); return; }
+      t0 = T; roundFor(queue[0]);
     },
     layout() { if (tpl) tpl.layout(); },
     tap(x, y) { if (tpl && !ended) tpl.tap(x, y); },
+    move(x, y) { if (tpl && !ended && tpl.move) tpl.move(x, y); },
+    up(x, y) { if (tpl && !ended && tpl.up) tpl.up(x, y); },
     update(dt) { if (tpl) tpl.update(dt); },
     draw(tt) { if (tpl) tpl.draw(tt); },
     repeat() { if (tpl && !ended) tpl.repeat(); },
-    get pack() { return pack; },
   };
 }
 
-export { MAX_ROUNDS, MAX_SECONDS };
+export { MAIN_ROUNDS, MAX_SECONDS, levelById };

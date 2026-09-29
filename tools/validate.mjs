@@ -14,14 +14,15 @@ const ajv = new Ajv({ allErrors: true, strict: false });
 ajv.addFormat('uri', s => /^https?:\/\/\S+$/.test(s));
 const validate = ajv.compile(json('content/schema/pack.schema.json'));
 
-const templates = new Set([...readFileSync('src/templates/index.js', 'utf8').matchAll(/(\w+): \w+(?=[,\s}])/g)].map(m => m[1]));
+const templates = new Set([...readFileSync('src/templates/index.js', 'utf8').matchAll(/^\s+(\w+): \w+,/gm)].map(m => m[1]));
 const packs = readdirSync('content/packs').filter(f => f.endsWith('.json')).map(f => ({ f, p: json(`content/packs/${f}`) }));
 const ids = new Set();
 for (const { f, p } of packs) {
   if (!validate(p)) validate.errors.forEach(e => errors.push(`${f}${e.instancePath}: ${e.message}`));
   for (const lv of p.levels || []) {
     if (ids.has(lv.id)) errors.push(`${f}: duplicate level id ${lv.id}`); ids.add(lv.id);
-    if (!templates.has(lv.template)) errors.push(`${f}: ${lv.id} uses unknown template "${lv.template}"`);
+    // planned levels may name a template that is not built yet; ready/lab levels must be playable
+    if (lv.status !== 'planned' && !templates.has(lv.template)) errors.push(`${f}: ${lv.id} is ${lv.status} but template "${lv.template}" is not registered`);
     if (lv.template === 'rovercode') for (const [i, it] of (lv.items || []).entries()) {
       const plan = roverSolve(it, lv.params.cols, lv.params.rows, 12);
       if (!plan) errors.push(`${f}: ${lv.id} item ${i} has no solution`);
@@ -30,6 +31,8 @@ for (const { f, p } of packs) {
   }
 }
 
+// every `requires` id must exist
+for (const { f, p } of packs) for (const lv of p.levels || []) for (const r of lv.requires || []) if (!ids.has(r)) errors.push(`${f}: ${lv.id} requires unknown level ${r}`);
 const keysOf = (o, p = '') => Object.entries(o).flatMap(([k, v]) => k.startsWith('_') ? [] :
   (v && typeof v === 'object' && !Array.isArray(v)) ? keysOf(v, p ? `${p}.${k}` : k) : [p ? `${p}.${k}` : k]);
 const i18n = Object.fromEntries(LANGS.map(l => [l, json(`content/i18n/${l}.json`)]));

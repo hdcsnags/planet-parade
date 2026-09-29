@@ -1,0 +1,2991 @@
+{
+ "version": "2026-09-29-synthesis-1",
+ "conventions": {
+  "track": "basic = content for ~2-4, on by default; advanced = raises and ~4-7 content, reachable only when the parent turns the advanced track on for that strand AND every id in `requires` is mastered.",
+  "params": "Base parameters passed to the template. Ranges are [min, max] inclusive integers.",
+  "variants": "Optional list of parameter overrides; the runner cycles them round by round (e.g. more / less / equal). A level is mastered only when its window includes every variant.",
+  "stage": "Concrete-pictorial-abstract order. The runner starts at the first stage, moves on after 3 first-try wins in a row, and drops back one stage after 2 consecutive misses.",
+  "existing": "Existing content-pack levels (content/packs/*.json) that become this level or its transfer pool.",
+  "age": "Guide only, never a gate (all five council seats).",
+  "station": "Space Map station the level launches from."
+ },
+ "mastery_rules": {
+  "M": {
+   "window": 5,
+   "need": 4,
+   "struggle": 3,
+   "sessions": 2,
+   "transfer": 1,
+   "desc": "At least 4 of the last 5 first committed responses correct without an answer-revealing hint, in each of 2 sessions on different days, including at least 1 transfer item (different representation or context)."
+  },
+  "M4": {
+   "window": 4,
+   "need": 3,
+   "struggle": 3,
+   "sessions": 2,
+   "transfer": 1,
+   "desc": "M for long items (rover, tangram, rangoli, word builder): 3 of the last 4, in each of 2 sessions."
+  },
+  "E": {
+   "window": 5,
+   "need": 4,
+   "struggle": 3,
+   "sessions": 2,
+   "transfer": 1,
+   "desc": "M scored on the observation/evidence answer only; the prediction is never scored."
+  },
+  "L": {
+   "window": 5,
+   "need": 4,
+   "struggle": 3,
+   "sessions": 2,
+   "transfer": 1,
+   "perLocale": true,
+   "desc": "M tracked separately per language (en, fr, fa); sentence audio played before answering routes evidence to listening, not reading."
+  },
+  "R": {
+   "window": 4,
+   "need": 3,
+   "struggle": 3,
+   "sessions": 2,
+   "transfer": 0,
+   "toleranceBeat": 0.35,
+   "desc": "Rhythm: order and long/short/rest pattern correct within +/-35% of a beat (UNVERIFIED tolerance). Never a speed score."
+  },
+  "X": {
+   "desc": "Exploration, unassessed. Visiting it never advances or steps back anything."
+  }
+ },
+ "strands": [
+  {
+   "id": "number",
+   "name": {
+    "en": "Number",
+    "fr": "Nombres",
+    "fa": "عددها"
+   },
+   "name_review": "fr/fa need native review",
+   "station": "mercury",
+   "levels": [
+    {
+     "id": "number.1",
+     "n": 1,
+     "track": "basic",
+     "age": "2-2.5",
+     "skill": "one-to-one",
+     "objective": {
+      "en": "Gives one object to each of 1-3 recipients, and tap-counts 1-3 objects once each."
+     },
+     "template": "counting_tray",
+     "params": {
+      "n": [
+       1,
+       3
+      ],
+      "recipients": [
+       1,
+       3
+      ],
+      "choices": 2,
+      "layout": "line"
+     },
+     "variants": [
+      {
+       "mode": "give"
+      },
+      {
+       "mode": "count"
+      }
+     ],
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Give each of three astronauts one helmet.",
+     "station": "mercury",
+     "requires": []
+    },
+    {
+     "id": "number.2",
+     "n": 2,
+     "track": "basic",
+     "age": "2-3",
+     "skill": "count-to-5",
+     "objective": {
+      "en": "Counts 1-5 objects and chooses the matching total (dots or numeral)."
+     },
+     "template": "counting_tray",
+     "params": {
+      "mode": "count",
+      "n": [
+       1,
+       5
+      ],
+      "choices": 2,
+      "answer": "dots"
+     },
+     "variants": [
+      {
+       "layout": "line"
+      },
+      {
+       "layout": "scatter"
+      },
+      {
+       "answer": "numeral"
+      }
+     ],
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Count four moon rocks; choose the four-dot card.",
+     "station": "mercury",
+     "requires": [
+      "number.1"
+     ],
+     "existing": [
+      "tenframe.1",
+      "tenframe.2"
+     ]
+    },
+    {
+     "id": "number.3",
+     "n": 3,
+     "track": "basic",
+     "age": "2.5-3",
+     "skill": "subitize-4",
+     "objective": {
+      "en": "Recognises 1-4 objects without counting, across dice, line and scattered arrangements."
+     },
+     "template": "subitize",
+     "params": {
+      "n": [
+       1,
+       4
+      ],
+      "arrangement": [
+       "dice",
+       "line",
+       "scatter"
+      ],
+      "peekMs": 2000,
+      "replay": true,
+      "choices": 2,
+      "sayAs": "plain"
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Three lights glow, then the dome covers them; tap the three-dot card (peek again any time).",
+     "station": "mercury",
+     "requires": [
+      "number.1"
+     ],
+     "existing": [
+      "tenframe.3"
+     ]
+    },
+    {
+     "id": "number.4",
+     "n": 4,
+     "track": "basic",
+     "age": "3",
+     "skill": "compare-5",
+     "objective": {
+      "en": "Tells which group has more, fewer, or the same (to 5), even when spacing or object size differs."
+     },
+     "template": "compare",
+     "params": {
+      "max": 5,
+      "minDiff": 2
+     },
+     "variants": [
+      {
+       "mode": "more"
+      },
+      {
+       "mode": "less"
+      },
+      {
+       "mode": "equal",
+       "minDiff": 1
+      }
+     ],
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Four big stars spread out vs five small stars packed close: which has more?",
+     "station": "mercury",
+     "requires": [
+      "number.2"
+     ],
+     "existing": [
+      "compare.1",
+      "compare.2",
+      "compare.3"
+     ]
+    },
+    {
+     "id": "number.5",
+     "n": 5,
+     "track": "basic",
+     "age": "3-4",
+     "skill": "count-to-10",
+     "objective": {
+      "en": "Counts 6-10 objects with one-to-one tapping and matches the total to a numeral."
+     },
+     "template": "counting_tray",
+     "params": {
+      "mode": "count",
+      "n": [
+       6,
+       10
+      ],
+      "choices": 3,
+      "answer": "numeral"
+     },
+     "variants": [
+      {
+       "layout": "rows"
+      },
+      {
+       "layout": "scatter"
+      }
+     ],
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Count eight satellites; tap 8.",
+     "station": "mercury",
+     "requires": [
+      "number.2"
+     ],
+     "existing": [
+      "tenframe.4",
+      "compare.4"
+     ]
+    },
+    {
+     "id": "number.6",
+     "n": 6,
+     "track": "basic",
+     "age": "3-4",
+     "skill": "add-take-small",
+     "objective": {
+      "en": "Finds one more, one less, and adds or takes away 1-2 within 10 by hopping, with objects always available."
+     },
+     "template": "numberline",
+     "params": {
+      "max": 10,
+      "maxStep": 2
+     },
+     "variants": [
+      {
+       "op": "add"
+      },
+      {
+       "op": "sub"
+      },
+      {
+       "op": "add",
+       "predict": true,
+       "choices": 2
+      }
+     ],
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Rocket on 4; one hop back. Where does it land? (the current '4 - 1' level)",
+     "station": "jupiter",
+     "requires": [
+      "number.5"
+     ],
+     "existing": [
+      "numberline.1",
+      "numberline.2",
+      "numberline.3",
+      "numberline.5"
+     ]
+    },
+    {
+     "id": "number.7",
+     "n": 7,
+     "track": "advanced",
+     "age": "3.5+",
+     "skill": "subitize-structured-10",
+     "raise": "structured subitizing",
+     "evidence": "strong (Clements & Sarama Building Blocks, per Kimi)",
+     "objective": {
+      "en": "Recognises 5-10 as 'five and some more' on five-frames, ten-frames and dice pairs without counting one by one."
+     },
+     "template": "subitize",
+     "params": {
+      "n": [
+       5,
+       10
+      ],
+      "arrangement": [
+       "fiveFrame",
+       "tenFrame",
+       "dicePair"
+      ],
+      "peekMs": 2000,
+      "replay": true,
+      "choices": 3,
+      "sayAs": "fiveAnd"
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "A full row of five and two more: 'five and two, seven'.",
+     "station": "mercury",
+     "requires": [
+      "number.3",
+      "number.5"
+     ]
+    },
+    {
+     "id": "number.8",
+     "n": 8,
+     "track": "advanced",
+     "age": "3.5+",
+     "skill": "bonds-5",
+     "raise": "number bonds",
+     "evidence": "moderate (Singapore NEL/CPA, per Kimi and Sol)",
+     "objective": {
+      "en": "Splits and joins totals of 3-5 into two parts (including zero), then finds a hidden part."
+     },
+     "template": "bond",
+     "params": {
+      "whole": [
+       3,
+       5
+      ],
+      "unknown": "part",
+      "diagram": "circles",
+      "stage": [
+       "concrete",
+       "pictorial"
+      ],
+      "includeZero": true
+     },
+     "variants": [
+      {
+       "show": "split"
+      },
+      {
+       "show": "hide"
+      }
+     ],
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Five fuel pods; three are in the rocket. How many hid under the dome?",
+     "station": "mercury",
+     "requires": [
+      "number.6"
+     ],
+     "existing": [
+      "tenframe.5"
+     ]
+    },
+    {
+     "id": "number.9",
+     "n": 9,
+     "track": "advanced",
+     "age": "4+",
+     "skill": "bead-frame-10",
+     "raise": "bead frame",
+     "evidence": "moderate (soroban structure + rekenrek; Barner et al. 2016 is school-age)",
+     "objective": {
+      "en": "Shows any number 1-10 on a two-row bead frame using the five landmark, and shows how many more make ten."
+     },
+     "template": "bead_frame",
+     "params": {
+      "rows": 2,
+      "perRow": 5,
+      "target": [
+       1,
+       10
+      ],
+      "fiveColour": true
+     },
+     "variants": [
+      {
+       "mode": "build"
+      },
+      {
+       "mode": "complement"
+      }
+     ],
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Slide beads to show 7: one full row and two. How many more make 10?",
+     "station": "mercury",
+     "requires": [
+      "number.7"
+     ]
+    },
+    {
+     "id": "number.10",
+     "n": 10,
+     "track": "advanced",
+     "age": "4+",
+     "skill": "bonds-10",
+     "raise": "number bonds",
+     "evidence": "moderate (Singapore)",
+     "objective": {
+      "en": "Finds the missing part for totals 6-10 (missing addend), moving from pictures to numerals."
+     },
+     "template": "bond",
+     "params": {
+      "whole": [
+       6,
+       10
+      ],
+      "unknown": "part",
+      "diagram": "circles",
+      "stage": [
+       "pictorial",
+       "abstract"
+      ],
+      "includeZero": true
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "10 is 7 and ? (circles, then '7 + ? = 10').",
+     "station": "mercury",
+     "requires": [
+      "number.8",
+      "number.9"
+     ],
+     "existing": [
+      "tenframe.6",
+      "tenframe.7"
+     ]
+    },
+    {
+     "id": "number.11",
+     "n": 11,
+     "track": "advanced",
+     "age": "4+",
+     "skill": "teens-ten-and",
+     "raise": "teens as ten-and-more",
+     "evidence": "moderate (Miller et al. 1995, per Kimi)",
+     "objective": {
+      "en": "Builds and reads 11-19 as one full ten and some more, hearing 'ten and four' before the teen name."
+     },
+     "template": "tenframe",
+     "params": {
+      "mode": "teen",
+      "range": [
+       11,
+       19
+      ],
+      "choices": 3,
+      "sayAs": "tenAnd"
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "One full cabin and four more: 'ten and four, fourteen'.",
+     "station": "mercury",
+     "requires": [
+      "number.7",
+      "number.10"
+     ],
+     "existing": [
+      "tenframe.8",
+      "compare.7"
+     ]
+    },
+    {
+     "id": "number.12",
+     "n": 12,
+     "track": "advanced",
+     "age": "4.5+",
+     "skill": "number-strings",
+     "raise": "mental-math strings",
+     "evidence": "anecdotal at this age (Kimi, Sol)",
+     "objective": {
+      "en": "Follows an untimed 3-step string within 10 ('show 6, add 2, take 1'), with objects on demand."
+     },
+     "template": "number_string",
+     "params": {
+      "start": [
+       1,
+       6
+      ],
+      "steps": 3,
+      "ops": [
+       "+",
+       "-"
+      ],
+      "stepMax": 2,
+      "maxN": 10,
+      "objectsOnDemand": true
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Show 6. Two more land. One flies away. How many now?",
+     "station": "jupiter",
+     "requires": [
+      "number.10"
+     ],
+     "existing": [
+      "numberline.6"
+     ]
+    },
+    {
+     "id": "number.13",
+     "n": 13,
+     "track": "advanced",
+     "age": "5+",
+     "skill": "make-ten-20",
+     "raise": "make-ten",
+     "evidence": "moderate at 5-7; UNVERIFIED at 4 (Sol)",
+     "objective": {
+      "en": "Adds within 20 by completing ten first on a double ten-frame (8 + 5 = 8 + 2 + 3)."
+     },
+     "template": "tenframe",
+     "params": {
+      "mode": "makeTen",
+      "frames": 2,
+      "maxN": 20,
+      "ops": [
+       "+"
+      ],
+      "bridgeTen": true,
+      "choices": 3
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "8 + 5: move 2 to fill the first cabin; 10 and 3 is 13.",
+     "station": "mercury",
+     "requires": [
+      "number.10",
+      "number.11"
+     ]
+    },
+    {
+     "id": "number.14",
+     "n": 14,
+     "track": "advanced",
+     "age": "5.5+",
+     "skill": "bar-model-20",
+     "raise": "bar models",
+     "evidence": "moderate (Singapore primary syllabus, per Sol)",
+     "objective": {
+      "en": "Solves spoken part-whole stories within 20 using a bar strip, finding either a part or the whole."
+     },
+     "template": "bond",
+     "params": {
+      "whole": [
+       5,
+       20
+      ],
+      "unknown": [
+       "part",
+       "whole"
+      ],
+      "diagram": "bar",
+      "story": true,
+      "stage": [
+       "pictorial",
+       "abstract"
+      ]
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "12 probes; 5 went to Mars. The bar shows 5 and a gap: how many went to the Moon?",
+     "station": "mercury",
+     "requires": [
+      "number.10",
+      "number.11"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "space",
+   "name": {
+    "en": "Measuring & Shapes",
+    "fr": "Mesures et formes",
+    "fa": "اندازه‌گیری و شکل‌ها"
+   },
+   "name_review": "fr/fa need native review",
+   "station": "venus",
+   "levels": [
+    {
+     "id": "space.1",
+     "n": 1,
+     "track": "basic",
+     "age": "2",
+     "skill": "shape-match",
+     "objective": {
+      "en": "Matches circles, squares and triangles to identical outlines."
+     },
+     "template": "shadow_match",
+     "params": {
+      "mode": "outline",
+      "shapes": [
+       "circle",
+       "square",
+       "triangle"
+      ],
+      "rotate": [
+       0,
+       0
+      ],
+      "choices": 3
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Park the round pod in the round bay.",
+     "station": "venus",
+     "requires": []
+    },
+    {
+     "id": "space.2",
+     "n": 2,
+     "track": "basic",
+     "age": "2-2.5",
+     "skill": "compare-length",
+     "raise": "measurement-first",
+     "evidence": "moderate (Davydov; Sol, Kimi)",
+     "objective": {
+      "en": "Chooses the longer, shorter or taller of two objects standing on the same baseline."
+     },
+     "template": "quantity_balance",
+     "params": {
+      "mode": "compare",
+      "attribute": [
+       "length",
+       "height"
+      ],
+      "items": 2,
+      "ratioMin": 1.5,
+      "alignedBase": true
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Which antenna is longer?",
+     "station": "venus",
+     "requires": []
+    },
+    {
+     "id": "space.3",
+     "n": 3,
+     "track": "basic",
+     "age": "2.5-3",
+     "skill": "position-in-on-under",
+     "objective": {
+      "en": "Places an object in, on, under or beside a visible reference."
+     },
+     "template": "place_scene",
+     "params": {
+      "relations": [
+       "in",
+       "on",
+       "under",
+       "beside"
+      ],
+      "steps": 1,
+      "zones": 3
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Put the rover under the bridge.",
+     "station": "venus",
+     "requires": []
+    },
+    {
+     "id": "space.4",
+     "n": 4,
+     "track": "basic",
+     "age": "3",
+     "skill": "compare-mass-volume",
+     "raise": "measurement-first",
+     "evidence": "moderate (Davydov)",
+     "objective": {
+      "en": "Tells heavier/lighter on a pan balance and fuller/emptier between two same-size containers."
+     },
+     "template": "quantity_balance",
+     "params": {
+      "mode": "compare",
+      "items": 2,
+      "ratioMin": 1.5
+     },
+     "variants": [
+      {
+       "attribute": "mass"
+      },
+      {
+       "attribute": "volume"
+      }
+     ],
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "The balance tips: which moon rock is heavier? Which fuel tank is fuller?",
+     "station": "venus",
+     "requires": [
+      "space.2"
+     ]
+    },
+    {
+     "id": "space.5",
+     "n": 5,
+     "track": "basic",
+     "age": "3-3.5",
+     "skill": "shape-invariance",
+     "objective": {
+      "en": "Finds a named circle, triangle, square or rectangle across size, rotation and non-typical forms."
+     },
+     "template": "shadow_match",
+     "params": {
+      "mode": "named",
+      "shapes": [
+       "circle",
+       "square",
+       "triangle",
+       "rectangle"
+      ],
+      "rotate": [
+       0,
+       90
+      ],
+      "nonPrototypical": true,
+      "choices": 3
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Find the triangle, even when its point faces sideways.",
+     "station": "venus",
+     "requires": [
+      "space.1"
+     ]
+    },
+    {
+     "id": "space.6",
+     "n": 6,
+     "track": "basic",
+     "age": "3-4",
+     "skill": "order-3",
+     "objective": {
+      "en": "Lines up three objects from shortest to longest (or smallest to biggest)."
+     },
+     "template": "line_up",
+     "params": {
+      "count": 3,
+      "attribute": "length",
+      "minRatio": 1.25
+     },
+     "variants": [
+      {
+       "attribute": "length"
+      },
+      {
+       "attribute": "size"
+      }
+     ],
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Line up three rockets from shortest to tallest.",
+     "station": "venus",
+     "requires": [
+      "space.2"
+     ]
+    },
+    {
+     "id": "space.7",
+     "n": 7,
+     "track": "basic",
+     "age": "3.5-4",
+     "skill": "left-middle-right",
+     "objective": {
+      "en": "Finds and places things on the left, in the middle, on the right and between, using real screen sides in every language."
+     },
+     "template": "place_scene",
+     "params": {
+      "relations": [
+       "left",
+       "middle",
+       "right",
+       "between"
+      ],
+      "steps": 1,
+      "zones": 3,
+      "mirrorRTL": false
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Put the satellite between the two moons.",
+     "station": "venus",
+     "requires": [
+      "space.3"
+     ]
+    },
+    {
+     "id": "space.8",
+     "n": 8,
+     "track": "advanced",
+     "age": "3.5+",
+     "skill": "equalize",
+     "raise": "measurement-first",
+     "evidence": "moderate (Davydov, Grade 1; adapted as play per Sol)",
+     "objective": {
+      "en": "Makes two paths or tanks equal by adding or removing, and says which needed more."
+     },
+     "template": "quantity_balance",
+     "params": {
+      "mode": "equalize",
+      "maxUnits": 8
+     },
+     "variants": [
+      {
+       "attribute": "length"
+      },
+      {
+       "attribute": "volume"
+      }
+     ],
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Make the two rover tracks the same length.",
+     "station": "venus",
+     "requires": [
+      "space.4",
+      "space.6"
+     ]
+    },
+    {
+     "id": "space.9",
+     "n": 9,
+     "track": "advanced",
+     "age": "4+",
+     "skill": "compose-shapes",
+     "objective": {
+      "en": "Fills a simple silhouette with 2-3 pieces (no rotation needed)."
+     },
+     "template": "tangram",
+     "params": {
+      "pieces": [
+       2,
+       3
+      ],
+      "rotation": 0,
+      "outline": "segmented",
+      "solutions": "any"
+     },
+     "mastery": {
+      "rule": "M4"
+     },
+     "example": "Join two triangles into a square solar panel.",
+     "station": "venus",
+     "requires": [
+      "space.5"
+     ]
+    },
+    {
+     "id": "space.10",
+     "n": 10,
+     "track": "advanced",
+     "age": "4+",
+     "skill": "measure-units",
+     "raise": "measurement-first",
+     "evidence": "moderate (Davydov; Sol: smaller units give larger counts)",
+     "objective": {
+      "en": "Measures with equal units end to end without gaps or overlaps, spots a flawed measurement, and sees smaller units give a bigger count."
+     },
+     "template": "quantity_balance",
+     "params": {
+      "mode": "unitCount",
+      "attribute": "length",
+      "units": [
+       3,
+       8
+      ]
+     },
+     "variants": [
+      {
+       "flaw": "none"
+      },
+      {
+       "flaw": [
+        "gap",
+        "overlap"
+       ]
+      },
+      {
+       "unitSizes": 2
+      }
+     ],
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "The landing strip is 6 tiles long. With half-size tiles, is it more or fewer?",
+     "station": "venus",
+     "requires": [
+      "space.8",
+      "number.5"
+     ]
+    },
+    {
+     "id": "space.11",
+     "n": 11,
+     "track": "advanced",
+     "age": "4-4.5+",
+     "skill": "3d-solids",
+     "objective": {
+      "en": "Matches spheres, cubes, cylinders and cones across different views and everyday objects."
+     },
+     "template": "shadow_match",
+     "params": {
+      "mode": "views",
+      "solids": [
+       "sphere",
+       "cube",
+       "cylinder",
+       "cone"
+      ],
+      "choices": 3
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "A planet is a sphere; the rocket nose is a cone.",
+     "station": "venus",
+     "requires": [
+      "space.5"
+     ]
+    },
+    {
+     "id": "space.12",
+     "n": 12,
+     "track": "advanced",
+     "age": "5+",
+     "skill": "tangram-rotate",
+     "raise": "tangram (spatial)",
+     "evidence": "strong for spatial training (Uttal et al. 2013, per Kimi); cultural-form claims UNVERIFIED",
+     "objective": {
+      "en": "Fills a silhouette with 4-5 tangram pieces, rotating pieces by quarter turns; any valid solution counts."
+     },
+     "template": "tangram",
+     "params": {
+      "pieces": [
+       4,
+       5
+      ],
+      "rotation": 90,
+      "outline": "silhouette",
+      "solutions": "any"
+     },
+     "mastery": {
+      "rule": "M4"
+     },
+     "example": "Build a rocket from five pieces; tap a piece to turn it.",
+     "station": "venus",
+     "requires": [
+      "space.9"
+     ]
+    },
+    {
+     "id": "space.13",
+     "n": 13,
+     "track": "advanced",
+     "age": "5+",
+     "skill": "symmetry",
+     "raise": "rangoli/kolam",
+     "evidence": "content real, pedagogy anecdotal (Kimi, Sol)",
+     "objective": {
+      "en": "Completes the mirror half of a dot-grid picture across a vertical, then horizontal, line."
+     },
+     "template": "rangoli",
+     "params": {
+      "mode": "mirror",
+      "grid": [
+       5,
+       5
+      ],
+      "dots": true
+     },
+     "variants": [
+      {
+       "axis": "vertical"
+      },
+      {
+       "axis": "horizontal"
+      }
+     ],
+     "mastery": {
+      "rule": "M4"
+     },
+     "example": "Finish the butterfly nebula's other wing.",
+     "station": "venus",
+     "requires": [
+      "space.9"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "logic",
+   "name": {
+    "en": "Logic & Patterns",
+    "fr": "Logique et motifs",
+    "fa": "منطق و الگوها"
+   },
+   "name_review": "fr/fa need native review",
+   "station": "saturn",
+   "levels": [
+    {
+     "id": "logic.1",
+     "n": 1,
+     "track": "basic",
+     "age": "2",
+     "skill": "sort-kind",
+     "objective": {
+      "en": "Sorts 4 objects into 2 craters by kind."
+     },
+     "template": "sort",
+     "params": {
+      "by": [
+       "kind"
+      ],
+      "groups": 2,
+      "count": 4
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Stars in one crater, moons in the other.",
+     "station": "saturn",
+     "requires": [],
+     "existing": [
+      "sort.1"
+     ]
+    },
+    {
+     "id": "logic.2",
+     "n": 2,
+     "track": "basic",
+     "age": "2-2.5",
+     "skill": "sort-colour-size",
+     "objective": {
+      "en": "Sorts 5 objects into 2 groups by colour or by size."
+     },
+     "template": "sort",
+     "params": {
+      "groups": 2,
+      "count": 5
+     },
+     "variants": [
+      {
+       "by": [
+        "color"
+       ]
+      },
+      {
+       "by": [
+        "size"
+       ]
+      }
+     ],
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Big rocks here, small rocks there.",
+     "station": "saturn",
+     "requires": [
+      "logic.1"
+     ],
+     "existing": [
+      "sort.2",
+      "sort.3"
+     ]
+    },
+    {
+     "id": "logic.3",
+     "n": 3,
+     "track": "basic",
+     "age": "2.5-3",
+     "skill": "pattern-ab",
+     "objective": {
+      "en": "Continues an AB pattern."
+     },
+     "template": "pattern",
+     "params": {
+      "unit": "AB",
+      "choices": 2,
+      "cars": 5
+     },
+     "variants": [
+      {
+       "token": "color"
+      },
+      {
+       "token": "planet"
+      }
+     ],
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Moon, star, moon, star, ...?",
+     "station": "saturn",
+     "requires": [],
+     "existing": [
+      "pattern.1",
+      "pattern.2"
+     ]
+    },
+    {
+     "id": "logic.4",
+     "n": 4,
+     "track": "basic",
+     "age": "3",
+     "skill": "odd-one-out",
+     "objective": {
+      "en": "Finds the one that does not belong among 4 (one feature differs)."
+     },
+     "template": "math_circle",
+     "params": {
+      "mode": "oddOne",
+      "setSize": 4,
+      "attribute": [
+       "kind",
+       "color"
+      ]
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Three rockets and a moon: which is different?",
+     "station": "saturn",
+     "requires": [
+      "logic.1"
+     ]
+    },
+    {
+     "id": "logic.5",
+     "n": 5,
+     "track": "basic",
+     "age": "3-3.5",
+     "skill": "rover-forward",
+     "objective": {
+      "en": "Plans 2-3 forward moves, then runs the rover to the sample."
+     },
+     "template": "rovercode",
+     "params": {
+      "cols": 4,
+      "rows": 3,
+      "slots": 3
+     },
+     "mastery": {
+      "rule": "M4"
+     },
+     "example": "Three forwards to the blue rock.",
+     "station": "mars",
+     "requires": [],
+     "existing": [
+      "rovercode.1",
+      "rovercode.2"
+     ]
+    },
+    {
+     "id": "logic.6",
+     "n": 6,
+     "track": "basic",
+     "age": "3.5-4",
+     "skill": "pattern-aab-abc",
+     "objective": {
+      "en": "Extends AAB, ABB and ABC patterns."
+     },
+     "template": "pattern",
+     "params": {
+      "choices": 3,
+      "cars": 6
+     },
+     "variants": [
+      {
+       "unit": "AAB",
+       "token": "color"
+      },
+      {
+       "unit": "ABB",
+       "token": "shape"
+      },
+      {
+       "unit": "ABC",
+       "token": "shape"
+      }
+     ],
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Rocket, rocket, moon, rocket, rocket, ...?",
+     "station": "saturn",
+     "requires": [
+      "logic.3"
+     ],
+     "existing": [
+      "pattern.3",
+      "pattern.4",
+      "pattern.5"
+     ]
+    },
+    {
+     "id": "logic.7",
+     "n": 7,
+     "track": "basic",
+     "age": "3.5-4",
+     "skill": "sequence-steps",
+     "objective": {
+      "en": "Puts 3 pictured steps of a familiar procedure in order."
+     },
+     "template": "story_sequence",
+     "params": {
+      "steps": 3,
+      "cardType": "picture",
+      "narration": true,
+      "set": "procedures"
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Helmet on, climb in, blast off.",
+     "station": "mars",
+     "requires": []
+    },
+    {
+     "id": "logic.8",
+     "n": 8,
+     "track": "advanced",
+     "age": "4+",
+     "skill": "pattern-missing-fix",
+     "objective": {
+      "en": "Fills a gap inside AB/AAB/ABC patterns and finds the wrong car."
+     },
+     "template": "pattern",
+     "params": {
+      "unit": [
+       "AB",
+       "AAB",
+       "ABC"
+      ],
+      "choices": 3,
+      "cars": 6
+     },
+     "variants": [
+      {
+       "blank": "middle"
+      },
+      {
+       "fixMode": true
+      }
+     ],
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Red, blue, yellow, red, ?, yellow.",
+     "station": "saturn",
+     "requires": [
+      "logic.6"
+     ],
+     "existing": [
+      "pattern.6"
+     ]
+    },
+    {
+     "id": "logic.9",
+     "n": 9,
+     "track": "advanced",
+     "age": "4+",
+     "skill": "rover-one-turn",
+     "objective": {
+      "en": "Plans a 3-4 move route with one turn; also drives step by step with direction buttons."
+     },
+     "template": "rovercode",
+     "params": {
+      "cols": 4,
+      "rows": 4,
+      "slots": 4
+     },
+     "variants": [
+      {
+       "mode": "plan"
+      },
+      {
+       "mode": "drive"
+      }
+     ],
+     "mastery": {
+      "rule": "M4"
+     },
+     "example": "Forward, turn left, forward to the base.",
+     "station": "mars",
+     "requires": [
+      "logic.5"
+     ],
+     "existing": [
+      "rovercode.3",
+      "rovercode.4"
+     ]
+    },
+    {
+     "id": "logic.10",
+     "n": 10,
+     "track": "advanced",
+     "age": "4.5+",
+     "skill": "sort-two-attributes",
+     "objective": {
+      "en": "Sorts 6 objects by two attributes at once into 4 craters."
+     },
+     "template": "sort",
+     "params": {
+      "by": [
+       "kind",
+       "color"
+      ],
+      "groups": 4,
+      "count": 6
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Red moons, blue moons, red stars, blue stars.",
+     "station": "saturn",
+     "requires": [
+      "logic.2"
+     ],
+     "existing": [
+      "sort.6",
+      "sort.7",
+      "sort.8"
+     ]
+    },
+    {
+     "id": "logic.11",
+     "n": 11,
+     "track": "advanced",
+     "age": "4.5+",
+     "skill": "reasons-what-changed",
+     "raise": "math circle",
+     "evidence": "anecdotal-moderate (Zvonkin, per Kimi); low risk",
+     "objective": {
+      "en": "Picks the odd one out and a picture of why; spots what changed between two scenes."
+     },
+     "template": "math_circle",
+     "params": {
+      "setSize": 4,
+      "reasonCards": 3,
+      "changes": 1
+     },
+     "variants": [
+      {
+       "mode": "oddReason"
+      },
+      {
+       "mode": "whatChanged"
+      }
+     ],
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Which pod is odd, and why: colour, stripes or size?",
+     "station": "saturn",
+     "requires": [
+      "logic.4"
+     ]
+    },
+    {
+     "id": "logic.12",
+     "n": 12,
+     "track": "advanced",
+     "age": "5+",
+     "skill": "rover-plan-debug",
+     "objective": {
+      "en": "Plans 5-6 moves around rocks, and predicts then fixes one wrong command."
+     },
+     "template": "rovercode",
+     "params": {
+      "cols": 5,
+      "rows": 4,
+      "slots": 6
+     },
+     "variants": [
+      {
+       "mode": "plan"
+      },
+      {
+       "mode": "debug",
+       "bugs": 1
+      }
+     ],
+     "mastery": {
+      "rule": "M4"
+     },
+     "example": "The rover will bump the rock: swap the left turn for a right turn.",
+     "station": "mars",
+     "requires": [
+      "logic.9"
+     ],
+     "existing": [
+      "rovercode.5",
+      "rovercode.6",
+      "rovercode.7",
+      "rovercode.8"
+     ]
+    },
+    {
+     "id": "logic.13",
+     "n": 13,
+     "track": "advanced",
+     "age": "5.5+",
+     "skill": "growing-patterns",
+     "objective": {
+      "en": "Continues patterns that grow by 1 or 2."
+     },
+     "template": "pattern",
+     "params": {
+      "choices": 3,
+      "cars": 4
+     },
+     "variants": [
+      {
+       "unit": "grow"
+      },
+      {
+       "unit": "grow2"
+      }
+     ],
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "1 light, 2 lights, 3 lights, ...?",
+     "station": "saturn",
+     "requires": [
+      "logic.8",
+      "number.5"
+     ],
+     "existing": [
+      "pattern.7",
+      "pattern.8"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "science",
+   "name": {
+    "en": "Science: Space & Earth",
+    "fr": "Sciences : l'espace et la Terre",
+    "fa": "علوم: فضا و زمین"
+   },
+   "name_review": "fr/fa need native review",
+   "station": "earth",
+   "levels": [
+    {
+     "id": "science.1",
+     "n": 1,
+     "track": "basic",
+     "age": "2",
+     "skill": "day-night-sky",
+     "objective": {
+      "en": "Sorts pictures into the day sky or the night sky."
+     },
+     "template": "sort",
+     "params": {
+      "by": [
+       "sky"
+      ],
+      "set": "day-night",
+      "groups": 2,
+      "count": 4
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Sun and rainbow go to day; Moon and stars go to night.",
+     "station": "earth",
+     "requires": []
+    },
+    {
+     "id": "science.2",
+     "n": 2,
+     "track": "basic",
+     "age": "2-2.5",
+     "skill": "sky-weather",
+     "objective": {
+      "en": "Finds the Sun, Moon, a cloud, rain or snow in real photographs."
+     },
+     "template": "find_hear",
+     "params": {
+      "promptKind": "word",
+      "set": "sky-weather",
+      "choices": 3,
+      "images": "photo"
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Where is the rain?",
+     "station": "earth",
+     "requires": []
+    },
+    {
+     "id": "science.3",
+     "n": 3,
+     "track": "basic",
+     "age": "2.5-3",
+     "skill": "hot-cold",
+     "objective": {
+      "en": "Sorts hot and cold things, including sourced facts such as Mercury near the Sun and icy Neptune."
+     },
+     "template": "sort",
+     "params": {
+      "by": [
+       "temp"
+      ],
+      "set": "hot-cold",
+      "groups": 2,
+      "count": 4
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Hot cocoa and the Sun here; snowman and Neptune there.",
+     "station": "earth",
+     "requires": []
+    },
+    {
+     "id": "science.4",
+     "n": 4,
+     "track": "basic",
+     "age": "3",
+     "skill": "living-needs",
+     "objective": {
+      "en": "Chooses what a plant or animal needs (water, light, food) from concrete choices."
+     },
+     "template": "find_hear",
+     "params": {
+      "promptKind": "description",
+      "set": "living-needs",
+      "choices": 2
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "The habitat plant is thirsty: water or a toy?",
+     "station": "earth",
+     "requires": []
+    },
+    {
+     "id": "science.5",
+     "n": 5,
+     "track": "basic",
+     "age": "3-3.5",
+     "skill": "planet-names",
+     "objective": {
+      "en": "Finds a named planet among 3-4 real images."
+     },
+     "template": "find_hear",
+     "params": {
+      "promptKind": "word",
+      "set": "planets",
+      "choices": [
+       3,
+       4
+      ],
+      "images": "photo"
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Where is Saturn?",
+     "station": "moon",
+     "requires": []
+    },
+    {
+     "id": "science.6",
+     "n": 6,
+     "track": "basic",
+     "age": "3.5-4",
+     "skill": "sink-float",
+     "objective": {
+      "en": "Predicts, watches a verified test, and reports whether an object floated or sank."
+     },
+     "template": "observe_change",
+     "params": {
+      "experiment": "sink_float",
+      "choices": 2,
+      "objects": 4
+     },
+     "mastery": {
+      "rule": "E"
+     },
+     "example": "Wooden block: guess, drop, watch. What happened? (never 'heavy things sink')",
+     "station": "earth",
+     "requires": []
+    },
+    {
+     "id": "science.7",
+     "n": 7,
+     "track": "advanced",
+     "age": "4+",
+     "skill": "shadows",
+     "objective": {
+      "en": "Predicts which side a shadow falls when a lamp moves, then reports what the shadow did."
+     },
+     "template": "observe_change",
+     "params": {
+      "experiment": "shadow",
+      "lampPositions": 3,
+      "choices": 3
+     },
+     "mastery": {
+      "rule": "E"
+     },
+     "example": "Lamp moves to the left: where is the rover's shadow now?",
+     "station": "earth",
+     "requires": [
+      "science.6"
+     ]
+    },
+    {
+     "id": "science.8",
+     "n": 8,
+     "track": "advanced",
+     "age": "4+",
+     "skill": "earth-turns",
+     "objective": {
+      "en": "Turns a globe with quarter-turn taps until a marked home faces the Sun (day) or away (night)."
+     },
+     "template": "dial",
+     "params": {
+      "scene": "globe",
+      "positions": 4,
+      "targets": [
+       "day",
+       "night"
+      ]
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Turn Earth until the home marker is in the dark.",
+     "station": "earth",
+     "requires": [
+      "science.1"
+     ]
+    },
+    {
+     "id": "science.9",
+     "n": 9,
+     "track": "advanced",
+     "age": "4.5+",
+     "skill": "body-types",
+     "objective": {
+      "en": "Sorts planets into rocky and gas giants, then stars, planets and moons by role."
+     },
+     "template": "sort",
+     "params": {
+      "by": [
+       "bodyType"
+      ],
+      "set": "solar-system",
+      "count": 6
+     },
+     "variants": [
+      {
+       "groups": 2,
+       "rule": "rocky-gas"
+      },
+      {
+       "groups": 3,
+       "rule": "star-planet-moon"
+      }
+     ],
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Jupiter is a gas giant; Mars is rocky.",
+     "station": "moon",
+     "requires": [
+      "science.5"
+     ]
+    },
+    {
+     "id": "science.10",
+     "n": 10,
+     "track": "advanced",
+     "age": "4.5+",
+     "skill": "seasons",
+     "objective": {
+      "en": "Orders a local tree through four seasons and spots what changed between two pictures."
+     },
+     "template": "story_sequence",
+     "params": {
+      "steps": 4,
+      "cycle": true,
+      "cardType": "picture",
+      "set": "local-seasons"
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Blossom, green leaves, orange leaves, bare branches with snow.",
+     "station": "earth",
+     "requires": [
+      "science.2"
+     ]
+    },
+    {
+     "id": "science.11",
+     "n": 11,
+     "track": "advanced",
+     "age": "5+",
+     "skill": "moon-phases",
+     "objective": {
+      "en": "Sequences four simplified Moon landmarks and shows sunlight as what lights the Moon."
+     },
+     "template": "dial",
+     "params": {
+      "scene": "moon",
+      "positions": 4,
+      "landmarks": [
+       "new",
+       "firstQuarter",
+       "full",
+       "lastQuarter"
+      ],
+      "showSun": true
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "New, first quarter, full, last quarter, then again. (never 'Earth's shadow')",
+     "station": "moon",
+     "requires": [
+      "science.8"
+     ]
+    },
+    {
+     "id": "science.12",
+     "n": 12,
+     "track": "advanced",
+     "age": "5.5+",
+     "skill": "fair-test",
+     "objective": {
+      "en": "Chooses a comparison that changes one thing and says what the result showed."
+     },
+     "template": "observe_change",
+     "params": {
+      "experiment": "ice_melt",
+      "changedFactor": "sun_vs_shade",
+      "choices": 3,
+      "askChangedFactor": true
+     },
+     "mastery": {
+      "rule": "E"
+     },
+     "example": "Same ice cubes, same trays, one in sun and one in shade: which melted first?",
+     "station": "earth",
+     "requires": [
+      "science.6",
+      "science.7"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "language",
+   "name": {
+    "en": "Words & Letters",
+    "fr": "Mots et lettres",
+    "fa": "واژه‌ها و حروف"
+   },
+   "name_review": "fr/fa need native review",
+   "station": "neptune",
+   "levels": [
+    {
+     "id": "language.1",
+     "n": 1,
+     "track": "basic",
+     "age": "2",
+     "skill": "vocab",
+     "objective": {
+      "en": "Taps a familiar object among 2-3 pictures after hearing its name."
+     },
+     "template": "find_hear",
+     "params": {
+      "promptKind": "word",
+      "set": "space-words",
+      "choices": [
+       2,
+       3
+      ]
+     },
+     "mastery": {
+      "rule": "L"
+     },
+     "example": "Where is the comet?",
+     "station": "neptune",
+     "requires": []
+    },
+    {
+     "id": "language.2",
+     "n": 2,
+     "track": "basic",
+     "age": "2-2.5",
+     "skill": "one-step-direction",
+     "objective": {
+      "en": "Follows a one-step spoken action with a familiar object."
+     },
+     "template": "place_scene",
+     "params": {
+      "relations": [
+       "in",
+       "on",
+       "next-to"
+      ],
+      "steps": 1,
+      "zones": 3,
+      "promptKind": "action"
+     },
+     "mastery": {
+      "rule": "L"
+     },
+     "example": "Put the astronaut in the rocket.",
+     "station": "neptune",
+     "requires": []
+    },
+    {
+     "id": "language.3",
+     "n": 3,
+     "track": "basic",
+     "age": "2.5-3",
+     "skill": "opposites",
+     "objective": {
+      "en": "Picks the picture for one of a pair of opposites (big/small, up/down, full/empty, fast/slow)."
+     },
+     "template": "find_hear",
+     "params": {
+      "promptKind": "opposite",
+      "pairs": [
+       "big-small",
+       "up-down",
+       "full-empty",
+       "fast-slow"
+      ],
+      "choices": 2
+     },
+     "mastery": {
+      "rule": "L"
+     },
+     "example": "The rocket goes up. Now tap the one going down.",
+     "station": "neptune",
+     "requires": [
+      "language.1"
+     ]
+    },
+    {
+     "id": "language.4",
+     "n": 4,
+     "track": "basic",
+     "age": "3",
+     "skill": "two-step-direction",
+     "objective": {
+      "en": "Follows a two-step instruction in order."
+     },
+     "template": "find_hear",
+     "params": {
+      "promptKind": "word",
+      "steps": 2,
+      "choices": 4,
+      "set": "space-words"
+     },
+     "mastery": {
+      "rule": "L"
+     },
+     "example": "Tap the rocket, then the Moon.",
+     "station": "neptune",
+     "requires": [
+      "language.2"
+     ]
+    },
+    {
+     "id": "language.5",
+     "n": 5,
+     "track": "basic",
+     "age": "3-3.5",
+     "skill": "story-order",
+     "objective": {
+      "en": "Orders 3 pictures after hearing a short story."
+     },
+     "template": "story_sequence",
+     "params": {
+      "steps": 3,
+      "cardType": "picture",
+      "narration": true,
+      "set": "short-stories"
+     },
+     "mastery": {
+      "rule": "L"
+     },
+     "example": "Hear the story, then put the three pictures in order.",
+     "station": "neptune",
+     "requires": [
+      "language.1"
+     ]
+    },
+    {
+     "id": "language.6",
+     "n": 6,
+     "track": "basic",
+     "age": "3.5-4",
+     "skill": "syllables",
+     "objective": {
+      "en": "Taps once per syllable of a familiar word (tap count, not timing)."
+     },
+     "template": "sound_match",
+     "params": {
+      "mode": "syllables",
+      "syllables": [
+       1,
+       3
+      ]
+     },
+     "mastery": {
+      "rule": "L"
+     },
+     "example": "Ju-pi-ter: three taps.",
+     "station": "neptune",
+     "requires": [
+      "language.1"
+     ]
+    },
+    {
+     "id": "language.7",
+     "n": 7,
+     "track": "basic",
+     "age": "3.5-4",
+     "skill": "rhyme",
+     "objective": {
+      "en": "Picks the picture that rhymes with a spoken word, using reviewed pairs per language."
+     },
+     "template": "sound_match",
+     "params": {
+      "mode": "rhyme",
+      "choices": 2
+     },
+     "mastery": {
+      "rule": "L"
+     },
+     "example": "EN moon: spoon or star? (FR/FA use their own pairs)",
+     "station": "neptune",
+     "requires": [
+      "language.6"
+     ]
+    },
+    {
+     "id": "language.8",
+     "n": 8,
+     "track": "advanced",
+     "age": "4+",
+     "skill": "first-sound",
+     "objective": {
+      "en": "Matches pictures by the same first sound, without printed letters."
+     },
+     "template": "sound_match",
+     "params": {
+      "mode": "firstSound",
+      "choices": 3
+     },
+     "mastery": {
+      "rule": "L"
+     },
+     "example": "Mmm-moon: Mars, Sun or star?",
+     "station": "neptune",
+     "requires": [
+      "language.6"
+     ]
+    },
+    {
+     "id": "language.9",
+     "n": 9,
+     "track": "advanced",
+     "age": "4+",
+     "skill": "letter-names",
+     "objective": {
+      "en": "Finds a named letter among 3-4 in the child's script (Persian isolated forms first)."
+     },
+     "template": "find_hear",
+     "params": {
+      "promptKind": "letter",
+      "choices": [
+       3,
+       4
+      ],
+      "inventory": "taught",
+      "forms": "isolated"
+     },
+     "mastery": {
+      "rule": "L"
+     },
+     "example": "Where is M? / its Persian counterpart in the fa pack.",
+     "station": "neptune",
+     "requires": [
+      "language.1"
+     ]
+    },
+    {
+     "id": "language.10",
+     "n": 10,
+     "track": "advanced",
+     "age": "4.5+",
+     "skill": "letter-sound",
+     "objective": {
+      "en": "Hears a taught sound and picks its letter from a small cumulative set; tracing is optional and never scored."
+     },
+     "template": "letter_path",
+     "params": {
+      "inventorySize": [
+       4,
+       12
+      ],
+      "choices": 3,
+      "trace": "optional",
+      "scored": "selection"
+     },
+     "mastery": {
+      "rule": "L"
+     },
+     "example": "Hear /s/; tap S, then trace it with big checkpoint taps if she wants.",
+     "station": "neptune",
+     "requires": [
+      "language.8",
+      "language.9"
+     ]
+    },
+    {
+     "id": "language.11",
+     "n": 11,
+     "track": "advanced",
+     "age": "5+",
+     "skill": "blending",
+     "objective": {
+      "en": "Blends 2-3 spoken sounds into a word and taps its picture."
+     },
+     "template": "sound_match",
+     "params": {
+      "mode": "blend",
+      "phonemes": [
+       2,
+       3
+      ],
+      "choices": 3
+     },
+     "mastery": {
+      "rule": "L"
+     },
+     "example": "s-u-n: which picture?",
+     "station": "neptune",
+     "requires": [
+      "language.8"
+     ]
+    },
+    {
+     "id": "language.12",
+     "n": 12,
+     "track": "advanced",
+     "age": "5+",
+     "skill": "build-words",
+     "objective": {
+      "en": "Builds short words from taught letter tiles after hearing them."
+     },
+     "template": "word_builder",
+     "params": {
+      "phonemes": 3,
+      "tiles": [
+       3,
+       5
+      ],
+      "inventory": "taught",
+      "vowelSupport": true
+     },
+     "mastery": {
+      "rule": "M4",
+      "perLocale": true
+     },
+     "example": "Build 'sun' from four tiles.",
+     "station": "neptune",
+     "requires": [
+      "language.10",
+      "language.11"
+     ]
+    },
+    {
+     "id": "language.13",
+     "n": 13,
+     "track": "advanced",
+     "age": "5.5+",
+     "skill": "decodable-sentence",
+     "objective": {
+      "en": "Reads a short fully decodable sentence and picks the matching scene."
+     },
+     "template": "find_hear",
+     "params": {
+      "promptKind": "sentence",
+      "audio": false,
+      "words": [
+       3,
+       4
+      ],
+      "choices": 3,
+      "inventory": "taught"
+     },
+     "mastery": {
+      "rule": "L"
+     },
+     "example": "EN 'The cat sat.' once every letter in it is taught; fr/fa packs author their own texts.",
+     "station": "neptune",
+     "requires": [
+      "language.12"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "music",
+   "name": {
+    "en": "Music & Rhythm",
+    "fr": "Musique et rythme",
+    "fa": "موسیقی و ریتم"
+   },
+   "name_review": "fr/fa need native review",
+   "station": "uranus",
+   "priority": "build last (Astra defers it; Fable and Gemini include it)",
+   "levels": [
+    {
+     "id": "music.1",
+     "n": 1,
+     "track": "basic",
+     "age": "2",
+     "skill": "steady-beat",
+     "objective": {
+      "en": "Plays along on the big drum with a slow steady beat (exploration, not scored)."
+     },
+     "template": "echo",
+     "params": {
+      "mode": "beat",
+      "bpm": [
+       60,
+       80
+      ],
+      "beats": 8
+     },
+     "mastery": {
+      "rule": "X"
+     },
+     "example": "Boom, boom, boom, boom with the pulsar.",
+     "station": "uranus",
+     "requires": []
+    },
+    {
+     "id": "music.2",
+     "n": 2,
+     "track": "basic",
+     "age": "2-2.5",
+     "skill": "loud-soft",
+     "objective": {
+      "en": "Tells which of two sounds was louder or softer."
+     },
+     "template": "echo",
+     "params": {
+      "mode": "compare",
+      "attribute": "loudness",
+      "choices": 2
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Which planet drum was louder?",
+     "station": "uranus",
+     "requires": []
+    },
+    {
+     "id": "music.3",
+     "n": 3,
+     "track": "basic",
+     "age": "2.5-3",
+     "skill": "fast-slow",
+     "objective": {
+      "en": "Tells which of two beats was faster or slower."
+     },
+     "template": "echo",
+     "params": {
+      "mode": "compare",
+      "attribute": "tempo",
+      "choices": 2,
+      "bpm": [
+       60,
+       120
+      ]
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Fast rocket beat or slow drifting-asteroid beat?",
+     "station": "uranus",
+     "requires": []
+    },
+    {
+     "id": "music.4",
+     "n": 4,
+     "track": "basic",
+     "age": "3",
+     "skill": "echo-2",
+     "objective": {
+      "en": "Taps back a 2-tap pattern."
+     },
+     "template": "echo",
+     "params": {
+      "mode": "echo",
+      "beats": 2,
+      "rests": 0,
+      "pitches": 1
+     },
+     "mastery": {
+      "rule": "R"
+     },
+     "example": "Ta ta: your turn.",
+     "station": "uranus",
+     "requires": [
+      "music.1"
+     ]
+    },
+    {
+     "id": "music.5",
+     "n": 5,
+     "track": "basic",
+     "age": "3-3.5",
+     "skill": "high-low",
+     "objective": {
+      "en": "Tells which of two notes was higher or lower."
+     },
+     "template": "echo",
+     "params": {
+      "mode": "compare",
+      "attribute": "pitch",
+      "choices": 2,
+      "intervalSemitones": 12
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Tiny satellite chime or big gas-giant rumble: which was higher?",
+     "station": "uranus",
+     "requires": []
+    },
+    {
+     "id": "music.6",
+     "n": 6,
+     "track": "basic",
+     "age": "3.5-4",
+     "skill": "echo-3",
+     "objective": {
+      "en": "Taps back a 3-beat pattern with long and short sounds."
+     },
+     "template": "echo",
+     "params": {
+      "mode": "echo",
+      "beats": 3,
+      "rests": 0,
+      "longShort": true,
+      "pitches": 1
+     },
+     "mastery": {
+      "rule": "R"
+     },
+     "example": "Ta, ta-ti, ta.",
+     "station": "uranus",
+     "requires": [
+      "music.4"
+     ]
+    },
+    {
+     "id": "music.7",
+     "n": 7,
+     "track": "advanced",
+     "age": "4+",
+     "skill": "contour",
+     "objective": {
+      "en": "Tells whether a 3-note tune goes up or down."
+     },
+     "template": "echo",
+     "params": {
+      "mode": "compare",
+      "attribute": "contour",
+      "notes": 3,
+      "choices": 2
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Rocket climbing (do-mi-sol) or landing (sol-mi-do)?",
+     "station": "uranus",
+     "requires": [
+      "music.5"
+     ]
+    },
+    {
+     "id": "music.8",
+     "n": 8,
+     "track": "advanced",
+     "age": "4.5+",
+     "skill": "echo-4-rest",
+     "objective": {
+      "en": "Taps back 4 beats that include one silent beat."
+     },
+     "template": "echo",
+     "params": {
+      "mode": "echo",
+      "beats": 4,
+      "rests": 1,
+      "pitches": 1
+     },
+     "mastery": {
+      "rule": "R"
+     },
+     "example": "Ta, ta, (rest), ta.",
+     "station": "uranus",
+     "requires": [
+      "music.6"
+     ]
+    },
+    {
+     "id": "music.9",
+     "n": 9,
+     "track": "advanced",
+     "age": "5+",
+     "skill": "tune-3",
+     "objective": {
+      "en": "Plays back a 3-note tune on a 3-key planet xylophone."
+     },
+     "template": "echo",
+     "params": {
+      "mode": "melody",
+      "keys": 3,
+      "notes": 3
+     },
+     "mastery": {
+      "rule": "R"
+     },
+     "example": "Mercury, Venus, Earth keys: play it back.",
+     "station": "uranus",
+     "requires": [
+      "music.7",
+      "music.8"
+     ]
+    },
+    {
+     "id": "music.10",
+     "n": 10,
+     "track": "advanced",
+     "age": "5+",
+     "skill": "rhythm-pattern",
+     "objective": {
+      "en": "Matches a heard AB or AAB rhythm to its pattern train."
+     },
+     "template": "pattern",
+     "params": {
+      "unit": [
+       "AB",
+       "AAB"
+      ],
+      "token": "rhythm",
+      "choices": 3,
+      "cars": 6
+     },
+     "mastery": {
+      "rule": "M"
+     },
+     "example": "Long, short, long, short: which train shows it?",
+     "station": "uranus",
+     "requires": [
+      "music.8",
+      "logic.6"
+     ]
+    }
+   ]
+  }
+ ],
+ "templates": [
+  {
+   "id": "tenframe",
+   "exists": true,
+   "mechanic": "Fill, count, complete (bonds), teen and make-ten on one or two ten-frames.",
+   "interaction": "tap",
+   "params": [
+    "mode: fill|count|bond|bondPick|teen (+ NEW makeTen)",
+    "range: [min,max]",
+    "whole: 5|10",
+    "choices: 2|3",
+    "NEW frames: 1|2",
+    "NEW maxN: 10|20",
+    "NEW ops: ['+']",
+    "NEW bridgeTen: bool",
+    "NEW sayAs: plain|tenAnd"
+   ],
+   "skin": "ten-seat shuttle cabins",
+   "source_file": "src/templates/tenframe.js"
+  },
+  {
+   "id": "numberline",
+   "exists": true,
+   "mechanic": "Rocket hops along 0..max: count on, add, subtract, predict landing, skip count.",
+   "interaction": "tap",
+   "params": [
+    "op: hop|add|sub|mix|skip",
+    "max",
+    "maxStep",
+    "predict: bool",
+    "step",
+    "choices"
+   ],
+   "skin": "Jupiter number track",
+   "source_file": "src/templates/numberline.js"
+  },
+  {
+   "id": "compare",
+   "exists": true,
+   "mechanic": "Balance scale for more/less/equal groups, then bigger/smaller/biggest numerals.",
+   "interaction": "tap",
+   "params": [
+    "mode: more|less|equal|bigger|smaller|biggest",
+    "max",
+    "minDiff",
+    "choices"
+   ],
+   "skin": "asteroid balance",
+   "source_file": "src/templates/compare.js"
+  },
+  {
+   "id": "pattern",
+   "exists": true,
+   "mechanic": "Pattern train with one empty car; pick what goes there.",
+   "interaction": "tap",
+   "params": [
+    "unit: AB|AAB|ABB|ABC|AABB|ABCD|grow|grow2",
+    "token: color|planet|shape (+ NEW rhythm)",
+    "blank: end|middle",
+    "choices",
+    "cars",
+    "NEW fixMode: bool"
+   ],
+   "skin": "Saturn ring train",
+   "source_file": "src/templates/pattern.js"
+  },
+  {
+   "id": "sort",
+   "exists": true,
+   "mechanic": "One object at a time; tap the crater it belongs in.",
+   "interaction": "tap-tap",
+   "params": [
+    "by: kind|color|size (+ NEW content attributes sky|temp|bodyType)",
+    "groups: 2-4",
+    "count",
+    "NEW set: content set id",
+    "NEW rule"
+   ],
+   "skin": "Saturn sorting craters",
+   "source_file": "src/templates/sort.js"
+  },
+  {
+   "id": "rovercode",
+   "exists": true,
+   "mechanic": "Plan Forward/Left/Right blocks, press go, rover drives the Mars grid.",
+   "interaction": "tap; large Go and Undo",
+   "params": [
+    "cols",
+    "rows",
+    "slots",
+    "items[{start,goal,rocks}]",
+    "NEW mode: plan|drive|debug",
+    "NEW bugs: 1"
+   ],
+   "skin": "Mars rover garage",
+   "source_file": "src/templates/rovercode.js"
+  },
+  {
+   "id": "counting_tray",
+   "exists": false,
+   "port_from": "src/templates/legacy/count.js",
+   "mechanic": "Give one to each, tap-count, add/take away, or make N with objects always on screen.",
+   "interaction": "tap; repeated taps never recount",
+   "params": [
+    "mode: give|count|addTake|make",
+    "n: [min,max]",
+    "recipients: [min,max]",
+    "maxN",
+    "maxStep",
+    "ops",
+    "choices",
+    "answer: dots|numeral",
+    "layout: line|rows|scatter",
+    "zeroResult: bool"
+   ],
+   "skin": "Mercury counting dock supply crates"
+  },
+  {
+   "id": "find_hear",
+   "exists": false,
+   "port_from": "src/templates/legacy/find.js + words.js",
+   "mechanic": "Hear (or read) a prompt and tap the matching picture.",
+   "interaction": "tap; separate replay",
+   "params": [
+    "promptKind: word|description|opposite|letter|sentence",
+    "set",
+    "choices: 2-4",
+    "steps: 1|2",
+    "images: art|photo",
+    "audio: bool",
+    "inventory",
+    "forms"
+   ],
+   "skin": "observatory windows"
+  },
+  {
+   "id": "line_up",
+   "exists": false,
+   "port_from": "src/templates/legacy/order.js",
+   "mechanic": "Put 2-4 things in order by an attribute (or planets by distance).",
+   "interaction": "tap in order, or tap-tap",
+   "params": [
+    "count: 2-4",
+    "attribute: length|size|planetOrder",
+    "minRatio",
+    "set"
+   ],
+   "skin": "line up the rockets"
+  },
+  {
+   "id": "subitize",
+   "exists": false,
+   "mechanic": "Show a structured small collection, cover it, child picks how many; peek again freely.",
+   "interaction": "tap",
+   "params": [
+    "n: [min,max]",
+    "arrangement: dice|line|scatter|fiveFrame|tenFrame|dicePair",
+    "peekMs: 2000 (display only, never a response timer)",
+    "replay: true",
+    "choices",
+    "sayAs: plain|fiveAnd"
+   ],
+   "skin": "constellation under a crater dome",
+   "from_tradition": "learning trajectories (Clements & Sarama)"
+  },
+  {
+   "id": "bond",
+   "exists": false,
+   "mechanic": "Part-part-whole: split a whole into two parts, find a hidden part or the whole, as circles or bar strips.",
+   "interaction": "tap counters and parts; tap Done",
+   "params": [
+    "whole: [min,max]",
+    "unknown: part|whole",
+    "diagram: circles|bar",
+    "stage: concrete|pictorial|abstract",
+    "show: split|hide",
+    "includeZero",
+    "story: bool"
+   ],
+   "skin": "fuel pods split between two rockets",
+   "from_tradition": "Singapore (number bonds, CPA, bar model)"
+  },
+  {
+   "id": "bead_frame",
+   "exists": false,
+   "mechanic": "Slide beads on a two-row frame with a colour change at five to show a number or its complement to ten.",
+   "interaction": "tap a bead to slide it and all beads before it",
+   "params": [
+    "rows: 1|2",
+    "perRow: 5|10",
+    "target: [min,max]",
+    "mode: build|complement",
+    "fiveColour: true"
+   ],
+   "skin": "comet bead frame",
+   "from_tradition": "Japan soroban / Dutch rekenrek"
+  },
+  {
+   "id": "number_string",
+   "exists": false,
+   "mechanic": "Untimed spoken chain of 2-3 operations on a running total; objects shown on demand.",
+   "interaction": "tap answer tile; tap 'show me' for objects",
+   "params": [
+    "start: [min,max]",
+    "steps: 2|3",
+    "ops",
+    "stepMax",
+    "maxN",
+    "objectsOnDemand: true"
+   ],
+   "skin": "mission-control radio countdown",
+   "from_tradition": "Japan/Netherlands mental-arithmetic strings"
+  },
+  {
+   "id": "quantity_balance",
+   "exists": false,
+   "mechanic": "Compare, equalize, then measure continuous quantities (length, mass, volume) with child-placed units.",
+   "interaction": "tap objects; tap to add/remove snapped units",
+   "params": [
+    "mode: compare|equalize|unitCount",
+    "attribute: length|height|mass|volume",
+    "items: 2",
+    "ratioMin",
+    "alignedBase",
+    "maxUnits",
+    "units: [min,max]",
+    "flaw: none|gap|overlap",
+    "unitSizes: 1|2"
+   ],
+   "skin": "Venus cargo ramp and fuel tanks",
+   "from_tradition": "Russia (Davydov, measurement-first)"
+  },
+  {
+   "id": "shadow_match",
+   "exists": false,
+   "mechanic": "Match a shape or solid to its outline, name, rotated form or other view.",
+   "interaction": "tap source, tap match",
+   "params": [
+    "mode: outline|named|views",
+    "shapes",
+    "solids",
+    "rotate: [min,max] degrees",
+    "nonPrototypical",
+    "choices"
+   ],
+   "skin": "docking silhouettes"
+  },
+  {
+   "id": "place_scene",
+   "exists": false,
+   "mechanic": "Put an object where a spoken instruction says.",
+   "interaction": "tap object, tap large highlighted zone",
+   "params": [
+    "relations",
+    "steps: 1|2",
+    "zones: 3",
+    "promptKind: position|action",
+    "mirrorRTL: false"
+   ],
+   "skin": "lunar habitat"
+  },
+  {
+   "id": "tangram",
+   "exists": false,
+   "mechanic": "Fill a silhouette with pieces, rotating by tap; any valid construction counts.",
+   "interaction": "tap piece, tap slot; rotate button",
+   "params": [
+    "pieces: [min,max] (2-7)",
+    "rotation: 0|90|45",
+    "outline: segmented|silhouette",
+    "solutions: any"
+   ],
+   "skin": "build a satellite",
+   "from_tradition": "China (tangram)"
+  },
+  {
+   "id": "rangoli",
+   "exists": false,
+   "mechanic": "Copy, extend or mirror line patterns on a dot grid.",
+   "interaction": "tap dot, tap dot to draw a segment",
+   "params": [
+    "mode: copy|extend|mirror",
+    "grid: [cols,rows]",
+    "axis: vertical|horizontal",
+    "dots: true"
+   ],
+   "skin": "star-map constellation grid",
+   "from_tradition": "India (kolam/rangoli)"
+  },
+  {
+   "id": "math_circle",
+   "exists": false,
+   "mechanic": "Small reasoning puzzles: odd one out, odd one out with a reason card, what changed.",
+   "interaction": "tap item, tap pictured reason",
+   "params": [
+    "mode: oddOne|oddReason|whatChanged (reserved: clues)",
+    "setSize: 3-5",
+    "attribute",
+    "reasonCards",
+    "changes"
+   ],
+   "skin": "cargo inspection before launch",
+   "from_tradition": "Russia (Zvonkin math circle)"
+  },
+  {
+   "id": "story_sequence",
+   "exists": false,
+   "mechanic": "Put 3-5 picture or word cards in order, or around a cycle.",
+   "interaction": "tap card, tap slot",
+   "params": [
+    "steps: 3-5",
+    "cardType: picture|word",
+    "narration",
+    "cycle",
+    "set",
+    "validOrders"
+   ],
+   "skin": "mission scrapbook",
+   "from_tradition": "Japan yochien nature-diary for the seasons set (Kimi)"
+  },
+  {
+   "id": "observe_change",
+   "exists": false,
+   "mechanic": "Predict, run a reviewed demonstration, then report what was observed.",
+   "interaction": "tap prediction, tap Start, tap observation card",
+   "params": [
+    "experiment: sink_float|shadow|ice_melt",
+    "objects",
+    "lampPositions",
+    "changedFactor",
+    "askChangedFactor",
+    "choices"
+   ],
+   "skin": "Earth research station lab",
+   "from_tradition": "Japan experiential science (Sol)"
+  },
+  {
+   "id": "dial",
+   "exists": false,
+   "mechanic": "Turn a big wheel in quarter steps; the scene (globe, Moon, seasons) changes.",
+   "interaction": "tap turn buttons (hold optional, tap equivalent always)",
+   "params": [
+    "scene: globe|moon",
+    "positions: 4|8",
+    "targets",
+    "landmarks",
+    "showSun"
+   ],
+   "skin": "Earth observation deck / Moon notebook"
+  },
+  {
+   "id": "sound_match",
+   "exists": false,
+   "mechanic": "Compare spoken words by syllables, rhyme, first sound or blended sounds.",
+   "interaction": "tap beats or pictures; replay freely",
+   "params": [
+    "mode: syllables|rhyme|firstSound|blend",
+    "syllables: [min,max]",
+    "phonemes: [min,max]",
+    "choices",
+    "locale word list"
+   ],
+   "skin": "space radio"
+  },
+  {
+   "id": "letter_path",
+   "exists": false,
+   "mechanic": "Hear a taught sound, pick its letter; optional trace-lite by big checkpoint taps.",
+   "interaction": "tap; optional checkpoint taps",
+   "params": [
+    "inventorySize: [min,max]",
+    "choices",
+    "trace: optional",
+    "scored: selection",
+    "contextualForm"
+   ],
+   "skin": "letter constellations"
+  },
+  {
+   "id": "word_builder",
+   "exists": false,
+   "mechanic": "Hear a word, assemble it from taught letter tiles.",
+   "interaction": "tap tile, tap slot to revise",
+   "params": [
+    "phonemes",
+    "tiles: [min,max]",
+    "inventory: taught",
+    "vowelSupport",
+    "joiningRules (fa)"
+   ],
+   "skin": "cargo pod labels"
+  },
+  {
+   "id": "echo",
+   "exists": false,
+   "mechanic": "Play along, compare two sounds, or hear a rhythm/tune and tap it back on a drum or 3-key xylophone.",
+   "interaction": "tap",
+   "params": [
+    "mode: beat|compare|echo|melody",
+    "attribute: loudness|tempo|pitch|contour",
+    "beats",
+    "rests",
+    "longShort",
+    "bpm: [min,max]",
+    "keys",
+    "notes",
+    "intervalSemitones"
+   ],
+   "skin": "Uranus drum, planet xylophone"
+  }
+ ],
+ "space_map": [
+  {
+   "station": "playground",
+   "role": "Sun hub: parent gear, free play (Tap & Hear, Planet Song, Rocket Trip), never assessed"
+  },
+  {
+   "station": "mercury",
+   "strand": "number",
+   "templates": [
+    "counting_tray",
+    "subitize",
+    "compare",
+    "tenframe",
+    "bond",
+    "bead_frame"
+   ],
+   "current_pack": "tenframe (stays)"
+  },
+  {
+   "station": "jupiter",
+   "strand": "number",
+   "templates": [
+    "numberline",
+    "number_string"
+   ],
+   "current_pack": "numberline (stays)"
+  },
+  {
+   "station": "venus",
+   "strand": "space",
+   "templates": [
+    "shadow_match",
+    "quantity_balance",
+    "place_scene",
+    "line_up",
+    "tangram",
+    "rangoli"
+   ],
+   "current_pack": "sort (moves to saturn)"
+  },
+  {
+   "station": "earth",
+   "strand": "science",
+   "note": "Earth topics",
+   "current_pack": "pattern (moves to saturn)"
+  },
+  {
+   "station": "moon",
+   "strand": "science",
+   "note": "space topics; new sub-station orbiting Earth"
+  },
+  {
+   "station": "mars",
+   "strand": "logic",
+   "templates": [
+    "rovercode",
+    "story_sequence"
+   ],
+   "current_pack": "rovercode (stays)"
+  },
+  {
+   "station": "saturn",
+   "strand": "logic",
+   "templates": [
+    "pattern",
+    "sort",
+    "math_circle"
+   ],
+   "current_pack": "compare (moves to mercury)"
+  },
+  {
+   "station": "uranus",
+   "strand": "music"
+  },
+  {
+   "station": "neptune",
+   "strand": "language"
+  }
+ ],
+ "placement": {
+  "start": "Parent sets a start level per strand in the parent gear by choosing an example the child can already do (no ages, no numbers shown to the child). Advanced track is a per-strand toggle.",
+  "probe": {
+   "items": 3,
+   "composition": [
+    "prerequisite",
+    "target",
+    "transfer"
+   ],
+   "rules": {
+    "3of3": "start one level higher (provisional)",
+    "2of3": "stay",
+    "0to1of3": "demonstrate, then offer the prerequisite"
+   },
+   "countsAsMastery": false,
+   "trigger": "parent action or first visit to a station"
+  },
+  "visit": {
+   "items": [
+    3,
+    5
+   ],
+   "maxSeconds": 180,
+   "warmup": 1,
+   "lookAhead": "at most 1 item from the next level, only when 3 of the last 4 are first-try; counts toward advancing only"
+  },
+  "support": {
+   "after2ConsecutiveMisses": [
+    "speak the true answer",
+    "reduce choices to 2",
+    "drop one CPA stage / show counters"
+   ],
+   "after3MissesInWindow": "offer the prerequisite for the rest of this visit only; next visit resumes the same level"
+  },
+  "neverErase": "Mastered levels are never un-mastered; probe skips are 'placed', not 'done', so they do not add map moons.",
+  "firstTry": "misses === 0 AND no answer-revealing hint shown (replaying the prompt is fine)"
+ },
+ "v1_volume": {
+  "levels": 75,
+  "generated": {
+   "levels": 44,
+   "itemsPerLevel": 30,
+   "reserved": {
+    "probe": 3,
+    "transfer": 3
+   },
+   "total": 1320,
+   "note": "all number, music and most space/logic levels; seeded generator + deterministic answer/uniqueness checks"
+  },
+  "authored_shared": {
+   "levels": 18,
+   "itemsPerLevel": 18,
+   "total": 324,
+   "note": "12 science levels, space.9/.12/.13 (tangram, rangoli), logic.4/.7/.11 (math circle, sequences); one item set shared across locales, prompts translated and reviewed"
+  },
+  "authored_per_locale": {
+   "levels": 13,
+   "itemsPerLevelPerLocale": 18,
+   "locales": 3,
+   "total": 702,
+   "note": "language strand; authored independently per language, never translated"
+  },
+  "total_records": 2346,
+  "minimum_viable_per_level": 13,
+  "minimum_note": "10 distinct items for two 5-item mastery sessions + 3 reserved probe items"
+ }
+}

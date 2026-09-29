@@ -1,0 +1,802 @@
+{
+  "$schema": "../schema/pack.schema.json",
+  "id": "logic",
+  "strand": "logic",
+  "station": "saturn",
+  "order": 3,
+  "name": {
+    "en": "Logic & Patterns",
+    "fr": "Logique et motifs",
+    "fa": "منطق و الگوها"
+  },
+  "name_key": "strands.logic",
+  "levels": [
+    {
+      "id": "logic.1",
+      "n": 1,
+      "track": "basic",
+      "age": "2",
+      "band": "2-3",
+      "skill": "sort-kind",
+      "objective": "Sorts 4 objects into 2 craters by kind.",
+      "template": "sort",
+      "params": {
+        "by": [
+          "kind"
+        ],
+        "groups": 2,
+        "count": 4
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "saturn",
+      "requires": [],
+      "example": "Stars in one crater, moons in the other.",
+      "status": "ready",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "logic.2",
+      "n": 2,
+      "track": "basic",
+      "age": "2-2.5",
+      "band": "2-3",
+      "skill": "sort-colour-size",
+      "objective": "Sorts 5 objects into 2 groups by colour or by size.",
+      "template": "sort",
+      "params": {
+        "groups": 2,
+        "count": 5
+      },
+      "variants": [
+        {
+          "by": [
+            "color"
+          ]
+        },
+        {
+          "by": [
+            "size"
+          ]
+        }
+      ],
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "saturn",
+      "requires": [
+        "logic.1"
+      ],
+      "example": "Big rocks here, small rocks there.",
+      "status": "ready",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "logic.3",
+      "n": 3,
+      "track": "basic",
+      "age": "2.5-3",
+      "band": "2-3",
+      "skill": "pattern-ab",
+      "objective": "Continues an AB pattern.",
+      "template": "pattern",
+      "params": {
+        "unit": "AB",
+        "choices": 2,
+        "cars": 5
+      },
+      "variants": [
+        {
+          "token": "color"
+        },
+        {
+          "token": "planet"
+        }
+      ],
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "saturn",
+      "requires": [],
+      "example": "Moon, star, moon, star, ...?",
+      "status": "ready",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "logic.4",
+      "n": 4,
+      "track": "basic",
+      "age": "3",
+      "band": "2-3",
+      "skill": "odd-one-out",
+      "objective": "Finds the one that does not belong among 4 (one feature differs).",
+      "template": "math_circle",
+      "params": {
+        "mode": "oddOne",
+        "setSize": 4,
+        "attribute": [
+          "kind",
+          "color"
+        ]
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "saturn",
+      "requires": [
+        "logic.1"
+      ],
+      "example": "Three rockets and a moon: which is different?",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "logic.5",
+      "n": 5,
+      "track": "basic",
+      "age": "3-3.5",
+      "band": "2-3",
+      "skill": "rover-forward",
+      "objective": "Plans 2-3 forward moves, then runs the rover to the sample.",
+      "template": "rovercode",
+      "params": {
+        "cols": 4,
+        "rows": 3,
+        "slots": 3
+      },
+      "mastery": {
+        "rule": "M4",
+        "window": 4,
+        "need": 3,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "mars",
+      "requires": [],
+      "example": "Three forwards to the blue rock.",
+      "status": "ready",
+      "items": [
+        {
+          "start": [
+            0,
+            2,
+            3
+          ],
+          "goal": [
+            0,
+            0
+          ],
+          "rocks": [],
+          "answer": "RFF",
+          "prompt": "tpl.rover.goal"
+        },
+        {
+          "start": [
+            2,
+            0,
+            3
+          ],
+          "goal": [
+            2,
+            2
+          ],
+          "rocks": [],
+          "answer": "LFF",
+          "prompt": "tpl.rover.goal"
+        },
+        {
+          "start": [
+            1,
+            0,
+            1
+          ],
+          "goal": [
+            1,
+            2
+          ],
+          "rocks": [],
+          "answer": "RFF",
+          "prompt": "tpl.rover.goal"
+        },
+        {
+          "start": [
+            3,
+            1,
+            2
+          ],
+          "goal": [
+            1,
+            1
+          ],
+          "rocks": [],
+          "answer": "RFF",
+          "prompt": "tpl.rover.goal"
+        },
+        {
+          "start": [
+            2,
+            0,
+            2
+          ],
+          "goal": [
+            1,
+            1
+          ],
+          "rocks": [],
+          "answer": "FRF",
+          "prompt": "tpl.rover.goal"
+        },
+        {
+          "start": [
+            1,
+            2,
+            3
+          ],
+          "goal": [
+            0,
+            1
+          ],
+          "rocks": [],
+          "answer": "FRF",
+          "prompt": "tpl.rover.goal"
+        }
+      ]
+    },
+    {
+      "id": "logic.6",
+      "n": 6,
+      "track": "basic",
+      "age": "3.5-4",
+      "band": "2-3",
+      "skill": "pattern-aab-abc",
+      "objective": "Extends AAB, ABB and ABC patterns.",
+      "template": "pattern",
+      "params": {
+        "choices": 3,
+        "cars": 6
+      },
+      "variants": [
+        {
+          "unit": "AAB",
+          "token": "color"
+        },
+        {
+          "unit": "ABB",
+          "token": "shape"
+        },
+        {
+          "unit": "ABC",
+          "token": "shape"
+        }
+      ],
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "saturn",
+      "requires": [
+        "logic.3"
+      ],
+      "example": "Rocket, rocket, moon, rocket, rocket, ...?",
+      "status": "ready",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "logic.7",
+      "n": 7,
+      "track": "basic",
+      "age": "3.5-4",
+      "band": "2-3",
+      "skill": "sequence-steps",
+      "objective": "Puts 3 pictured steps of a familiar procedure in order.",
+      "template": "story_sequence",
+      "params": {
+        "steps": 3,
+        "cardType": "picture",
+        "narration": true,
+        "set": "procedures"
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "mars",
+      "requires": [],
+      "example": "Helmet on, climb in, blast off.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "logic.8",
+      "n": 8,
+      "track": "advanced",
+      "age": "4+",
+      "band": "4-5",
+      "skill": "pattern-missing-fix",
+      "objective": "Fills a gap inside AB/AAB/ABC patterns and finds the wrong car.",
+      "template": "pattern",
+      "params": {
+        "unit": [
+          "AB",
+          "AAB",
+          "ABC"
+        ],
+        "choices": 3,
+        "cars": 6
+      },
+      "variants": [
+        {
+          "blank": "middle"
+        },
+        {
+          "fixMode": true
+        }
+      ],
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "saturn",
+      "requires": [
+        "logic.6"
+      ],
+      "example": "Red, blue, yellow, red, ?, yellow.",
+      "status": "ready",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "logic.9",
+      "n": 9,
+      "track": "advanced",
+      "age": "4+",
+      "band": "4-5",
+      "skill": "rover-one-turn",
+      "objective": "Plans a 3-4 move route with one turn; also drives step by step with direction buttons.",
+      "template": "rovercode",
+      "params": {
+        "cols": 4,
+        "rows": 4,
+        "slots": 4
+      },
+      "variants": [
+        {
+          "mode": "plan"
+        },
+        {
+          "mode": "drive"
+        }
+      ],
+      "mastery": {
+        "rule": "M4",
+        "window": 4,
+        "need": 3,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "mars",
+      "requires": [
+        "logic.5"
+      ],
+      "example": "Forward, turn left, forward to the base.",
+      "status": "ready",
+      "items": [
+        {
+          "start": [
+            1,
+            3,
+            0
+          ],
+          "goal": [
+            2,
+            1
+          ],
+          "rocks": [],
+          "answer": "FFRF",
+          "prompt": "tpl.rover.goal"
+        },
+        {
+          "start": [
+            3,
+            3,
+            0
+          ],
+          "goal": [
+            0,
+            3
+          ],
+          "rocks": [],
+          "answer": "LFFF",
+          "prompt": "tpl.rover.goal"
+        },
+        {
+          "start": [
+            2,
+            1,
+            1
+          ],
+          "goal": [
+            3,
+            3
+          ],
+          "rocks": [],
+          "answer": "FRFF",
+          "prompt": "tpl.rover.goal"
+        },
+        {
+          "start": [
+            0,
+            3,
+            0
+          ],
+          "goal": [
+            1,
+            1
+          ],
+          "rocks": [],
+          "answer": "FFRF",
+          "prompt": "tpl.rover.goal"
+        },
+        {
+          "start": [
+            0,
+            0,
+            3
+          ],
+          "goal": [
+            0,
+            3
+          ],
+          "rocks": [],
+          "answer": "LFFF",
+          "prompt": "tpl.rover.goal"
+        },
+        {
+          "start": [
+            0,
+            0,
+            1
+          ],
+          "goal": [
+            1,
+            2
+          ],
+          "rocks": [],
+          "answer": "FRFF",
+          "prompt": "tpl.rover.goal"
+        }
+      ]
+    },
+    {
+      "id": "logic.10",
+      "n": 10,
+      "track": "advanced",
+      "age": "4.5+",
+      "band": "4-5",
+      "skill": "sort-two-attributes",
+      "objective": "Sorts 6 objects by two attributes at once into 4 craters.",
+      "template": "sort",
+      "params": {
+        "by": [
+          "kind",
+          "color"
+        ],
+        "groups": 4,
+        "count": 6
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "saturn",
+      "requires": [
+        "logic.2"
+      ],
+      "example": "Red moons, blue moons, red stars, blue stars.",
+      "status": "ready",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "logic.11",
+      "n": 11,
+      "track": "advanced",
+      "age": "4.5+",
+      "band": "4-5",
+      "skill": "reasons-what-changed",
+      "objective": "Picks the odd one out and a picture of why; spots what changed between two scenes.",
+      "template": "math_circle",
+      "params": {
+        "setSize": 4,
+        "reasonCards": 3,
+        "changes": 1
+      },
+      "variants": [
+        {
+          "mode": "oddReason"
+        },
+        {
+          "mode": "whatChanged"
+        }
+      ],
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "saturn",
+      "requires": [
+        "logic.4"
+      ],
+      "example": "Which pod is odd, and why: colour, stripes or size?",
+      "evidence": "anecdotal-moderate (Zvonkin, per Kimi); low risk",
+      "raise": "math circle",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "logic.12",
+      "n": 12,
+      "track": "advanced",
+      "age": "5+",
+      "band": "4-5",
+      "skill": "rover-plan-debug",
+      "objective": "Plans 5-6 moves around rocks, and predicts then fixes one wrong command.",
+      "template": "rovercode",
+      "params": {
+        "cols": 5,
+        "rows": 4,
+        "slots": 6
+      },
+      "variants": [
+        {
+          "mode": "plan"
+        },
+        {
+          "mode": "debug",
+          "bugs": 1
+        }
+      ],
+      "mastery": {
+        "rule": "M4",
+        "window": 4,
+        "need": 3,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "mars",
+      "requires": [
+        "logic.9"
+      ],
+      "example": "The rover will bump the rock: swap the left turn for a right turn.",
+      "status": "ready",
+      "items": [
+        {
+          "start": [
+            3,
+            3,
+            3
+          ],
+          "goal": [
+            1,
+            0
+          ],
+          "rocks": [
+            [
+              0,
+              1
+            ]
+          ],
+          "answer": "FFRFFF",
+          "prompt": "tpl.rover.goal"
+        },
+        {
+          "start": [
+            0,
+            1,
+            2
+          ],
+          "goal": [
+            3,
+            3
+          ],
+          "rocks": [
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "answer": "FFLFFF",
+          "prompt": "tpl.rover.goal"
+        },
+        {
+          "start": [
+            2,
+            0,
+            0
+          ],
+          "goal": [
+            1,
+            3
+          ],
+          "rocks": [
+            [
+              4,
+              1
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "answer": "LFLFFF",
+          "prompt": "tpl.rover.goal"
+        },
+        {
+          "start": [
+            0,
+            3,
+            1
+          ],
+          "goal": [
+            3,
+            1
+          ],
+          "rocks": [
+            [
+              0,
+              1
+            ]
+          ],
+          "answer": "FFFLFF",
+          "prompt": "tpl.rover.goal"
+        },
+        {
+          "start": [
+            4,
+            0,
+            3
+          ],
+          "goal": [
+            0,
+            1
+          ],
+          "rocks": [
+            [
+              4,
+              3
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "answer": "FFFFLF",
+          "prompt": "tpl.rover.goal"
+        },
+        {
+          "start": [
+            0,
+            0,
+            2
+          ],
+          "goal": [
+            2,
+            3
+          ],
+          "rocks": [
+            [
+              3,
+              3
+            ]
+          ],
+          "answer": "FFFLFF",
+          "prompt": "tpl.rover.goal"
+        }
+      ]
+    },
+    {
+      "id": "logic.13",
+      "n": 13,
+      "track": "advanced",
+      "age": "5.5+",
+      "band": "4-5",
+      "skill": "growing-patterns",
+      "objective": "Continues patterns that grow by 1 or 2.",
+      "template": "pattern",
+      "params": {
+        "choices": 3,
+        "cars": 4
+      },
+      "variants": [
+        {
+          "unit": "grow"
+        },
+        {
+          "unit": "grow2"
+        }
+      ],
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "saturn",
+      "requires": [
+        "logic.8",
+        "number.5"
+      ],
+      "example": "1 light, 2 lights, 3 lights, ...?",
+      "status": "ready",
+      "generator": {
+        "kind": "random"
+      }
+    }
+  ]
+}

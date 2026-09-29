@@ -4,54 +4,315 @@
   "title": "Planet Parade content pack",
   "description": "One strand's ladder of levels. Every fact needs a source URL; every language line records who reviewed it.",
   "type": "object",
-  "required": ["id", "strand", "station", "order", "name_key", "levels"],
+  "required": [
+    "id",
+    "strand",
+    "station",
+    "order",
+    "name_key",
+    "levels"
+  ],
   "properties": {
-    "$schema": { "type": "string" },
-    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
-    "strand": { "enum": ["number", "logic", "science", "language"] },
-    "station": { "enum": ["mercury", "venus", "earth", "moon", "mars", "jupiter", "saturn", "uranus", "neptune"] },
-    "order": { "type": "integer", "minimum": 1 },
-    "name_key": { "type": "string" },
-    "levels": { "type": "array", "minItems": 1, "items": { "$ref": "#/definitions/level" } }
+    "$schema": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "strand": {
+      "enum": [
+        "number",
+        "space",
+        "logic",
+        "science",
+        "language",
+        "music"
+      ]
+    },
+    "station": {
+      "enum": [
+        "mercury",
+        "venus",
+        "earth",
+        "moon",
+        "mars",
+        "jupiter",
+        "saturn",
+        "uranus",
+        "neptune"
+      ]
+    },
+    "order": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "name_key": {
+      "type": "string"
+    },
+    "levels": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/level"
+      }
+    },
+    "name": {
+      "type": "object",
+      "properties": {
+        "en": {
+          "type": "string"
+        },
+        "fr": {
+          "type": "string"
+        },
+        "fa": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "en"
+      ]
+    }
   },
   "additionalProperties": false,
   "definitions": {
     "level": {
       "type": "object",
-      "required": ["id", "band", "skill", "objective", "template", "params", "mastery"],
+      "required": [
+        "id",
+        "band",
+        "skill",
+        "objective",
+        "template",
+        "params",
+        "mastery",
+        "station",
+        "track",
+        "status"
+      ],
       "properties": {
-        "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*[.][0-9]+$" },
-        "band": { "enum": ["2-3", "4-5", "6-7"] },
-        "skill": { "type": "string", "pattern": "^[a-z0-9-]+$" },
-        "objective": { "type": "string", "minLength": 8, "description": "Parent-facing capability, e.g. 'Counts out up to 5 things'." },
-        "template": { "type": "string" },
-        "params": { "type": "object" },
-        "items": { "type": "array", "minItems": 1, "items": { "$ref": "#/definitions/item" } },
-        "generator": { "type": "object", "required": ["kind"], "properties": { "kind": { "enum": ["random"] } } },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*[.][0-9]+$"
+        },
+        "band": {
+          "enum": [
+            "2-3",
+            "4-5",
+            "6-7"
+          ]
+        },
+        "skill": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "objective": {
+          "type": "string",
+          "minLength": 8,
+          "description": "Parent-facing capability, e.g. 'Counts out up to 5 things'."
+        },
+        "template": {
+          "type": "string"
+        },
+        "params": {
+          "type": "object"
+        },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/item"
+          }
+        },
+        "generator": {
+          "type": "object",
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "random"
+              ]
+            }
+          }
+        },
         "mastery": {
-          "type": "object", "required": ["window", "need", "struggle"],
-          "properties": { "window": { "type": "integer", "minimum": 1 }, "need": { "type": "integer", "minimum": 1 }, "struggle": { "type": "integer", "minimum": 1 } },
+          "type": "object",
+          "required": [
+            "rule"
+          ],
+          "properties": {
+            "rule": {
+              "enum": [
+                "M",
+                "M4",
+                "E",
+                "L",
+                "R",
+                "X"
+              ]
+            },
+            "window": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "need": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "struggle": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "sessions": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "transfer": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "perLocale": {
+              "type": "boolean"
+            },
+            "toleranceBeat": {
+              "type": "number"
+            }
+          },
           "additionalProperties": false
+        },
+        "n": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "track": {
+          "enum": [
+            "basic",
+            "advanced"
+          ]
+        },
+        "age": {
+          "type": "string",
+          "description": "guide only, never a gate"
+        },
+        "station": {
+          "enum": [
+            "mercury",
+            "venus",
+            "earth",
+            "moon",
+            "mars",
+            "jupiter",
+            "saturn",
+            "uranus",
+            "neptune"
+          ]
+        },
+        "requires": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*[.][0-9]+$"
+          }
+        },
+        "variants": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object"
+          }
+        },
+        "example": {
+          "type": "string"
+        },
+        "evidence": {
+          "type": "string"
+        },
+        "raise": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "ready",
+            "lab",
+            "planned"
+          ]
         }
       },
-      "oneOf": [{ "required": ["items"] }, { "required": ["generator"] }],
+      "oneOf": [
+        {
+          "required": [
+            "items"
+          ]
+        },
+        {
+          "required": [
+            "generator"
+          ]
+        }
+      ],
       "additionalProperties": false
     },
     "item": {
       "type": "object",
       "properties": {
-        "prompt": { "type": "string", "description": "i18n key of the spoken prompt" },
+        "prompt": {
+          "type": "string",
+          "description": "i18n key of the spoken prompt"
+        },
         "answer": {},
-        "fact": { "type": "string", "description": "i18n key of a fact; requires `source`" },
-        "source": { "type": "string", "format": "uri", "pattern": "^https://" },
-        "i18n": { "type": "array", "items": { "type": "string" } },
+        "fact": {
+          "type": "string",
+          "description": "i18n key of a fact; requires `source`"
+        },
+        "source": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://"
+        },
+        "i18n": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "reviewed_by": {
           "type": "object",
-          "properties": { "en": { "type": ["string", "null"] }, "fr": { "type": ["string", "null"] }, "fa": { "type": ["string", "null"] } },
+          "properties": {
+            "en": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "fr": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "fa": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
           "additionalProperties": false
         }
       },
-      "if": { "required": ["fact"] }, "then": { "required": ["source"] }
+      "if": {
+        "required": [
+          "fact"
+        ]
+      },
+      "then": {
+        "required": [
+          "source"
+        ]
+      }
     }
   }
 }

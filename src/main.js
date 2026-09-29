@@ -1,6 +1,7 @@
 import './styles.css';
 import './generated/fonts.css';
 import { hush } from './audio/speech.js';
+import { PACKS } from './content/packs.js';
 import { rolloverToday, saveToday, settings, today } from './core/settings.js';
 import { drawParts, updateParts } from './engine/particles.js';
 import { drawSky, makeStars, paintSkyBackdrop } from './engine/sky.js';
@@ -22,15 +23,17 @@ resize();
 drawIcons();
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawIcons);
 // Deep links (plain tokens only): #hub · #freeplay · #rocket-fa · #find_where-fa · #freeplay_grownups
-// · #tenframe-L8-fr (a curriculum template at a given level: preview only, no progress saved).
+// · #bond-Lmin-fr / #bond-Lmax (a curriculum template at its lowest / highest level; preview only)
+// · #number-L7 (one curriculum level; preview only, nothing is saved).
 const tokens = (location.hash || '').slice(1).split('-').filter(Boolean);
 let deepLevel = null;
-for (const tk of tokens.slice(1)) { if (/^L\d+$/.test(tk)) deepLevel = +tk.slice(1); else if (LANGS.includes(tk)) setLang(tk); }
+for (const tk of tokens.slice(1)) { if (/^L(\d+|min|max)$/.test(tk)) deepLevel = tk.slice(1); else if (LANGS.includes(tk)) setLang(tk); }
 const [deepMode, deepSub] = (tokens[0] || '').split('_');
 applyLang();
 // If play time ran out earlier today, the planets are still asleep until a grown-up wakes them.
 if (today.asleep) setMode('sleep');
-else if (TEMPLATES[deepMode]) setMode('play', deepLevel ? `${deepMode}.${deepLevel}` : deepMode);
+else if (TEMPLATES[deepMode]) setMode('play', `tpl:${deepMode}:${deepLevel === 'max' ? 'max' : 'min'}`);
+else if (PACKS.some(p => p.id === deepMode) && deepLevel) setMode('play', `preview:${deepMode}.${deepLevel}`);
 else if (MODES[deepMode] && deepMode !== 'menu' && deepMode !== 'play') setMode(deepMode, deepSub);
 else setMode('hub');
 

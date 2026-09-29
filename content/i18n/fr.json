@@ -150,6 +150,11 @@
       "name": "Neptune",
       "label": "Neptune",
       "fact": "Neptune est la planète la plus venteuse."
+    },
+    "moon": {
+      "name": "la Lune",
+      "label": "Lune",
+      "fact": "La Lune tourne autour de la Terre."
     }
   },
   "numbers": [
@@ -214,12 +219,15 @@
     "DROITE"
   ],
   "stations": {
-    "tenframe": "Mercure ! On compte !",
-    "numberline": "Jupiter ! On saute sur la ligne des nombres !",
-    "compare": "Saturne ! La balance !",
-    "pattern": "La Terre ! Le petit train des motifs !",
-    "sort": "Vénus ! On range dans les cratères !",
-    "rovercode": "Mars ! On programme le rover !",
+    "mercury": "Mercure ! On compte !",
+    "venus": "Vénus ! Les formes et les mesures !",
+    "earth": "La Terre ! On explore !",
+    "moon": "La Lune ! Des questions sur l’espace !",
+    "mars": "Mars ! On programme le rover !",
+    "jupiter": "Jupiter ! On saute sur les nombres !",
+    "saturn": "Saturne ! On trie et on fait des motifs !",
+    "uranus": "Uranus ! C’est l’heure de la musique !",
+    "neptune": "Neptune ! Des jeux de mots !",
     "playground": "Le terrain de jeux !",
     "sleeping": "Cette planète dort encore. Bientôt !"
   },
@@ -298,5 +306,13 @@
       "almost": "Presque ! On essaie encore.",
       "got": "On a trouvé l’échantillon !"
     }
+  },
+  "strands": {
+    "number": "Nombres",
+    "space": "Mesures et formes",
+    "logic": "Logique et motifs",
+    "science": "Sciences : l’espace et la Terre",
+    "language": "Mots et lettres",
+    "music": "Musique et rythme"
   }
 }

@@ -1,0 +1,422 @@
+{
+  "$schema": "../schema/pack.schema.json",
+  "id": "science",
+  "strand": "science",
+  "station": "earth",
+  "order": 4,
+  "name": {
+    "en": "Science: Space & Earth",
+    "fr": "Sciences : l'espace et la Terre",
+    "fa": "علوم: فضا و زمین"
+  },
+  "name_key": "strands.science",
+  "levels": [
+    {
+      "id": "science.1",
+      "n": 1,
+      "track": "basic",
+      "age": "2",
+      "band": "2-3",
+      "skill": "day-night-sky",
+      "objective": "Sorts pictures into the day sky or the night sky.",
+      "template": "sort",
+      "params": {
+        "by": [
+          "sky"
+        ],
+        "set": "day-night",
+        "groups": 2,
+        "count": 4
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "earth",
+      "requires": [],
+      "example": "Sun and rainbow go to day; Moon and stars go to night.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "science.2",
+      "n": 2,
+      "track": "basic",
+      "age": "2-2.5",
+      "band": "2-3",
+      "skill": "sky-weather",
+      "objective": "Finds the Sun, Moon, a cloud, rain or snow in real photographs.",
+      "template": "find_hear",
+      "params": {
+        "promptKind": "word",
+        "set": "sky-weather",
+        "choices": 3,
+        "images": "photo"
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "earth",
+      "requires": [],
+      "example": "Where is the rain?",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "science.3",
+      "n": 3,
+      "track": "basic",
+      "age": "2.5-3",
+      "band": "2-3",
+      "skill": "hot-cold",
+      "objective": "Sorts hot and cold things, including sourced facts such as Mercury near the Sun and icy Neptune.",
+      "template": "sort",
+      "params": {
+        "by": [
+          "temp"
+        ],
+        "set": "hot-cold",
+        "groups": 2,
+        "count": 4
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "earth",
+      "requires": [],
+      "example": "Hot cocoa and the Sun here; snowman and Neptune there.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "science.4",
+      "n": 4,
+      "track": "basic",
+      "age": "3",
+      "band": "2-3",
+      "skill": "living-needs",
+      "objective": "Chooses what a plant or animal needs (water, light, food) from concrete choices.",
+      "template": "find_hear",
+      "params": {
+        "promptKind": "description",
+        "set": "living-needs",
+        "choices": 2
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "earth",
+      "requires": [],
+      "example": "The habitat plant is thirsty: water or a toy?",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "science.5",
+      "n": 5,
+      "track": "basic",
+      "age": "3-3.5",
+      "band": "2-3",
+      "skill": "planet-names",
+      "objective": "Finds a named planet among 3-4 real images.",
+      "template": "find_hear",
+      "params": {
+        "promptKind": "word",
+        "set": "planets",
+        "choices": [
+          3,
+          4
+        ],
+        "images": "photo"
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "moon",
+      "requires": [],
+      "example": "Where is Saturn?",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "science.6",
+      "n": 6,
+      "track": "basic",
+      "age": "3.5-4",
+      "band": "2-3",
+      "skill": "sink-float",
+      "objective": "Predicts, watches a verified test, and reports whether an object floated or sank.",
+      "template": "observe_change",
+      "params": {
+        "experiment": "sink_float",
+        "choices": 2,
+        "objects": 4
+      },
+      "mastery": {
+        "rule": "E",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "earth",
+      "requires": [],
+      "example": "Wooden block: guess, drop, watch. What happened? (never 'heavy things sink')",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "science.7",
+      "n": 7,
+      "track": "advanced",
+      "age": "4+",
+      "band": "4-5",
+      "skill": "shadows",
+      "objective": "Predicts which side a shadow falls when a lamp moves, then reports what the shadow did.",
+      "template": "observe_change",
+      "params": {
+        "experiment": "shadow",
+        "lampPositions": 3,
+        "choices": 3
+      },
+      "mastery": {
+        "rule": "E",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "earth",
+      "requires": [
+        "science.6"
+      ],
+      "example": "Lamp moves to the left: where is the rover's shadow now?",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "science.8",
+      "n": 8,
+      "track": "advanced",
+      "age": "4+",
+      "band": "4-5",
+      "skill": "earth-turns",
+      "objective": "Turns a globe with quarter-turn taps until a marked home faces the Sun (day) or away (night).",
+      "template": "dial",
+      "params": {
+        "scene": "globe",
+        "positions": 4,
+        "targets": [
+          "day",
+          "night"
+        ]
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "earth",
+      "requires": [
+        "science.1"
+      ],
+      "example": "Turn Earth until the home marker is in the dark.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "science.9",
+      "n": 9,
+      "track": "advanced",
+      "age": "4.5+",
+      "band": "4-5",
+      "skill": "body-types",
+      "objective": "Sorts planets into rocky and gas giants, then stars, planets and moons by role.",
+      "template": "sort",
+      "params": {
+        "by": [
+          "bodyType"
+        ],
+        "set": "solar-system",
+        "count": 6
+      },
+      "variants": [
+        {
+          "groups": 2,
+          "rule": "rocky-gas"
+        },
+        {
+          "groups": 3,
+          "rule": "star-planet-moon"
+        }
+      ],
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "moon",
+      "requires": [
+        "science.5"
+      ],
+      "example": "Jupiter is a gas giant; Mars is rocky.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "science.10",
+      "n": 10,
+      "track": "advanced",
+      "age": "4.5+",
+      "band": "4-5",
+      "skill": "seasons",
+      "objective": "Orders a local tree through four seasons and spots what changed between two pictures.",
+      "template": "story_sequence",
+      "params": {
+        "steps": 4,
+        "cycle": true,
+        "cardType": "picture",
+        "set": "local-seasons"
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "earth",
+      "requires": [
+        "science.2"
+      ],
+      "example": "Blossom, green leaves, orange leaves, bare branches with snow.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "science.11",
+      "n": 11,
+      "track": "advanced",
+      "age": "5+",
+      "band": "4-5",
+      "skill": "moon-phases",
+      "objective": "Sequences four simplified Moon landmarks and shows sunlight as what lights the Moon.",
+      "template": "dial",
+      "params": {
+        "scene": "moon",
+        "positions": 4,
+        "landmarks": [
+          "new",
+          "firstQuarter",
+          "full",
+          "lastQuarter"
+        ],
+        "showSun": true
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "moon",
+      "requires": [
+        "science.8"
+      ],
+      "example": "New, first quarter, full, last quarter, then again. (never 'Earth's shadow')",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "science.12",
+      "n": 12,
+      "track": "advanced",
+      "age": "5.5+",
+      "band": "4-5",
+      "skill": "fair-test",
+      "objective": "Chooses a comparison that changes one thing and says what the result showed.",
+      "template": "observe_change",
+      "params": {
+        "experiment": "ice_melt",
+        "changedFactor": "sun_vs_shade",
+        "choices": 3,
+        "askChangedFactor": true
+      },
+      "mastery": {
+        "rule": "E",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "earth",
+      "requires": [
+        "science.6",
+        "science.7"
+      ],
+      "example": "Same ice cubes, same trays, one in sun and one in shade: which melted first?",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    }
+  ]
+}

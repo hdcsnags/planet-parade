@@ -1,0 +1,632 @@
+{
+  "$schema": "../schema/pack.schema.json",
+  "id": "number",
+  "strand": "number",
+  "station": "mercury",
+  "order": 1,
+  "name": {
+    "en": "Number",
+    "fr": "Nombres",
+    "fa": "عددها"
+  },
+  "name_key": "strands.number",
+  "levels": [
+    {
+      "id": "number.1",
+      "n": 1,
+      "track": "basic",
+      "age": "2-2.5",
+      "band": "2-3",
+      "skill": "one-to-one",
+      "objective": "Gives one object to each of 1-3 recipients, and tap-counts 1-3 objects once each.",
+      "template": "counting_tray",
+      "params": {
+        "n": [
+          1,
+          3
+        ],
+        "recipients": [
+          1,
+          3
+        ],
+        "choices": 2,
+        "layout": "line"
+      },
+      "variants": [
+        {
+          "mode": "give"
+        },
+        {
+          "mode": "count"
+        }
+      ],
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "mercury",
+      "requires": [],
+      "example": "Give each of three astronauts one helmet.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "number.2",
+      "n": 2,
+      "track": "basic",
+      "age": "2-3",
+      "band": "2-3",
+      "skill": "count-to-5",
+      "objective": "Counts 1-5 objects and chooses the matching total (dots or numeral).",
+      "template": "counting_tray",
+      "params": {
+        "mode": "count",
+        "n": [
+          1,
+          5
+        ],
+        "choices": 2,
+        "answer": "dots"
+      },
+      "variants": [
+        {
+          "layout": "line"
+        },
+        {
+          "layout": "scatter"
+        },
+        {
+          "answer": "numeral"
+        }
+      ],
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "mercury",
+      "requires": [
+        "number.1"
+      ],
+      "example": "Count four moon rocks; choose the four-dot card.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "number.3",
+      "n": 3,
+      "track": "basic",
+      "age": "2.5-3",
+      "band": "2-3",
+      "skill": "subitize-4",
+      "objective": "Recognises 1-4 objects without counting, across dice, line and scattered arrangements.",
+      "template": "subitize",
+      "params": {
+        "n": [
+          1,
+          4
+        ],
+        "arrangement": [
+          "dice",
+          "line",
+          "scatter"
+        ],
+        "peekMs": 2000,
+        "replay": true,
+        "choices": 2,
+        "sayAs": "plain"
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "mercury",
+      "requires": [
+        "number.1"
+      ],
+      "example": "Three lights glow, then the dome covers them; tap the three-dot card (peek again any time).",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "number.4",
+      "n": 4,
+      "track": "basic",
+      "age": "3",
+      "band": "2-3",
+      "skill": "compare-5",
+      "objective": "Tells which group has more, fewer, or the same (to 5), even when spacing or object size differs.",
+      "template": "compare",
+      "params": {
+        "max": 5,
+        "minDiff": 2
+      },
+      "variants": [
+        {
+          "mode": "more"
+        },
+        {
+          "mode": "less"
+        },
+        {
+          "mode": "equal",
+          "minDiff": 1
+        }
+      ],
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "mercury",
+      "requires": [
+        "number.2"
+      ],
+      "example": "Four big stars spread out vs five small stars packed close: which has more?",
+      "status": "ready",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "number.5",
+      "n": 5,
+      "track": "basic",
+      "age": "3-4",
+      "band": "2-3",
+      "skill": "count-to-10",
+      "objective": "Counts 6-10 objects with one-to-one tapping and matches the total to a numeral.",
+      "template": "counting_tray",
+      "params": {
+        "mode": "count",
+        "n": [
+          6,
+          10
+        ],
+        "choices": 3,
+        "answer": "numeral"
+      },
+      "variants": [
+        {
+          "layout": "rows"
+        },
+        {
+          "layout": "scatter"
+        }
+      ],
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "mercury",
+      "requires": [
+        "number.2"
+      ],
+      "example": "Count eight satellites; tap 8.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "number.6",
+      "n": 6,
+      "track": "basic",
+      "age": "3-4",
+      "band": "2-3",
+      "skill": "add-take-small",
+      "objective": "Finds one more, one less, and adds or takes away 1-2 within 10 by hopping, with objects always available.",
+      "template": "numberline",
+      "params": {
+        "max": 10,
+        "maxStep": 2
+      },
+      "variants": [
+        {
+          "op": "add"
+        },
+        {
+          "op": "sub"
+        },
+        {
+          "op": "add",
+          "predict": true,
+          "choices": 2
+        }
+      ],
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "jupiter",
+      "requires": [
+        "number.5"
+      ],
+      "example": "Rocket on 4; one hop back. Where does it land? (the current '4 - 1' level)",
+      "status": "ready",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "number.7",
+      "n": 7,
+      "track": "advanced",
+      "age": "3.5+",
+      "band": "2-3",
+      "skill": "subitize-structured-10",
+      "objective": "Recognises 5-10 as 'five and some more' on five-frames, ten-frames and dice pairs without counting one by one.",
+      "template": "subitize",
+      "params": {
+        "n": [
+          5,
+          10
+        ],
+        "arrangement": [
+          "fiveFrame",
+          "tenFrame",
+          "dicePair"
+        ],
+        "peekMs": 2000,
+        "replay": true,
+        "choices": 3,
+        "sayAs": "fiveAnd"
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "mercury",
+      "requires": [
+        "number.3",
+        "number.5"
+      ],
+      "example": "A full row of five and two more: 'five and two, seven'.",
+      "evidence": "strong (Clements & Sarama Building Blocks, per Kimi)",
+      "raise": "structured subitizing",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "number.8",
+      "n": 8,
+      "track": "advanced",
+      "age": "3.5+",
+      "band": "2-3",
+      "skill": "bonds-5",
+      "objective": "Splits and joins totals of 3-5 into two parts (including zero), then finds a hidden part.",
+      "template": "bond",
+      "params": {
+        "whole": [
+          3,
+          5
+        ],
+        "unknown": "part",
+        "diagram": "circles",
+        "stage": [
+          "concrete",
+          "pictorial"
+        ],
+        "includeZero": true
+      },
+      "variants": [
+        {
+          "show": "split"
+        },
+        {
+          "show": "hide"
+        }
+      ],
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "mercury",
+      "requires": [
+        "number.6"
+      ],
+      "example": "Five fuel pods; three are in the rocket. How many hid under the dome?",
+      "evidence": "moderate (Singapore NEL/CPA, per Kimi and Sol)",
+      "raise": "number bonds",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "number.9",
+      "n": 9,
+      "track": "advanced",
+      "age": "4+",
+      "band": "4-5",
+      "skill": "bead-frame-10",
+      "objective": "Shows any number 1-10 on a two-row bead frame using the five landmark, and shows how many more make ten.",
+      "template": "bead_frame",
+      "params": {
+        "rows": 2,
+        "perRow": 5,
+        "target": [
+          1,
+          10
+        ],
+        "fiveColour": true
+      },
+      "variants": [
+        {
+          "mode": "build"
+        },
+        {
+          "mode": "complement"
+        }
+      ],
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "mercury",
+      "requires": [
+        "number.7"
+      ],
+      "example": "Slide beads to show 7: one full row and two. How many more make 10?",
+      "evidence": "moderate (soroban structure + rekenrek; Barner et al. 2016 is school-age)",
+      "raise": "bead frame",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "number.10",
+      "n": 10,
+      "track": "advanced",
+      "age": "4+",
+      "band": "4-5",
+      "skill": "bonds-10",
+      "objective": "Finds the missing part for totals 6-10 (missing addend), moving from pictures to numerals.",
+      "template": "bond",
+      "params": {
+        "whole": [
+          6,
+          10
+        ],
+        "unknown": "part",
+        "diagram": "circles",
+        "stage": [
+          "pictorial",
+          "abstract"
+        ],
+        "includeZero": true
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "mercury",
+      "requires": [
+        "number.8",
+        "number.9"
+      ],
+      "example": "10 is 7 and ? (circles, then '7 + ? = 10').",
+      "evidence": "moderate (Singapore)",
+      "raise": "number bonds",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "number.11",
+      "n": 11,
+      "track": "advanced",
+      "age": "4+",
+      "band": "4-5",
+      "skill": "teens-ten-and",
+      "objective": "Builds and reads 11-19 as one full ten and some more, hearing 'ten and four' before the teen name.",
+      "template": "tenframe",
+      "params": {
+        "mode": "teen",
+        "range": [
+          11,
+          19
+        ],
+        "choices": 3,
+        "sayAs": "tenAnd"
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "mercury",
+      "requires": [
+        "number.7",
+        "number.10"
+      ],
+      "example": "One full cabin and four more: 'ten and four, fourteen'.",
+      "evidence": "moderate (Miller et al. 1995, per Kimi)",
+      "raise": "teens as ten-and-more",
+      "status": "ready",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "number.12",
+      "n": 12,
+      "track": "advanced",
+      "age": "4.5+",
+      "band": "4-5",
+      "skill": "number-strings",
+      "objective": "Follows an untimed 3-step string within 10 ('show 6, add 2, take 1'), with objects on demand.",
+      "template": "number_string",
+      "params": {
+        "start": [
+          1,
+          6
+        ],
+        "steps": 3,
+        "ops": [
+          "+",
+          "-"
+        ],
+        "stepMax": 2,
+        "maxN": 10,
+        "objectsOnDemand": true
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "jupiter",
+      "requires": [
+        "number.10"
+      ],
+      "example": "Show 6. Two more land. One flies away. How many now?",
+      "evidence": "anecdotal at this age (Kimi, Sol)",
+      "raise": "mental-math strings",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "number.13",
+      "n": 13,
+      "track": "advanced",
+      "age": "5+",
+      "band": "4-5",
+      "skill": "make-ten-20",
+      "objective": "Adds within 20 by completing ten first on a double ten-frame (8 + 5 = 8 + 2 + 3).",
+      "template": "tenframe",
+      "params": {
+        "mode": "makeTen",
+        "frames": 2,
+        "maxN": 20,
+        "ops": [
+          "+"
+        ],
+        "bridgeTen": true,
+        "choices": 3
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "mercury",
+      "requires": [
+        "number.10",
+        "number.11"
+      ],
+      "example": "8 + 5: move 2 to fill the first cabin; 10 and 3 is 13.",
+      "evidence": "moderate at 5-7; UNVERIFIED at 4 (Sol)",
+      "raise": "make-ten",
+      "status": "ready",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "number.14",
+      "n": 14,
+      "track": "advanced",
+      "age": "5.5+",
+      "band": "4-5",
+      "skill": "bar-model-20",
+      "objective": "Solves spoken part-whole stories within 20 using a bar strip, finding either a part or the whole.",
+      "template": "bond",
+      "params": {
+        "whole": [
+          5,
+          20
+        ],
+        "unknown": [
+          "part",
+          "whole"
+        ],
+        "diagram": "bar",
+        "story": true,
+        "stage": [
+          "pictorial",
+          "abstract"
+        ]
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "mercury",
+      "requires": [
+        "number.10",
+        "number.11"
+      ],
+      "example": "12 probes; 5 went to Mars. The bar shows 5 and a gap: how many went to the Moon?",
+      "evidence": "moderate (Singapore primary syllabus, per Sol)",
+      "raise": "bar models",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    }
+  ]
+}

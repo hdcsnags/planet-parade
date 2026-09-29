@@ -35,7 +35,7 @@ function setMode(name, sub) {
   document.body.classList.toggle('in-game', !inMenu && !onMap);
   $('#menu').hidden = !inMenu; $('#homeBtn').hidden = onMap || asleep; $('#gearBtn').hidden = !(onMap || inMenu || asleep);
   $('#langBtn').hidden = asleep;
-  $('#repeatBtn').hidden = !M.repeat; $('#stars').hidden = name !== 'find'; $('#findBtn').hidden = name !== 'words';
+  $('#repeatBtn').hidden = !M.repeat || onMap; // the map's gear sits in that corner $('#stars').hidden = name !== 'find'; $('#findBtn').hidden = name !== 'words';
   $('#songBtn').hidden = name !== 'free'; $('#songBtn').setAttribute('aria-pressed', false);
   if (M.start) M.start(sub);
 }

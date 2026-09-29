@@ -3,7 +3,7 @@
 //   node tools/tour.mjs legacy     → only routes tagged "legacy"
 // Writes tours/<set>/<name>.png, a contact sheet tours/<set>/_sheet.png, and fails on page errors.
 import { chromium } from 'playwright-core';
-import { mkdirSync, writeFileSync, existsSync, mkdtempSync } from 'node:fs';
+import { mkdirSync, writeFileSync, existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawn } from 'node:child_process';
@@ -12,6 +12,7 @@ import { pathToFileURL } from 'node:url';
 const set = process.argv[2] || 'all';
 const PAGE = pathToFileURL(resolve('dist/index.html')).href;
 const L = ['en', 'fr', 'fa'];
+const TEMPLATE_IDS = [...readFileSync('src/templates/index.js', 'utf8').matchAll(/^\s+(\w+): \w+,/gm)].map(m => m[1]);
 // [name, hash, tags, langs]
 const ROUTES = [
   ['menu', 'freeplay', ['legacy'], ['en', 'fa']],
@@ -24,11 +25,11 @@ const ROUTES = [
   ['sleep', 'sleep', ['legacy'], ['en']],
   ['grownups', 'freeplay_grownups', ['legacy', 'new'], ['en']],
   ['hub', 'hub', ['new'], L],
-  ...['tenframe', 'numberline', 'compare', 'pattern', 'sort', 'rovercode'].flatMap(tp =>
-    [1, 8].map(lv => [`${tp}-L${lv}`, `${tp}-L${lv}`, ['new'], L])),
+  // every registered curriculum template at its lowest and highest level, in all three languages
+  ...TEMPLATE_IDS.flatMap(tp => ['min', 'max'].map(lv => [`${tp}-L${lv}`, `${tp}-L${lv}`, ['new'], L])),
 ];
 const routes = ROUTES.filter(r => set === 'all' || r[2].includes(set));
-const out = resolve('tours', set); mkdirSync(out, { recursive: true });
+const out = resolve('tours', set); rmSync(out, { recursive: true, force: true }); mkdirSync(out, { recursive: true });
 
 // Playwright's pipe launch hangs with current Edge builds, so start Edge ourselves (new headless mode)
 // on a debugging port and attach over CDP.

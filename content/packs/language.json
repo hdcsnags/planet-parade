@@ -1,0 +1,476 @@
+{
+  "$schema": "../schema/pack.schema.json",
+  "id": "language",
+  "strand": "language",
+  "station": "neptune",
+  "order": 5,
+  "name": {
+    "en": "Words & Letters",
+    "fr": "Mots et lettres",
+    "fa": "واژه‌ها و حروف"
+  },
+  "name_key": "strands.language",
+  "levels": [
+    {
+      "id": "language.1",
+      "n": 1,
+      "track": "basic",
+      "age": "2",
+      "band": "2-3",
+      "skill": "vocab",
+      "objective": "Taps a familiar object among 2-3 pictures after hearing its name.",
+      "template": "find_hear",
+      "params": {
+        "promptKind": "word",
+        "set": "space-words",
+        "choices": [
+          2,
+          3
+        ]
+      },
+      "mastery": {
+        "rule": "L",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1,
+        "perLocale": true
+      },
+      "station": "neptune",
+      "requires": [],
+      "example": "Where is the comet?",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "language.2",
+      "n": 2,
+      "track": "basic",
+      "age": "2-2.5",
+      "band": "2-3",
+      "skill": "one-step-direction",
+      "objective": "Follows a one-step spoken action with a familiar object.",
+      "template": "place_scene",
+      "params": {
+        "relations": [
+          "in",
+          "on",
+          "next-to"
+        ],
+        "steps": 1,
+        "zones": 3,
+        "promptKind": "action"
+      },
+      "mastery": {
+        "rule": "L",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1,
+        "perLocale": true
+      },
+      "station": "neptune",
+      "requires": [],
+      "example": "Put the astronaut in the rocket.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "language.3",
+      "n": 3,
+      "track": "basic",
+      "age": "2.5-3",
+      "band": "2-3",
+      "skill": "opposites",
+      "objective": "Picks the picture for one of a pair of opposites (big/small, up/down, full/empty, fast/slow).",
+      "template": "find_hear",
+      "params": {
+        "promptKind": "opposite",
+        "pairs": [
+          "big-small",
+          "up-down",
+          "full-empty",
+          "fast-slow"
+        ],
+        "choices": 2
+      },
+      "mastery": {
+        "rule": "L",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1,
+        "perLocale": true
+      },
+      "station": "neptune",
+      "requires": [
+        "language.1"
+      ],
+      "example": "The rocket goes up. Now tap the one going down.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "language.4",
+      "n": 4,
+      "track": "basic",
+      "age": "3",
+      "band": "2-3",
+      "skill": "two-step-direction",
+      "objective": "Follows a two-step instruction in order.",
+      "template": "find_hear",
+      "params": {
+        "promptKind": "word",
+        "steps": 2,
+        "choices": 4,
+        "set": "space-words"
+      },
+      "mastery": {
+        "rule": "L",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1,
+        "perLocale": true
+      },
+      "station": "neptune",
+      "requires": [
+        "language.2"
+      ],
+      "example": "Tap the rocket, then the Moon.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "language.5",
+      "n": 5,
+      "track": "basic",
+      "age": "3-3.5",
+      "band": "2-3",
+      "skill": "story-order",
+      "objective": "Orders 3 pictures after hearing a short story.",
+      "template": "story_sequence",
+      "params": {
+        "steps": 3,
+        "cardType": "picture",
+        "narration": true,
+        "set": "short-stories"
+      },
+      "mastery": {
+        "rule": "L",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1,
+        "perLocale": true
+      },
+      "station": "neptune",
+      "requires": [
+        "language.1"
+      ],
+      "example": "Hear the story, then put the three pictures in order.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "language.6",
+      "n": 6,
+      "track": "basic",
+      "age": "3.5-4",
+      "band": "2-3",
+      "skill": "syllables",
+      "objective": "Taps once per syllable of a familiar word (tap count, not timing).",
+      "template": "sound_match",
+      "params": {
+        "mode": "syllables",
+        "syllables": [
+          1,
+          3
+        ]
+      },
+      "mastery": {
+        "rule": "L",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1,
+        "perLocale": true
+      },
+      "station": "neptune",
+      "requires": [
+        "language.1"
+      ],
+      "example": "Ju-pi-ter: three taps.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "language.7",
+      "n": 7,
+      "track": "basic",
+      "age": "3.5-4",
+      "band": "2-3",
+      "skill": "rhyme",
+      "objective": "Picks the picture that rhymes with a spoken word, using reviewed pairs per language.",
+      "template": "sound_match",
+      "params": {
+        "mode": "rhyme",
+        "choices": 2
+      },
+      "mastery": {
+        "rule": "L",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1,
+        "perLocale": true
+      },
+      "station": "neptune",
+      "requires": [
+        "language.6"
+      ],
+      "example": "EN moon: spoon or star? (FR/FA use their own pairs)",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "language.8",
+      "n": 8,
+      "track": "advanced",
+      "age": "4+",
+      "band": "4-5",
+      "skill": "first-sound",
+      "objective": "Matches pictures by the same first sound, without printed letters.",
+      "template": "sound_match",
+      "params": {
+        "mode": "firstSound",
+        "choices": 3
+      },
+      "mastery": {
+        "rule": "L",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1,
+        "perLocale": true
+      },
+      "station": "neptune",
+      "requires": [
+        "language.6"
+      ],
+      "example": "Mmm-moon: Mars, Sun or star?",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "language.9",
+      "n": 9,
+      "track": "advanced",
+      "age": "4+",
+      "band": "4-5",
+      "skill": "letter-names",
+      "objective": "Finds a named letter among 3-4 in the child's script (Persian isolated forms first).",
+      "template": "find_hear",
+      "params": {
+        "promptKind": "letter",
+        "choices": [
+          3,
+          4
+        ],
+        "inventory": "taught",
+        "forms": "isolated"
+      },
+      "mastery": {
+        "rule": "L",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1,
+        "perLocale": true
+      },
+      "station": "neptune",
+      "requires": [
+        "language.1"
+      ],
+      "example": "Where is M? / its Persian counterpart in the fa pack.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "language.10",
+      "n": 10,
+      "track": "advanced",
+      "age": "4.5+",
+      "band": "4-5",
+      "skill": "letter-sound",
+      "objective": "Hears a taught sound and picks its letter from a small cumulative set; tracing is optional and never scored.",
+      "template": "letter_path",
+      "params": {
+        "inventorySize": [
+          4,
+          12
+        ],
+        "choices": 3,
+        "trace": "optional",
+        "scored": "selection"
+      },
+      "mastery": {
+        "rule": "L",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1,
+        "perLocale": true
+      },
+      "station": "neptune",
+      "requires": [
+        "language.8",
+        "language.9"
+      ],
+      "example": "Hear /s/; tap S, then trace it with big checkpoint taps if she wants.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "language.11",
+      "n": 11,
+      "track": "advanced",
+      "age": "5+",
+      "band": "4-5",
+      "skill": "blending",
+      "objective": "Blends 2-3 spoken sounds into a word and taps its picture.",
+      "template": "sound_match",
+      "params": {
+        "mode": "blend",
+        "phonemes": [
+          2,
+          3
+        ],
+        "choices": 3
+      },
+      "mastery": {
+        "rule": "L",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1,
+        "perLocale": true
+      },
+      "station": "neptune",
+      "requires": [
+        "language.8"
+      ],
+      "example": "s-u-n: which picture?",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "language.12",
+      "n": 12,
+      "track": "advanced",
+      "age": "5+",
+      "band": "4-5",
+      "skill": "build-words",
+      "objective": "Builds short words from taught letter tiles after hearing them.",
+      "template": "word_builder",
+      "params": {
+        "phonemes": 3,
+        "tiles": [
+          3,
+          5
+        ],
+        "inventory": "taught",
+        "vowelSupport": true
+      },
+      "mastery": {
+        "rule": "M4",
+        "window": 4,
+        "need": 3,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "neptune",
+      "requires": [
+        "language.10",
+        "language.11"
+      ],
+      "example": "Build 'sun' from four tiles.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "language.13",
+      "n": 13,
+      "track": "advanced",
+      "age": "5.5+",
+      "band": "4-5",
+      "skill": "decodable-sentence",
+      "objective": "Reads a short fully decodable sentence and picks the matching scene.",
+      "template": "find_hear",
+      "params": {
+        "promptKind": "sentence",
+        "audio": false,
+        "words": [
+          3,
+          4
+        ],
+        "choices": 3,
+        "inventory": "taught"
+      },
+      "mastery": {
+        "rule": "L",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1,
+        "perLocale": true
+      },
+      "station": "neptune",
+      "requires": [
+        "language.12"
+      ],
+      "example": "EN 'The cat sat.' once every letter in it is taught; fr/fa packs author their own texts.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    }
+  ]
+}

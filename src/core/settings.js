@@ -1,5 +1,5 @@
 /* ---------- settings (per-device convenience only) ---------- */
-const settings = { voice: true, facts: true, faces: true, sound: true, choices: 3, maxNum: 5, step: 1, lang: 'en', session: 0, voiceNames: {}, countLvl: 0 };
+const settings = { voice: true, facts: true, faces: true, sound: true, choices: 3, maxNum: 5, step: 1, lang: 'en', session: 0, voiceNames: {}, countLvl: 0, familyLab: false };
 try { Object.assign(settings, JSON.parse(localStorage.getItem('planet-parade') || '{}')); } catch (e) {}
 const saveSettings = () => { try { localStorage.setItem('planet-parade', JSON.stringify(settings)); } catch (e) {} };
 

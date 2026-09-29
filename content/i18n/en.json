@@ -111,6 +111,11 @@
       "name": "Neptune",
       "label": "Neptune",
       "fact": "Neptune is the windiest planet."
+    },
+    "moon": {
+      "name": "the Moon",
+      "label": "Moon",
+      "fact": "The Moon travels around Earth."
     }
   },
   "numbers": [
@@ -175,12 +180,15 @@
     "RIGHT"
   ],
   "stations": {
-    "tenframe": "Mercury! Let’s count!",
-    "numberline": "Jupiter! Let’s hop on the number line!",
-    "compare": "Saturn! The balance scale!",
-    "pattern": "Earth! The pattern train!",
-    "sort": "Venus! Let’s sort into craters!",
-    "rovercode": "Mars! Let’s program the rover!",
+    "mercury": "Mercury! Let’s count!",
+    "venus": "Venus! Shapes and measuring!",
+    "earth": "Earth! Let’s explore!",
+    "moon": "The Moon! Space questions!",
+    "mars": "Mars! Let’s program the rover!",
+    "jupiter": "Jupiter! Number hops!",
+    "saturn": "Saturn! Sorting and patterns!",
+    "uranus": "Uranus! Music time!",
+    "neptune": "Neptune! Word games!",
     "playground": "The playground!",
     "sleeping": "This planet is still sleeping. Soon!"
   },
@@ -259,5 +267,13 @@
       "almost": "Almost! Let’s try again.",
       "got": "We found the sample!"
     }
+  },
+  "strands": {
+    "number": "Number",
+    "space": "Measuring & Shapes",
+    "logic": "Logic & Patterns",
+    "science": "Science: Space & Earth",
+    "language": "Words & Letters",
+    "music": "Music & Rhythm"
   }
 }

@@ -1,0 +1,345 @@
+{
+  "$schema": "../schema/pack.schema.json",
+  "id": "music",
+  "strand": "music",
+  "station": "uranus",
+  "order": 6,
+  "name": {
+    "en": "Music & Rhythm",
+    "fr": "Musique et rythme",
+    "fa": "موسیقی و ریتم"
+  },
+  "name_key": "strands.music",
+  "levels": [
+    {
+      "id": "music.1",
+      "n": 1,
+      "track": "basic",
+      "age": "2",
+      "band": "2-3",
+      "skill": "steady-beat",
+      "objective": "Plays along on the big drum with a slow steady beat (exploration, not scored).",
+      "template": "echo",
+      "params": {
+        "mode": "beat",
+        "bpm": [
+          60,
+          80
+        ],
+        "beats": 8
+      },
+      "mastery": {
+        "rule": "X"
+      },
+      "station": "uranus",
+      "requires": [],
+      "example": "Boom, boom, boom, boom with the pulsar.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "music.2",
+      "n": 2,
+      "track": "basic",
+      "age": "2-2.5",
+      "band": "2-3",
+      "skill": "loud-soft",
+      "objective": "Tells which of two sounds was louder or softer.",
+      "template": "echo",
+      "params": {
+        "mode": "compare",
+        "attribute": "loudness",
+        "choices": 2
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "uranus",
+      "requires": [],
+      "example": "Which planet drum was louder?",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "music.3",
+      "n": 3,
+      "track": "basic",
+      "age": "2.5-3",
+      "band": "2-3",
+      "skill": "fast-slow",
+      "objective": "Tells which of two beats was faster or slower.",
+      "template": "echo",
+      "params": {
+        "mode": "compare",
+        "attribute": "tempo",
+        "choices": 2,
+        "bpm": [
+          60,
+          120
+        ]
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "uranus",
+      "requires": [],
+      "example": "Fast rocket beat or slow drifting-asteroid beat?",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "music.4",
+      "n": 4,
+      "track": "basic",
+      "age": "3",
+      "band": "2-3",
+      "skill": "echo-2",
+      "objective": "Taps back a 2-tap pattern.",
+      "template": "echo",
+      "params": {
+        "mode": "echo",
+        "beats": 2,
+        "rests": 0,
+        "pitches": 1
+      },
+      "mastery": {
+        "rule": "R",
+        "window": 4,
+        "need": 3,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 0,
+        "toleranceBeat": 0.35
+      },
+      "station": "uranus",
+      "requires": [
+        "music.1"
+      ],
+      "example": "Ta ta: your turn.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "music.5",
+      "n": 5,
+      "track": "basic",
+      "age": "3-3.5",
+      "band": "2-3",
+      "skill": "high-low",
+      "objective": "Tells which of two notes was higher or lower.",
+      "template": "echo",
+      "params": {
+        "mode": "compare",
+        "attribute": "pitch",
+        "choices": 2,
+        "intervalSemitones": 12
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "uranus",
+      "requires": [],
+      "example": "Tiny satellite chime or big gas-giant rumble: which was higher?",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "music.6",
+      "n": 6,
+      "track": "basic",
+      "age": "3.5-4",
+      "band": "2-3",
+      "skill": "echo-3",
+      "objective": "Taps back a 3-beat pattern with long and short sounds.",
+      "template": "echo",
+      "params": {
+        "mode": "echo",
+        "beats": 3,
+        "rests": 0,
+        "longShort": true,
+        "pitches": 1
+      },
+      "mastery": {
+        "rule": "R",
+        "window": 4,
+        "need": 3,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 0,
+        "toleranceBeat": 0.35
+      },
+      "station": "uranus",
+      "requires": [
+        "music.4"
+      ],
+      "example": "Ta, ta-ti, ta.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "music.7",
+      "n": 7,
+      "track": "advanced",
+      "age": "4+",
+      "band": "4-5",
+      "skill": "contour",
+      "objective": "Tells whether a 3-note tune goes up or down.",
+      "template": "echo",
+      "params": {
+        "mode": "compare",
+        "attribute": "contour",
+        "notes": 3,
+        "choices": 2
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "uranus",
+      "requires": [
+        "music.5"
+      ],
+      "example": "Rocket climbing (do-mi-sol) or landing (sol-mi-do)?",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "music.8",
+      "n": 8,
+      "track": "advanced",
+      "age": "4.5+",
+      "band": "4-5",
+      "skill": "echo-4-rest",
+      "objective": "Taps back 4 beats that include one silent beat.",
+      "template": "echo",
+      "params": {
+        "mode": "echo",
+        "beats": 4,
+        "rests": 1,
+        "pitches": 1
+      },
+      "mastery": {
+        "rule": "R",
+        "window": 4,
+        "need": 3,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 0,
+        "toleranceBeat": 0.35
+      },
+      "station": "uranus",
+      "requires": [
+        "music.6"
+      ],
+      "example": "Ta, ta, (rest), ta.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "music.9",
+      "n": 9,
+      "track": "advanced",
+      "age": "5+",
+      "band": "4-5",
+      "skill": "tune-3",
+      "objective": "Plays back a 3-note tune on a 3-key planet xylophone.",
+      "template": "echo",
+      "params": {
+        "mode": "melody",
+        "keys": 3,
+        "notes": 3
+      },
+      "mastery": {
+        "rule": "R",
+        "window": 4,
+        "need": 3,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 0,
+        "toleranceBeat": 0.35
+      },
+      "station": "uranus",
+      "requires": [
+        "music.7",
+        "music.8"
+      ],
+      "example": "Mercury, Venus, Earth keys: play it back.",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    },
+    {
+      "id": "music.10",
+      "n": 10,
+      "track": "advanced",
+      "age": "5+",
+      "band": "4-5",
+      "skill": "rhythm-pattern",
+      "objective": "Matches a heard AB or AAB rhythm to its pattern train.",
+      "template": "pattern",
+      "params": {
+        "unit": [
+          "AB",
+          "AAB"
+        ],
+        "token": "rhythm",
+        "choices": 3,
+        "cars": 6
+      },
+      "mastery": {
+        "rule": "M",
+        "window": 5,
+        "need": 4,
+        "struggle": 3,
+        "sessions": 2,
+        "transfer": 1
+      },
+      "station": "uranus",
+      "requires": [
+        "music.8",
+        "logic.6"
+      ],
+      "example": "Long, short, long, short: which train shows it?",
+      "status": "planned",
+      "generator": {
+        "kind": "random"
+      }
+    }
+  ]
+}
