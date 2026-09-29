@@ -59,10 +59,12 @@ export function drawTile(c, tl, t, { dots = false, label = null } = {}) {
   c.fillStyle = '#ffc93c'; c.font = `800 ${h * (dots ? .42 : .55)}px ${fontFor()}`; c.textAlign = 'center'; c.textBaseline = 'middle';
   c.fillText(label ?? fmt(tl.n), 0, dots ? -h * .13 : h * .02);
   if (dots) {
-    const n = tl.n, perRow = Math.min(n, 5), rows = Math.ceil(n / 5), dr = Math.min(h * .065, w / (perRow * 2.8));
+    // dots under the numeral, or (dots-only cards, label '') big and centred
+    const only = label === '', n = tl.n, perRow = Math.min(n, 5), rows = Math.ceil(n / 5);
+    const dr = only ? Math.min(h * .11, w / (perRow * 2.7)) : Math.min(h * .065, w / (perRow * 2.8)), cy0 = only ? 0 : h * .24;
     for (let i = 0; i < n; i++) {
       const row = Math.floor(i / 5), col = i % 5, inRow = Math.min(5, n - row * 5);
-      c.fillStyle = '#6ef0c2'; c.beginPath(); c.arc((col - (inRow - 1) / 2) * dr * 2.8, h * .24 + (row - (rows - 1) / 2) * dr * 2.6, dr, 0, TAU); c.fill();
+      c.fillStyle = '#6ef0c2'; c.beginPath(); c.arc((col - (inRow - 1) / 2) * dr * 2.7, cy0 + (row - (rows - 1) / 2) * dr * 2.6, dr, 0, TAU); c.fill();
     }
   }
   c.restore();

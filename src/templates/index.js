@@ -6,6 +6,7 @@ import { NumberString } from './numberstring.js';
 import { Pattern } from './pattern.js';
 import { RoverCode } from './rovercode.js';
 import { Sort } from './sort.js';
+import { Subitize } from './subitize.js';
 import { TenFrame } from './tenframe.js';
 
 // Template registry: pack levels name a template id; the SessionRunner instantiates it.
@@ -29,4 +30,5 @@ export const TEMPLATES = {
   bond: Bond,
   bead_frame: BeadFrame,
   number_string: NumberString,
+  subitize: Subitize,
 };

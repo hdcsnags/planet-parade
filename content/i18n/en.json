@@ -291,6 +291,11 @@
       "fly": "{b} fly away!",
       "flyOne": "One flies away!",
       "ask": "How many now?"
+    },
+    "subitize": {
+      "watch": "Watch the lights!",
+      "ask": "How many lights did you see?",
+      "peekHint": "Want to peek again? Tap the eye!"
     }
   },
   "strands": {

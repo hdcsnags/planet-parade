@@ -330,6 +330,11 @@
       "fly": "{b} s’envolent !",
       "flyOne": "Une s’envole !",
       "ask": "Combien maintenant ?"
+    },
+    "subitize": {
+      "watch": "Regarde les lumières !",
+      "ask": "Combien de lumières as-tu vues ?",
+      "peekHint": "Tu veux regarder encore ? Touche l’œil !"
     }
   },
   "strands": {

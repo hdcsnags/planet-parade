@@ -140,7 +140,7 @@
         "number.1"
       ],
       "example": "Three lights glow, then the dome covers them; tap the three-dot card (peek again any time).",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -316,7 +316,7 @@
       "example": "A full row of five and two more: 'five and two, seven'.",
       "evidence": "strong (Clements & Sarama Building Blocks, per Kimi)",
       "raise": "structured subitizing",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
