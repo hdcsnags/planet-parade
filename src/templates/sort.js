@@ -1,10 +1,11 @@
 import { chime, pop } from '../audio/audio.js';
 import { TAU, clamp, ease, pick, shuffle } from '../core/util.js';
+import { drawPlanet, drawSun, goldStar } from '../engine/art.js';
 import { drawObj } from '../engine/components.js';
 import { sparkle } from '../engine/particles.js';
 import { H, W, cx } from '../engine/stage.js';
 import { Template } from '../engine/template.js';
-import { SCALE } from '../engine/world.js';
+import { MOON_P, PLANETS, SCALE } from '../engine/world.js';
 import { lookup, t } from '../i18n/i18n.js';
 
 // Sort into craters: one space object at a time appears at the top; she taps the crater where it
@@ -23,7 +24,9 @@ import { lookup, t } from '../i18n/i18n.js';
 const VALUES = { kind: ['star', 'moon', 'rocket'], color: ['pink', 'blue', 'gold'], size: ['big', 'small'] };
 export class Sort extends Template {
   makeRound() {
-    const p = this.p, by = p.by || ['kind'], groups = p.groups || 2;
+    const p = this.p;
+    if (p.set) { this.makeSetRound(); return; }
+    const by = p.by || ['kind'], groups = p.groups || 2;
     // pick the groups: combinations of the chosen attribute values
     let combos = [{}];
     for (const a of by) combos = combos.flatMap(cmb => VALUES[a].map(v => ({ ...cmb, [a]: v })));
@@ -37,8 +40,18 @@ export class Sort extends Template {
     this.next();
     this.ask(t('tpl.sort.go'));
   }
+  // Science picture sets: the groups are facts (sources in the pack level's `sources`).
+  makeSetRound() {
+    const p = this.p, def = SORT_SETS[p.set === 'solar-system' ? (p.rule || 'rocky-gas') : p.set];
+    this.setMode = true; this.by = ['group'];
+    this.groups = def.slice(0, p.groups || def.length).map(([key, members]) => ({ key: { group: key }, sample: { set: members[0] }, items: [], members }));
+    const n = p.count || 4, all = this.groups.flatMap(g => g.members.map(m => ({ set: m, group: g.key.group })));
+    this.queue = shuffle(Array.from({ length: n }, (_, i) => { const g = this.groups[i % this.groups.length]; return { set: pick(g.members), group: g.key.group }; }));
+    void all; this.flying = null; this.next();
+    this.ask(t('tpl.sort.go'));
+  }
   next() { this.cur = this.queue.shift() || null; if (this.cur) this.cur.scale = .01, this.cur.sv = 0; }
-  matches(o, g) { return this.by.every(a => o[a] === g.key[a]); }
+  matches(o, g) { return this.setMode ? o.group === g.key.group : this.by.every(a => o[a] === g.key[a]); }
   layout() {
     const n = this.groups.length, cw = (W - 32) / n;
     this.groups.forEach((g, i) => { g.x = 16 + cw * (i + .5); g.y = H * .74; g.rx = Math.min(cw * .42, 200); g.ry = g.rx * .42; });
@@ -52,6 +65,7 @@ export class Sort extends Template {
       pop(); this.flying = { o: this.cur, g, t: 0 }; this.cur = null;
     } else {
       this.wob = 1;
+      if (this.setMode) { this.miss(t('tpl.sort.notHere')); return; }
       // name the attribute that does not match
       const bad = this.by.find(a => this.cur[a] !== g.key[a]);
       const line = bad === 'color' ? t('tpl.sort.isColor', { c: lookup(`colors.${this.cur.color}`) })
@@ -85,22 +99,43 @@ export class Sort extends Template {
       // sign: the picture of what belongs here
       c.fillStyle = 'rgba(22,29,79,.9)'; c.beginPath(); c.arc(g.x, g.y - g.ry - 44, 38, 0, TAU); c.fill();
       c.lineWidth = 3; c.strokeStyle = 'rgba(255,255,255,.35)'; c.stroke();
-      drawObj(c, g.sample, g.x, g.y - g.ry - 44, 26, tt, { faces: false });
+      drawItem(c, g.sample, g.x, g.y - g.ry - 44, 26, tt);
       // what she has sorted so far, nestled in the crater
-      g.items.forEach((o, i) => drawObj(c, o, g.x + (i - (g.items.length - 1) / 2) * Math.min(28, g.rx * 1.6 / Math.max(1, g.items.length)), g.y - 4, 16, tt, { faces: false }));
+      g.items.forEach((o, i) => drawItem(c, o, g.x + (i - (g.items.length - 1) / 2) * Math.min(28, g.rx * 1.6 / Math.max(1, g.items.length)), g.y - 4, 16, tt));
       c.restore();
     });
     if (this.flying) {
       const f = this.flying, e = ease(Math.min(1, f.t));
       const x = this.itemX + (f.g.x - this.itemX) * e, y = this.itemY + (f.g.y - this.itemY) * e - Math.sin(e * Math.PI) * 60;
-      drawObj(c, f.o, x, y, this.itemR * (1 - e * .6), tt);
+      drawItem(c, f.o, x, y, this.itemR * (1 - e * .6), tt);
     }
     if (this.cur) {
       c.save(); c.translate(this.itemX, this.itemY + Math.sin(tt * 1.6) * 4); c.rotate(Math.sin(tt * 28) * .16 * (this.wob || 0));
       const s = Math.max(.01, this.cur.scale); c.scale(s, s);
-      drawObj(c, this.cur, 0, 0, this.itemR, tt); c.restore();
+      drawItem(c, this.cur, 0, 0, this.itemR, tt); c.restore();
     }
   }
 }
 
-export { VALUES };
+
+
+// Sorting sets for the Science strand. Rocky vs gas uses only Jupiter and Saturn as gas giants:
+// Uranus and Neptune are ice giants, so they stay out of that sort (NASA).
+const SORT_SETS = {
+  'day-night': [['day', ['sun', 'rainbow']], ['night', ['moon', 'star']]],
+  'hot-cold': [['hot', ['sun', 'venus']], ['cold', ['snow', 'neptune']]],
+  'rocky-gas': [['rocky', ['mars', 'earth', 'venus', 'mercury']], ['gas', ['jupiter', 'saturn']]],
+  'star-planet-moon': [['star', ['sun']], ['planet', ['earth', 'mars', 'jupiter', 'saturn']], ['moon', ['moon']]],
+};
+function drawItem(c, o, x, y, r, tt) {
+  if (!o.set) { drawObj(c, o, x, y, r, tt, { faces: false }); return; }
+  const id = o.set, pl = PLANETS.find(q => q.id === id);
+  if (pl) drawPlanet(c, pl, x, y, r * (id === 'saturn' ? .55 : .85), tt, {});
+  else if (id === 'sun') drawSun(c, x, y, r * .6, tt, {});
+  else if (id === 'moon') drawPlanet(c, MOON_P, x, y, r * .8, tt, {});
+  else if (id === 'star') goldStar(c, x, y, r * .9, tt, null);
+  else if (id === 'rainbow') { ['#ff5a6e', '#ffc93c', '#6ef0c2', '#5ea8ff'].forEach((col, i) => { c.strokeStyle = col; c.lineWidth = r * .14; c.beginPath(); c.arc(x, y + r * .4, r * (.95 - i * .15), Math.PI, TAU); c.stroke(); }); }
+  else if (id === 'snow') { c.strokeStyle = '#e8f4ff'; c.lineWidth = r * .1; c.lineCap = 'round'; for (let k = 0; k < 3; k++) { const a = k * Math.PI / 3; c.beginPath(); c.moveTo(x - Math.cos(a) * r * .8, y - Math.sin(a) * r * .8); c.lineTo(x + Math.cos(a) * r * .8, y + Math.sin(a) * r * .8); c.stroke(); } }
+}
+
+export { SORT_SETS, VALUES, drawItem };

@@ -295,7 +295,8 @@
       "allDone": "Tout est rangé !",
       "isKind": "C’est une {o} !",
       "isColor": "Elle est {c} !",
-      "isSize": "Elle est {s} !"
+      "isSize": "Elle est {s} !",
+      "notHere": "Hum, pas ce cratère. Essaie un autre !"
     },
     "rover": {
       "goal": "Conduis le rover jusqu’à l’échantillon bleu !",

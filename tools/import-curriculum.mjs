@@ -15,11 +15,18 @@ const ORDER = { number: 1, space: 2, logic: 3, science: 4, language: 5, music: 6
 // Levels whose template exists but needs content the template can't draw yet stay planned.
 function unsupported(l) {
   const p = l.params || {}, vs = l.variants || [], by = [].concat(p.by || [], ...vs.map(v => v.by || []));
-  if (l.template === 'sort' && by.some(a => !['kind', 'color', 'size'].includes(a))) return true; // sky / temp / bodyType picture sets
+  if (l.template === 'sort' && !p.set && by.some(a => !['kind', 'color', 'size'].includes(a))) return true;
   if (l.template === 'pattern' && (p.token === 'rhythm' || vs.some(v => v.token === 'rhythm'))) return true;
   if (l.template === 'find_hear' && (['letter', 'sentence', 'description'].includes(p.promptKind))) return true; // authored per language / living-needs pictures
   return false;
 }
+// Facts that science levels teach by construction (every science fact needs a source).
+const SOURCES = {
+  'science.1': ['https://spaceplace.nasa.gov/days/'],
+  'science.3': ['https://science.nasa.gov/venus/venus-facts/', 'https://science.nasa.gov/neptune/neptune-facts/'],
+  'science.9': ['https://science.nasa.gov/solar-system/planets/', 'https://science.nasa.gov/moon/'],
+  'science.10': ['https://spaceplace.nasa.gov/seasons/'],
+};
 const bandOf = age => { const a = parseFloat(String(age)); return a < 4 ? '2-3' : a < 6 ? '4-5' : '6-7'; };
 let seed = 20260929;
 const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
@@ -56,6 +63,7 @@ for (const s of C.strands) {
       ...(l.example ? { example: l.example } : {}), ...(l.evidence ? { evidence: l.evidence } : {}), ...(l.raise ? { raise: l.raise } : {}),
       status: unsupported(l) ? 'planned' : (BUILT[l.template] || 'planned'),
     };
+    if (SOURCES[l.id]) lv.sources = SOURCES[l.id];
     if (l.template === 'rovercode') lv.items = roverItems(l.params);
     else lv.generator = { kind: 'random' };
     counts[lv.status]++;

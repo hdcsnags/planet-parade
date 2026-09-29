@@ -39,7 +39,10 @@
       "station": "earth",
       "requires": [],
       "example": "Sun and rainbow go to day; Moon and stars go to night.",
-      "status": "planned",
+      "status": "ready",
+      "sources": [
+        "https://spaceplace.nasa.gov/days/"
+      ],
       "generator": {
         "kind": "random"
       }
@@ -103,7 +106,11 @@
       "station": "earth",
       "requires": [],
       "example": "Hot cocoa and the Sun here; snowman and Neptune there.",
-      "status": "planned",
+      "status": "ready",
+      "sources": [
+        "https://science.nasa.gov/venus/venus-facts/",
+        "https://science.nasa.gov/neptune/neptune-facts/"
+      ],
       "generator": {
         "kind": "random"
       }
@@ -308,7 +315,11 @@
         "science.5"
       ],
       "example": "Jupiter is a gas giant; Mars is rocky.",
-      "status": "planned",
+      "status": "ready",
+      "sources": [
+        "https://science.nasa.gov/solar-system/planets/",
+        "https://science.nasa.gov/moon/"
+      ],
       "generator": {
         "kind": "random"
       }
@@ -342,6 +353,9 @@
       ],
       "example": "Blossom, green leaves, orange leaves, bare branches with snow.",
       "status": "ready",
+      "sources": [
+        "https://spaceplace.nasa.gov/seasons/"
+      ],
       "generator": {
         "kind": "random"
       }

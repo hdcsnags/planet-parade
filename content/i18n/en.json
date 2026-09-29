@@ -256,7 +256,8 @@
       "allDone": "All sorted!",
       "isKind": "It’s a {o}!",
       "isColor": "It’s {c}!",
-      "isSize": "It’s {s}!"
+      "isSize": "It’s {s}!",
+      "notHere": "Hmm, not this crater. Try another one!"
     },
     "rover": {
       "goal": "Drive the rover to the blue sample!",
