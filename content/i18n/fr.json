@@ -322,6 +322,14 @@
       "compSay": "{a} et {b}, ça fait {z} !",
       "fiveAnd": "Cinq et {b}, {n} !",
       "ten": "Deux rangées pleines : dix !"
+    },
+    "string": {
+      "start": "Regarde : {a}.",
+      "more": "{b} de plus arrivent !",
+      "moreOne": "Encore une qui arrive !",
+      "fly": "{b} s’envolent !",
+      "flyOne": "Une s’envole !",
+      "ask": "Combien maintenant ?"
     }
   },
   "strands": {

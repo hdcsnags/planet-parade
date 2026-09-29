@@ -2,6 +2,7 @@ import { BeadFrame } from './beadframe.js';
 import { Bond } from './bond.js';
 import { Compare } from './compare.js';
 import { NumberLine } from './numberline.js';
+import { NumberString } from './numberstring.js';
 import { Pattern } from './pattern.js';
 import { RoverCode } from './rovercode.js';
 import { Sort } from './sort.js';
@@ -27,4 +28,5 @@ export const TEMPLATES = {
   rovercode: RoverCode,
   bond: Bond,
   bead_frame: BeadFrame,
+  number_string: NumberString,
 };

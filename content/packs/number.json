@@ -537,7 +537,7 @@
       "example": "Show 6. Two more land. One flies away. How many now?",
       "evidence": "anecdotal at this age (Kimi, Sol)",
       "raise": "mental-math strings",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }

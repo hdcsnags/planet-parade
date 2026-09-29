@@ -283,6 +283,14 @@
       "compSay": "{a} and {b} make {z}!",
       "fiveAnd": "Five and {b}, {n}!",
       "ten": "Two full rows: ten!"
+    },
+    "string": {
+      "start": "Look: {a}.",
+      "more": "{b} more land!",
+      "moreOne": "One more lands!",
+      "fly": "{b} fly away!",
+      "flyOne": "One flies away!",
+      "ask": "How many now?"
     }
   },
   "strands": {

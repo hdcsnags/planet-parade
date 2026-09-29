@@ -55,7 +55,8 @@ export class Template {
   }
   tap(x, y) { if (this.busy) return; this.idle = 0; this.onTap(x, y); }
   update(dt) {
-    this.idle += dt; this.step(dt);
+    if (!this.busy) this.idle += dt; // only waiting-for-her time counts (not a story or animation)
+    this.step(dt);
     if (!this.busy && this.idle > 9) { this.idle = 0; this.hint = this.revealed = true; this.repeat(); }
   }
   draw(t) { this.render(t); }
