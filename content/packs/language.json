@@ -76,7 +76,7 @@
       "station": "neptune",
       "requires": [],
       "example": "Put the astronaut in the rocket.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }

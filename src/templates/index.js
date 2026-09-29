@@ -5,6 +5,7 @@ import { CountingTray } from './countingtray.js';
 import { NumberLine } from './numberline.js';
 import { NumberString } from './numberstring.js';
 import { Pattern } from './pattern.js';
+import { PlaceScene } from './placescene.js';
 import { QuantityBalance } from './quantitybalance.js';
 import { RoverCode } from './rovercode.js';
 import { Sort } from './sort.js';
@@ -35,4 +36,5 @@ export const TEMPLATES = {
   subitize: Subitize,
   quantity_balance: QuantityBalance,
   counting_tray: CountingTray,
+  place_scene: PlaceScene,
 };

@@ -116,7 +116,7 @@
       "station": "venus",
       "requires": [],
       "example": "Put the rover under the bridge.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -278,7 +278,7 @@
         "space.3"
       ],
       "example": "Put the satellite between the two moons.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }

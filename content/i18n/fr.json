@@ -358,6 +358,27 @@
       "allHave": "Tout le monde a un casque !",
       "count": "Combien de cailloux de lune ? Touche chacun.",
       "pick": "Combien en tout ? Choisis la carte."
+    },
+    "place": {
+      "bridge": {
+        "on": "Mets le rover sur le pont !",
+        "under": "Mets le rover sous le pont !",
+        "beside": "Mets le rover à côté du pont !",
+        "in": "Mets le rover dans la boîte !"
+      },
+      "pads": {
+        "left": "Mets le satellite à gauche !",
+        "middle": "Mets le satellite au milieu !",
+        "right": "Mets le satellite à droite !",
+        "between": "Mets le satellite entre les deux lunes !"
+      },
+      "rocket": {
+        "in": "Mets l’astronaute dans la fusée !",
+        "on": "Mets l’astronaute sur la fusée !",
+        "next-to": "Mets l’astronaute à côté de la fusée !"
+      },
+      "notThere": "Pas là. Écoute encore !",
+      "done": "Parfait !"
     }
   },
   "strands": {

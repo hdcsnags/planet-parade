@@ -319,6 +319,27 @@
       "allHave": "Everyone has a helmet!",
       "count": "How many moon rocks? Tap each one.",
       "pick": "How many in all? Pick the card."
+    },
+    "place": {
+      "bridge": {
+        "on": "Put the rover on the bridge!",
+        "under": "Put the rover under the bridge!",
+        "beside": "Put the rover beside the bridge!",
+        "in": "Put the rover in the box!"
+      },
+      "pads": {
+        "left": "Put the satellite on the left!",
+        "middle": "Put the satellite in the middle!",
+        "right": "Put the satellite on the right!",
+        "between": "Put the satellite between the two moons!"
+      },
+      "rocket": {
+        "in": "Put the astronaut in the rocket!",
+        "on": "Put the astronaut on the rocket!",
+        "next-to": "Put the astronaut next to the rocket!"
+      },
+      "notThere": "Not there. Listen again!",
+      "done": "Just right!"
     }
   },
   "strands": {
