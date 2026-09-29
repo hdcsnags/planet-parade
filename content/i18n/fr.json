@@ -476,6 +476,20 @@
       "next": "Maintenant le suivant !",
       "lengthDone": "Du plus petit au plus grand !",
       "sizeDone": "Du plus petit au plus gros !"
+    },
+    "dial": {
+      "day": "Le Soleil brille de ce côté. Tourne la Terre jusqu’à ce qu’il fasse jour chez nous !",
+      "night": "Le Soleil brille de ce côté. Tourne la Terre jusqu’à ce qu’il fasse nuit chez nous !",
+      "dayYes": "Oui ! Notre maison est face au Soleil : c’est le jour !",
+      "nightYes": "Oui ! Notre maison ne voit plus le Soleil : c’est la nuit !",
+      "moonTo": "Fais tourner la Lune autour de la Terre pour voir {ph} !",
+      "moonYes": "Oui ! C’est {ph} !",
+      "phase": {
+        "new": "la nouvelle lune",
+        "firstQuarter": "le premier quartier",
+        "full": "la pleine lune",
+        "lastQuarter": "le dernier quartier"
+      }
     }
   },
   "strands": {

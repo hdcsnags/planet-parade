@@ -271,7 +271,10 @@
         "science.1"
       ],
       "example": "Turn Earth until the home marker is in the dark.",
-      "status": "planned",
+      "status": "ready",
+      "sources": [
+        "https://spaceplace.nasa.gov/days/"
+      ],
       "generator": {
         "kind": "random"
       }
@@ -393,7 +396,10 @@
         "science.8"
       ],
       "example": "New, first quarter, full, last quarter, then again. (never 'Earth's shadow')",
-      "status": "planned",
+      "status": "ready",
+      "sources": [
+        "https://science.nasa.gov/moon/moon-phases/"
+      ],
       "generator": {
         "kind": "random"
       }

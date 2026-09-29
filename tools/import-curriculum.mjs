@@ -26,6 +26,8 @@ const SOURCES = {
   'science.3': ['https://science.nasa.gov/venus/venus-facts/', 'https://science.nasa.gov/neptune/neptune-facts/'],
   'science.9': ['https://science.nasa.gov/solar-system/planets/', 'https://science.nasa.gov/moon/'],
   'science.10': ['https://spaceplace.nasa.gov/seasons/'],
+  'science.8': ['https://spaceplace.nasa.gov/days/'],
+  'science.11': ['https://science.nasa.gov/moon/moon-phases/'],
 };
 const bandOf = age => { const a = parseFloat(String(age)); return a < 4 ? '2-3' : a < 6 ? '4-5' : '6-7'; };
 let seed = 20260929;

@@ -2,6 +2,7 @@ import { BeadFrame } from './beadframe.js';
 import { Bond } from './bond.js';
 import { Compare } from './compare.js';
 import { CountingTray } from './countingtray.js';
+import { Dial } from './dial.js';
 import { FindHear } from './findhear.js';
 import { LineUp } from './lineup.js';
 import { MathCircle } from './mathcircle.js';
@@ -47,4 +48,5 @@ export const TEMPLATES = {
   shadow_match: ShadowMatch,
   find_hear: FindHear,
   line_up: LineUp,
+  dial: Dial,
 };

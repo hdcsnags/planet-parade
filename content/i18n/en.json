@@ -437,6 +437,20 @@
       "next": "Now the next one!",
       "lengthDone": "Shortest to tallest!",
       "sizeDone": "Smallest to biggest!"
+    },
+    "dial": {
+      "day": "The Sun shines from this side. Turn Earth until our home has daytime!",
+      "night": "The Sun shines from this side. Turn Earth until it is night at our home!",
+      "dayYes": "Yes! Our home faces the Sun: daytime!",
+      "nightYes": "Yes! Our home faces away from the Sun: night!",
+      "moonTo": "Move the Moon around Earth to make a {ph}!",
+      "moonYes": "Yes! That’s a {ph}!",
+      "phase": {
+        "new": "new moon",
+        "firstQuarter": "first quarter moon",
+        "full": "full moon",
+        "lastQuarter": "last quarter moon"
+      }
     }
   },
   "strands": {
