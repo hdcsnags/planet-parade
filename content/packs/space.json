@@ -528,7 +528,7 @@
       "example": "Finish the butterfly nebula's other wing.",
       "evidence": "content real, pedagogy anecdotal (Kimi, Sol)",
       "raise": "rangoli/kolam",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }

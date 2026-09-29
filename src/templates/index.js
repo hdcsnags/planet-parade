@@ -13,6 +13,7 @@ import { ObserveChange } from './observechange.js';
 import { Pattern } from './pattern.js';
 import { PlaceScene } from './placescene.js';
 import { QuantityBalance } from './quantitybalance.js';
+import { Rangoli } from './rangoli.js';
 import { RoverCode } from './rovercode.js';
 import { ShadowMatch } from './shadowmatch.js';
 import { Sort } from './sort.js';
@@ -53,4 +54,5 @@ export const TEMPLATES = {
   dial: Dial,
   echo: Echo,
   observe_change: ObserveChange, // lab (facts need reviewed sources before it leaves Family Lab)
+  rangoli: Rangoli,
 };
