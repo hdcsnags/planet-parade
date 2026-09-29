@@ -379,6 +379,33 @@
       },
       "notThere": "Pas là. Écoute encore !",
       "done": "Parfait !"
+    },
+    "story": {
+      "go": "Écoute l’histoire !",
+      "first": "Qu’est-ce qui se passe en premier ?",
+      "firstAny": "Choisis une image pour commencer !",
+      "next": "Et ensuite ?",
+      "notYet": "Pas encore. Qu’est-ce qui se passe avant ?",
+      "done": "Voilà l’histoire !",
+      "cycleDone": "Et ça recommence !",
+      "sets": {
+        "procedures": [
+          "On met le casque.",
+          "On monte dans la fusée.",
+          "Décollage !"
+        ],
+        "short-stories": [
+          "La fusée se pose sur la Lune.",
+          "L’astronaute sort.",
+          "Elle plante un drapeau."
+        ],
+        "local-seasons": [
+          "Le printemps : l’arbre a des fleurs.",
+          "L’été : des feuilles vertes.",
+          "L’automne : les feuilles orange tombent.",
+          "L’hiver : des branches nues et de la neige."
+        ]
+      }
     }
   },
   "strands": {

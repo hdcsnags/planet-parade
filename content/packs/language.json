@@ -182,7 +182,7 @@
         "language.1"
       ],
       "example": "Hear the story, then put the three pictures in order.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }

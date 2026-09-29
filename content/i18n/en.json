@@ -340,6 +340,33 @@
       },
       "notThere": "Not there. Listen again!",
       "done": "Just right!"
+    },
+    "story": {
+      "go": "Listen to the story!",
+      "first": "What happens first?",
+      "firstAny": "Pick a picture to start!",
+      "next": "What happens next?",
+      "notYet": "Not yet. What happens before that?",
+      "done": "That’s the story!",
+      "cycleDone": "And then it starts all over again!",
+      "sets": {
+        "procedures": [
+          "Put on the helmet.",
+          "Climb into the rocket.",
+          "Blast off!"
+        ],
+        "short-stories": [
+          "The rocket lands on the Moon.",
+          "The astronaut steps out.",
+          "She plants a flag."
+        ],
+        "local-seasons": [
+          "Spring: the tree has blossoms.",
+          "Summer: green leaves.",
+          "Autumn: orange leaves fall.",
+          "Winter: bare branches and snow."
+        ]
+      }
     }
   },
   "strands": {

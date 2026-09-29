@@ -9,6 +9,7 @@ import { PlaceScene } from './placescene.js';
 import { QuantityBalance } from './quantitybalance.js';
 import { RoverCode } from './rovercode.js';
 import { Sort } from './sort.js';
+import { StorySequence } from './storysequence.js';
 import { Subitize } from './subitize.js';
 import { TenFrame } from './tenframe.js';
 
@@ -37,4 +38,5 @@ export const TEMPLATES = {
   quantity_balance: QuantityBalance,
   counting_tray: CountingTray,
   place_scene: PlaceScene,
+  story_sequence: StorySequence,
 };

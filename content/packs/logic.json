@@ -343,7 +343,7 @@
       "station": "mars",
       "requires": [],
       "example": "Helmet on, climb in, blast off.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }

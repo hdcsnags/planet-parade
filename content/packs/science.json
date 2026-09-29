@@ -341,7 +341,7 @@
         "science.2"
       ],
       "example": "Blossom, green leaves, orange leaves, bare branches with snow.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
