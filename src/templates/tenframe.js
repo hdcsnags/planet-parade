@@ -14,6 +14,7 @@ import { bang, cap, fmt, num, qty, t } from '../i18n/i18n.js';
 
 // Ten-frame: fill a frame with N stars, count a frame, make 5 and 10 (number bonds), teen numbers.
 // params: mode 'fill' | 'count' | 'bond' (fill the rest) | 'bondPick' (how many more?) | 'teen'
+//         | 'makeTen' (8 + 5: move stars up to make ten, then how many in all? → 8 + 2 + 3)
 //         range [min, max], whole 5 | 10, choices 2 | 3
 // Frames fill left-to-right, top row first, the usual ten-frame convention in every language.
 
@@ -33,7 +34,8 @@ import { bang, cap, fmt, num, qty, t } from '../i18n/i18n.js';
 export class TenFrame extends Template {
   makeRound() {
     const p = this.p, [lo, hi] = p.range || [1, 5];
-    this.whole = p.whole || 10; this.frames = p.mode === 'teen' || (p.range && p.range[1] > 10) ? 2 : 1;
+    this.whole = p.whole || 10; this.frames = p.mode === 'teen' || p.mode === 'makeTen' || (p.range && p.range[1] > 10) ? 2 : 1;
+    this.phase = 'play';
     this.cells = Array.from({ length: this.frames * 10 }, (_, i) => ({ i, on: false, pre: false, scale: 1, sv: 0 }));
     this.tiles = [];
     const pre = n => { for (let i = 0; i < n; i++) { this.cells[i].on = this.cells[i].pre = true; } };
@@ -51,6 +53,14 @@ export class TenFrame extends Template {
       this.k = randInt(1, this.whole - 1); pre(this.k); this.target = this.whole - this.k;
       this.makeTiles(this.target, this.whole - 1);
       this.ask(t('tpl.tenframe.bondAsk', { z: num(this.whole) }));
+    } else if (p.mode === 'makeTen') {
+      // bridge through ten: a in the first frame, b waiting in the second; sum is more than 10
+      const maxN = p.maxN || 20;
+      this.k = randInt(6, 9); this.bb = randInt(11 - this.k, Math.min(9, maxN - this.k)); this.target = this.k + this.bb;
+      pre(this.k);
+      for (let i = 0; i < this.bb; i++) Object.assign(this.cells[10 + i], { on: true, pre: true, col: 'pink', movable: true });
+      this.phase = 'move';
+      this.ask(t('tpl.tenframe.makeTenMove', { a: cap(num(this.k)), b: num(this.bb) }));
     } else { // teen: a full ten and some more
       this.k = randInt(lo - 10, hi - 10); pre(10 + this.k); this.target = 10 + this.k;
       this.makeTiles(this.target, 19, 11);
@@ -93,7 +103,21 @@ export class TenFrame extends Template {
       else this.win(t('tpl.tenframe.full', { a: cap(qty(n, 'star')) }), c.x, c.y);
     } else say(cap(num(this.p.mode === 'bond' ? added : n)) + bang());
   }
+  // make-ten: each tap moves one pink star from the second frame into the first until it holds ten
+  moveUp() {
+    const from = [...this.cells].reverse().find(c => c.on && c.movable), to = this.cells.find(c => c.i < 10 && !c.on && !c.hidden);
+    if (!from || !to) return;
+    from.on = false; from.movable = false; Object.assign(to, { on: true, pre: true, col: 'pink', sv: 6 });
+    const moved = this.cells.filter(c => c.i < 10 && c.col === 'pink').length;
+    chime(SCALE[Math.min(8, moved + 2)]); sparkle(to.x, to.y, 6);
+    if (this.cells.slice(0, 10).every(c => c.on)) {
+      // ten is made: now how many in all?
+      this.phase = 'ask'; this.makeTiles(this.target, 19, 11); this.layout();
+      this.ask(t('tpl.tenframe.teenAsk'));
+    } else say(cap(num(this.k + moved)) + bang());
+  }
   onTap(x, y) {
+    if (this.phase === 'move') { this.moveUp(); return; }
     if (this.tiles.length) {
       const tl = hitTile(this.tiles, x, y);
       if (!tl) return;
@@ -105,6 +129,7 @@ export class TenFrame extends Template {
           free.forEach((c, i) => after(i * .12, () => { c.on = true; c.sv = 5; }));
           this.win(t('tpl.tenframe.bondSay', { x: cap(num(this.k)), y: num(this.target), z: num(this.whole) }));
         } else if (this.p.mode === 'teen') this.win(t('tpl.tenframe.teenSay', { y: num(this.k), z: fmt(this.target) }));
+        else if (this.p.mode === 'makeTen') this.win(t('tpl.tenframe.makeTenSay', { a: cap(num(this.k)), x: num(10 - this.k), y: num(this.bb - (10 - this.k)), s: fmt(this.target) }));
         else this.win(t('countYes', { a: qty(this.target, 'star') }));
       } else { tl.wob = 1; this.miss(cap(num(tl.n)) + bang()); }
       return;
@@ -130,7 +155,7 @@ export class TenFrame extends Template {
     this.cells.forEach(cl => {
       if (cl.hidden || !cl.on) return;
       c.save(); c.translate(cl.x, cl.y); const s = Math.max(.01, cl.scale); c.scale(s, s);
-      drawObj(c, { kind: 'star', color: cl.pre || this.p.mode === 'fill' || this.p.mode === 'count' ? 'gold' : 'pink' }, 0, 0, cs * .36, tt);
+      drawObj(c, { kind: 'star', color: cl.col || (cl.pre || this.p.mode === 'fill' || this.p.mode === 'count' ? 'gold' : 'pink') }, 0, 0, cs * .36, tt);
       c.restore();
     });
     this.tiles.forEach(tl => drawTile(c, tl, tt));

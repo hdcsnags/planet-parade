@@ -216,7 +216,9 @@
       "bondSay": "{x} and {y} make {z}!",
       "bondAsk": "How many more to make {z}?",
       "teenAsk": "How many stars in all?",
-      "teenSay": "Ten and {y} make {z}!"
+      "teenSay": "Ten and {y} make {z}!",
+      "makeTenMove": "{a} plus {b}. Fill the first frame to make ten!",
+      "makeTenSay": "{a} and {x} make ten, and {y} more make {s}!"
     },
     "numberline": {
       "hopN": "Hop {n} times!",

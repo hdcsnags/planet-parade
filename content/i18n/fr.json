@@ -255,7 +255,9 @@
       "bondSay": "{x} et {y}, ça fait {z} !",
       "bondAsk": "Il en manque combien pour faire {z} ?",
       "teenAsk": "Combien d’étoiles en tout ?",
-      "teenSay": "Dix et {y}, ça fait {z} !"
+      "teenSay": "Dix et {y}, ça fait {z} !",
+      "makeTenMove": "{a} plus {b}. Remplis le premier cadre pour faire dix !",
+      "makeTenSay": "{a} et {x} font dix, et encore {y}, ça fait {s} !"
     },
     "numberline": {
       "hopN": "Saute {n} fois !",
