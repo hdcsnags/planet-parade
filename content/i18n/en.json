@@ -266,6 +266,14 @@
       "bump": "Bump! Let’s try again.",
       "almost": "Almost! Let’s try again.",
       "got": "We found the sample!"
+    },
+    "bond": {
+      "askPart": "{w} in all, {a} here. How many over here?",
+      "askHidden": "{w} fuel pods. {a} are in the rocket. How many are hiding under the dome?",
+      "askWhole": "{a} and {b}. How many in all?",
+      "storyPart": "{w} rockets. {a} flew to Mars. How many flew to the Moon?",
+      "storyWhole": "{a} rockets flew to Mars and {b} to the Moon. How many rockets in all?",
+      "say": "{a} and {b} make {w}!"
     }
   },
   "strands": {

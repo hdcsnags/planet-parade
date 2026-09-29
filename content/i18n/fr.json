@@ -305,6 +305,14 @@
       "bump": "Boum ! On essaie encore.",
       "almost": "Presque ! On essaie encore.",
       "got": "On a trouvé l’échantillon !"
+    },
+    "bond": {
+      "askPart": "{w} en tout, {a} ici. Combien là-bas ?",
+      "askHidden": "{w} capsules. {a} sont dans la fusée. Combien se cachent sous le dôme ?",
+      "askWhole": "{a} et {b}. Combien en tout ?",
+      "storyPart": "{w} fusées. {a} sont allées sur Mars. Combien sont allées sur la Lune ?",
+      "storyWhole": "{a} fusées sont allées sur Mars et {b} sur la Lune. Combien de fusées en tout ?",
+      "say": "{a} et {b}, ça fait {w} !"
     }
   },
   "strands": {

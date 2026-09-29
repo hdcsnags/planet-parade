@@ -1,3 +1,4 @@
+import { Bond } from './bond.js';
 import { Compare } from './compare.js';
 import { NumberLine } from './numberline.js';
 import { Pattern } from './pattern.js';
@@ -23,4 +24,5 @@ export const TEMPLATES = {
   pattern: Pattern,
   sort: Sort,
   rovercode: RoverCode,
+  bond: Bond,
 };

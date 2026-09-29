@@ -366,7 +366,7 @@
       "example": "Five fuel pods; three are in the rocket. How many hid under the dome?",
       "evidence": "moderate (Singapore NEL/CPA, per Kimi and Sol)",
       "raise": "number bonds",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -455,7 +455,7 @@
       "example": "10 is 7 and ? (circles, then '7 + ? = 10').",
       "evidence": "moderate (Singapore)",
       "raise": "number bonds",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -623,7 +623,7 @@
       "example": "12 probes; 5 went to Mars. The bar shows 5 and a gap: how many went to the Moon?",
       "evidence": "moderate (Singapore primary syllabus, per Sol)",
       "raise": "bar models",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
