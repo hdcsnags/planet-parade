@@ -70,3 +70,21 @@ Nobody has reviewed these yet. They are in the same table (`ui.whichMore`, `ui.m
 
 Note for Farsi reviewers: «{pos}ه» joins the spoken copula to the position word (سمت چپه، وسطه، سمت راسته).
 Left and right always mean the child's real left and right on the screen. They are not mirrored in Farsi.
+
+## Round 5 (2026-09-29): the curriculum platform. **All new lines unreviewed.**
+Every string now lives in `content/i18n/{en,fr,fa}.json`. Each file has a `_reviewed` map
+(`"section.key": "who"`); anything missing, or marked `ai-…`, counts as **not checked by a person**. The
+grown-ups panel shows that count, and `npm run validate` prints it.
+
+New sections to review:
+- `stations`: what each planet says
+- `hub`: Space Map lines
+- `colors` and `sizes`: French forms are feminine, because every object (étoile, lune, fusée, planète) is feminine
+- `tpl.tenframe`, `tpl.numberline`, `tpl.compare`, `tpl.pattern`, `tpl.sort` and `tpl.rover`
+
+Farsi notes for reviewers:
+- «رنگش {c}ه» (رنگش صورتیه / آبیه / زرده) and «این {s}ه» (بزرگه / کوچیکه) use the spoken copula.
+- `tpl.sort.isKind` is «این یه {o}!» with no copula, because {o} often ends in a vowel (ستاره).
+- The rover's «بپیچ به چپ / راست» are the rover's own turns, never mirrored.
+
+To mark a line as checked, add it to that file's `_reviewed`, e.g. `"tpl.rover.goal": "Maman Joon 2026-10-02"`.

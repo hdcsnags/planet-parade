@@ -6,3 +6,9 @@ __pycache__/
 *.pyc
 .DS_Store
 Thumbs.db
+# family recordings and exports never belong in the repo
+recordings/
+planet-parade-voices*.json
+*.webm
+*.ogg
+*.m4a

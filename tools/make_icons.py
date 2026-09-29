@@ -1,23 +1,23 @@
-"""Render the PWA icons from the game's own canvas art (drawSun / drawPlanet in planet-parade.html).
+"""Render the PWA icons from the game's own canvas art (drawSun / drawPlanet in src/engine/art.js).
 
-The drawing code is lifted out of planet-parade.html, run in headless Edge on a 512x512 canvas,
-and the PNGs are written to icons/: icon-192.png, icon-512.png and icon-maskable-512.png
+The drawing module is loaded as plain script (imports/exports stripped), run in headless Edge on a 512x512 canvas,
+and the PNGs are written to public/icons/: icon-192.png, icon-512.png and icon-maskable-512.png
 (the maskable one keeps the art inside the central 80% safe zone on a full-bleed background).
 Run:  python tools/make_icons.py
 """
 import base64, html, json, os, pathlib, re, subprocess, tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-SRC = ROOT / 'planet-parade.html'
-OUT = ROOT / 'icons'
+SRC = ROOT / 'src' / 'engine' / 'art.js'
+OUT = ROOT / 'public' / 'icons'
 EDGE_PATHS = [r'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe',
               r'C:\Program Files\Microsoft\Edge\Application\msedge.exe']
 
 def drawing_code():
     src = SRC.read_text(encoding='utf-8')
-    start = src.index('// Gradients are built in local')
-    end = src.index('/* ---------- position cues')
-    return src[start:end]
+    src = re.sub(r'^import .*?;\s*$', '', src, flags=re.M)          # imports: only used when drawing labels
+    src = re.sub(r'^export \{[^}]*\};\s*$', '', src, flags=re.M)   # export list
+    return re.sub(r'^export ', '', src, flags=re.M)
 
 PAGE = """<!doctype html><meta charset="utf-8"><body><script>
 const TAU = Math.PI * 2;
