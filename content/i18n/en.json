@@ -312,6 +312,13 @@
       "unitGo": "Measure the strip with tiles! Tap to lay a tile.",
       "unitAsk": "How many tiles long?",
       "unitSay": "The strip is {n} tiles long!"
+    },
+    "tray": {
+      "give": "Give each astronaut one helmet!",
+      "hasOne": "This one already has a helmet.",
+      "allHave": "Everyone has a helmet!",
+      "count": "How many moon rocks? Tap each one.",
+      "pick": "How many in all? Pick the card."
     }
   },
   "strands": {

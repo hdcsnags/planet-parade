@@ -51,7 +51,7 @@
       "station": "mercury",
       "requires": [],
       "example": "Give each of three astronauts one helmet.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -98,7 +98,7 @@
         "number.1"
       ],
       "example": "Count four moon rocks; choose the four-dot card.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -227,7 +227,7 @@
         "number.2"
       ],
       "example": "Count eight satellites; tap 8.",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }

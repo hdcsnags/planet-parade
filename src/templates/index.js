@@ -1,6 +1,7 @@
 import { BeadFrame } from './beadframe.js';
 import { Bond } from './bond.js';
 import { Compare } from './compare.js';
+import { CountingTray } from './countingtray.js';
 import { NumberLine } from './numberline.js';
 import { NumberString } from './numberstring.js';
 import { Pattern } from './pattern.js';
@@ -33,4 +34,5 @@ export const TEMPLATES = {
   number_string: NumberString,
   subitize: Subitize,
   quantity_balance: QuantityBalance,
+  counting_tray: CountingTray,
 };

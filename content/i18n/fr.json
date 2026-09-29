@@ -351,6 +351,13 @@
       "unitGo": "Mesure la piste avec des carreaux ! Touche pour poser un carreau.",
       "unitAsk": "Combien de carreaux de long ?",
       "unitSay": "La piste mesure {n} carreaux !"
+    },
+    "tray": {
+      "give": "Donne un casque à chaque astronaute !",
+      "hasOne": "Celui-ci a déjà un casque.",
+      "allHave": "Tout le monde a un casque !",
+      "count": "Combien de cailloux de lune ? Touche chacun.",
+      "pick": "Combien en tout ? Choisis la carte."
     }
   },
   "strands": {
