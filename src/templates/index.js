@@ -4,6 +4,7 @@ import { Compare } from './compare.js';
 import { NumberLine } from './numberline.js';
 import { NumberString } from './numberstring.js';
 import { Pattern } from './pattern.js';
+import { QuantityBalance } from './quantitybalance.js';
 import { RoverCode } from './rovercode.js';
 import { Sort } from './sort.js';
 import { Subitize } from './subitize.js';
@@ -31,4 +32,5 @@ export const TEMPLATES = {
   bead_frame: BeadFrame,
   number_string: NumberString,
   subitize: Subitize,
+  quantity_balance: QuantityBalance,
 };

@@ -296,6 +296,22 @@
       "watch": "Watch the lights!",
       "ask": "How many lights did you see?",
       "peekHint": "Want to peek again? Tap the eye!"
+    },
+    "qb": {
+      "longer": "Which one is longer?",
+      "taller": "Which one is taller?",
+      "heavier": "The balance tips. Which rock is heavier?",
+      "fuller": "Which tank is fuller?",
+      "longerYes": "Yes, this one is longer!",
+      "tallerYes": "Yes, this one is taller!",
+      "heavierYes": "Yes, this rock is heavier! Its side went down.",
+      "fullerYes": "Yes, this tank is fuller!",
+      "lookAgain": "Look again!",
+      "equalizeLen": "Make both tracks the same length! Tap the short one.",
+      "equalizeVol": "Fill both tanks the same! Tap the emptier one.",
+      "unitGo": "Measure the strip with tiles! Tap to lay a tile.",
+      "unitAsk": "How many tiles long?",
+      "unitSay": "The strip is {n} tiles long!"
     }
   },
   "strands": {

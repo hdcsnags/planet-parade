@@ -81,7 +81,7 @@
       "example": "Which antenna is longer?",
       "evidence": "moderate (Davydov; Sol, Kimi)",
       "raise": "measurement-first",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -158,7 +158,7 @@
       "example": "The balance tips: which moon rock is heavier? Which fuel tank is fuller?",
       "evidence": "moderate (Davydov)",
       "raise": "measurement-first",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -320,7 +320,7 @@
       "example": "Make the two rover tracks the same length.",
       "evidence": "moderate (Davydov, Grade 1; adapted as play per Sol)",
       "raise": "measurement-first",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
@@ -408,7 +408,7 @@
       "example": "The landing strip is 6 tiles long. With half-size tiles, is it more or fewer?",
       "evidence": "moderate (Davydov; Sol: smaller units give larger counts)",
       "raise": "measurement-first",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }

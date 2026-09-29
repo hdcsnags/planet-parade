@@ -335,6 +335,22 @@
       "watch": "Regarde les lumières !",
       "ask": "Combien de lumières as-tu vues ?",
       "peekHint": "Tu veux regarder encore ? Touche l’œil !"
+    },
+    "qb": {
+      "longer": "Lequel est le plus long ?",
+      "taller": "Lequel est le plus haut ?",
+      "heavier": "La balance penche. Quel caillou est le plus lourd ?",
+      "fuller": "Quel réservoir est le plus plein ?",
+      "longerYes": "Oui, celui-ci est plus long !",
+      "tallerYes": "Oui, celui-ci est plus haut !",
+      "heavierYes": "Oui, ce caillou est plus lourd ! Son côté descend.",
+      "fullerYes": "Oui, ce réservoir est plus plein !",
+      "lookAgain": "Regarde encore !",
+      "equalizeLen": "Rends les deux pistes aussi longues ! Touche la plus courte.",
+      "equalizeVol": "Remplis les deux réservoirs pareil ! Touche le moins plein.",
+      "unitGo": "Mesure la piste avec des carreaux ! Touche pour poser un carreau.",
+      "unitAsk": "Combien de carreaux de long ?",
+      "unitSay": "La piste mesure {n} carreaux !"
     }
   },
   "strands": {
