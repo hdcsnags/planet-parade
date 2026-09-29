@@ -1,6 +1,7 @@
-# convenience copy of the build; dist/index.html is the tracked output
-/index.html
+node_modules/
+src/generated/
 fonts/google-fonts.css
+tours/
 __pycache__/
 *.pyc
 .DS_Store

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0a0e2a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Planet Parade</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<!--PP:STANDALONE-->
+<script>window.PP_STANDALONE = true;</script>
+<script>
+// Offline, installable app when served over http(s). Never registered on file://, so the single
+// offline file keeps working exactly as before.
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+  addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').then(() => navigator.serviceWorker.ready)
+      .then(() => { document.documentElement.dataset.sw = 'ready'; }).catch(() => {});
+  });
+}
+</script>
+<!--/PP:STANDALONE-->
+</head>
+<body>
+<canvas id="stage" aria-label="Planet Parade play area"></canvas>
+
+<section id="menu" class="menu" aria-label="Choose a game">
+  <div class="brand">
+    <h1><span class="t-en"><span class="w1">Planet</span> <span class="w2"><span style="--d:0;--c:#ff8a5c">P</span><span style="--d:1;--c:#f2c48f">a</span><span style="--d:2;--c:#5ea8ff">r</span><span style="--d:3;--c:#ff7eb6">a</span><span style="--d:4;--c:#9fe3e6">d</span><span style="--d:5;--c:#9fb4ff">e</span></span></span><span class="t-fa" lang="fa" dir="rtl"><span class="w1">رژه‌ی</span> <span class="w3">سیاره‌ها</span></span></h1>
+    <p class="sub" data-i18n="sub">Six space games for little astronauts. Tap one to play.</p>
+  </div>
+  <div class="modes">
+    <button class="mode" data-mode="free" style="--c:#ffc93c"><canvas data-icon="free" width="300" height="300"></canvas><span data-i18n="m_free">Tap &amp; Hear</span><small data-i18n="m_free_s">Planets say hello</small></button>
+    <button class="mode" data-mode="find" style="--c:#6ef0c2"><canvas data-icon="find" width="300" height="300"></canvas><span data-i18n="m_find">Find It</span><small data-i18n="m_find_s">Where is Saturn?</small></button>
+    <button class="mode" data-mode="rocket" style="--c:#ff7eb6"><canvas data-icon="rocket" width="300" height="300"></canvas><span data-i18n="m_rocket">Rocket Trip</span><small data-i18n="m_rocket_s">Fly past all eight</small></button>
+    <button class="mode" data-mode="order" style="--c:#9fb4ff"><canvas data-icon="order" width="300" height="300"></canvas><span data-i18n="m_order">Line Up</span><small data-i18n="m_order_s">Put them in order</small></button>
+    <button class="mode" data-mode="count" style="--c:#ff9a5c"><canvas data-icon="count" width="300" height="300"></canvas><span data-i18n="m_count">Count &amp; Add</span><small data-i18n="m_count_s">Stars, rockets, moons</small></button>
+    <button class="mode" data-mode="words" style="--c:#c7a4ff"><canvas data-icon="words" width="300" height="300"></canvas><span data-i18n="m_words">Space Words</span><small data-i18n="m_words_s">Rocket, comet, moon</small></button>
+  </div>
+</section>
+
+<button id="homeBtn" class="hud-btn" aria-label="Back to games" hidden>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg>
+</button>
+<button id="langBtn" class="hud-btn" aria-label="Change language">EN</button>
+<button id="findBtn" class="hud-btn" aria-label="Play find the picture" hidden>
+  <svg id="findIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5.5 5.5"/></svg>
+  <svg id="gridIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" hidden><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>
+</button>
+<button id="songBtn" class="hud-btn" aria-label="Planet Song" aria-pressed="false" hidden>♪</button>
+<button id="repeatBtn" class="hud-btn" aria-label="Say it again" hidden>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6"/><path d="M18.3 6.3a8 8 0 0 1 0 11.4"/></svg>
+</button>
+<button id="gearBtn" class="hud-btn" aria-label="Grown-ups settings (press and hold)">
+  <span class="inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8"/></svg></span>
+</button>
+
+<div id="stars" class="stars" hidden aria-hidden="true"></div>
+<div id="caption" class="caption" hidden aria-live="polite"></div>
+
+<div id="parent" class="parent" hidden role="dialog" aria-modal="true" aria-labelledby="parentTitle">
+  <div class="sheet">
+    <h2 id="parentTitle">Grown-ups</h2>
+    <p>Planet Parade talks, chimes and never says "wrong". A wrong tap just gets a wiggle and the thing says its own name. Every fact it speaks is true.</p>
+    <div class="opt"><div><b>Language</b><span>Starting language. The EN / FR / فا button switches it any time.</span></div>
+      <div class="seg" id="segLang" role="group" aria-label="Language"><button data-lang="en">English</button><button data-lang="fr">Français</button><button data-lang="fa" lang="fa">فارسی</button></div></div>
+    <p id="voiceNote" class="note" hidden></p>
+    <div class="opt"><div><b>Voice</b><span>Speaks names, numbers and questions</span></div><button class="tog" data-k="voice">On</button></div>
+    <div class="opt"><div><b>Which voice</b><span id="voiceFor">Natural-sounding voices are listed first.</span></div>
+      <div class="seg"><select id="voicePick" aria-label="Voice for this language"></select><button class="act" id="voicePlay" aria-label="Play a sample">▶</button></div></div>
+    <div class="opt"><div><b>Planet facts</b><span>Adds one short fact after names</span></div><button class="tog" data-k="facts">On</button></div>
+    <div class="opt"><div><b>Friendly faces</b><span>Eyes that follow her finger</span></div><button class="tog" data-k="faces">On</button></div>
+    <div class="opt"><div><b>Sounds</b><span>Chimes, whooshes and pops</span></div><button class="tog" data-k="sound">On</button></div>
+    <div class="opt"><div><b>Choices</b><span>Pictures to pick from in Find It, Line Up and Space Words</span></div>
+      <div class="seg" id="segChoices" role="group" aria-label="Choices"><button data-n="2">2</button><button data-n="3">3</button><button data-n="4">4</button></div></div>
+    <div class="opt"><div><b>Highest number</b><span>For Count &amp; Add</span></div>
+      <div class="seg" id="segMax" role="group" aria-label="Highest number"><button data-m="3">3</button><button data-m="5">5</button><button data-m="10">10</button></div></div>
+    <div class="opt"><div><b>Adding and taking away</b><span>How many join or fly away each time</span></div>
+      <div class="seg" id="segStep" role="group" aria-label="Adding and taking away"><button data-s="1">Just 1</button><button data-s="3">Up to 3</button></div></div>
+    <div class="opt"><div><b>Play time</b><span>When time is up the planets yawn and say goodnight. Hold the gear to wake them.</span></div>
+      <div class="seg" id="segSession" role="group" aria-label="Play time"><button data-min="0">Off</button><button data-min="10">10 min</button><button data-min="15">15 min</button><button data-min="20">20 min</button></div></div>
+    <div class="opt"><div><b>Today</b><div class="today-list" id="todayText"></div></div></div>
+    <div class="acts"><button class="act" id="studioBtn" hidden>Recording Studio</button><button class="act" id="fsBtn">Full screen</button><button class="act primary" id="closeParent">Done</button></div>
+  </div>
+</div>
+
+<div id="studio" class="parent" hidden role="dialog" aria-modal="true" aria-labelledby="studioTitle">
+  <div class="sheet studio">
+    <h2 id="studioTitle">Recording Studio</h2>
+    <p>Record any line in your own voice. The game then plays your recording instead of the computer voice. Recordings stay on this device; use Export and Import to move them to another tablet.</p>
+    <p id="studioNote" class="note" hidden></p>
+    <div class="opt"><div><b>Language</b></div>
+      <div class="seg" id="studioLang" role="group" aria-label="Recording language"><button data-lang="en">English</button><button data-lang="fr">Français</button><button data-lang="fa" lang="fa">فارسی</button></div></div>
+    <div id="studioList" class="studio-list"></div>
+    <div class="acts"><button class="act" id="studioExport">Export recordings</button><label class="act" for="studioImport">Import recordings</label><input type="file" id="studioImport" accept=".json,application/json" hidden><button class="act primary" id="studioClose">Done</button></div>
+  </div>
+</div>
+
+<script type="module" src="./main.js"></script>
+</body>
+</html>

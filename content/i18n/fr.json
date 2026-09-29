@@ -1,0 +1,216 @@
+{
+  "_meta": {
+    "lang": "fr",
+    "note": "reviewed: key path -> reviewer. Anything missing is unreviewed. \"ai-*\" reviewers are not a person."
+  },
+  "_reviewed": {
+    "ui.hello": "ai-council-2026-09-26",
+    "ui.sub": "ai-council-2026-09-26",
+    "ui.m_free": "ai-council-2026-09-26",
+    "ui.m_free_s": "ai-council-2026-09-26",
+    "ui.m_find": "ai-council-2026-09-26",
+    "ui.m_find_s": "ai-council-2026-09-26",
+    "ui.m_rocket": "ai-council-2026-09-26",
+    "ui.m_rocket_s": "ai-council-2026-09-26",
+    "ui.m_order": "ai-council-2026-09-26",
+    "ui.m_order_s": "ai-council-2026-09-26",
+    "ui.m_count": "ai-council-2026-09-26",
+    "ui.m_count_s": "ai-council-2026-09-26",
+    "ui.m_words": "ai-council-2026-09-26",
+    "ui.m_words_s": "ai-council-2026-09-26",
+    "ui.tapPlanet": "ai-council-2026-09-26",
+    "ui.nameBang": "ai-council-2026-09-26",
+    "ui.whereIs": "ai-council-2026-09-26",
+    "ui.yesThats": "ai-council-2026-09-26",
+    "ui.notThat": "ai-council-2026-09-26",
+    "ui.fiveStars": "ai-council-2026-09-26",
+    "ui.rocketGo": "ai-council-2026-09-26",
+    "ui.homeSun": "ai-council-2026-09-26",
+    "ui.allEight": "ai-council-2026-09-26",
+    "ui.lineUp": "ai-council-2026-09-26",
+    "ui.whoFirst": "ai-council-2026-09-26",
+    "ui.whoNext": "ai-council-2026-09-26",
+    "ui.thatsP": "ai-council-2026-09-26",
+    "ui.didIt": "ai-council-2026-09-26",
+    "ui.countIntro": "ai-council-2026-09-26",
+    "ui.addOne": "ai-council-2026-09-26",
+    "ui.addMany": "ai-council-2026-09-26",
+    "ui.takeOne": "ai-council-2026-09-26",
+    "ui.takeMany": "ai-council-2026-09-26",
+    "ui.countDone": "ai-council-2026-09-26",
+    "ui.countYes": "ai-council-2026-09-26",
+    "ui.tapToCount": "ai-council-2026-09-26",
+    "ui.wordsIntro": "ai-council-2026-09-26",
+    "ui.findWord": "ai-council-2026-09-26",
+    "ui.yesWord": "ai-council-2026-09-26",
+    "ui.thatsWord": "ai-council-2026-09-26"
+  },
+  "ui": {
+    "hello": "Bonjour !",
+    "sub": "Six jeux de l’espace pour petits astronautes. Touche-en un pour jouer.",
+    "m_free": "Touche et écoute",
+    "m_free_s": "Les planètes disent bonjour",
+    "m_find": "Trouve-la",
+    "m_find_s": "Où est Saturne ?",
+    "m_rocket": "Voyage en fusée",
+    "m_rocket_s": "Visite les huit planètes",
+    "m_order": "En ordre",
+    "m_order_s": "Mets-les en ordre",
+    "m_count": "Compte et ajoute",
+    "m_count_s": "Étoiles, fusées, lunes",
+    "m_words": "Mots de l’espace",
+    "m_words_s": "Fusée, comète, lune",
+    "tapPlanet": "Touche une planète !",
+    "nameBang": "{p} !",
+    "whereIs": "Où est {p} ?",
+    "yesThats": "Oui ! C’est {p} !",
+    "notThat": "Ça, c’est {p}. Où est {q} ?",
+    "fiveStars": "Cinq étoiles ! Bravo !",
+    "rocketGo": "Touche pour faire voler la fusée !",
+    "homeSun": "Retour au Soleil ! Touche pour repartir !",
+    "allEight": "On a visité les huit planètes ! Youpi !",
+    "lineUp": "On met les planètes en ordre ! Qui vient en premier ?",
+    "whoFirst": "Qui vient en premier ?",
+    "whoNext": "Qui vient ensuite ?",
+    "thatsP": "Ça, c’est {p}.",
+    "didIt": "Bravo ! Toutes les planètes sont en ordre !",
+    "countIntro": "On compte les {pl} ! Touche chacune.",
+    "addOne": "{a}… et encore une ! Ça fait combien ?",
+    "addMany": "{a}… et encore {b} ! Ça fait combien ?",
+    "takeOne": "{a}. Une s’envole ! Combien en reste-t-il ?",
+    "takeMany": "{a}. {b} s’envolent ! Combien en reste-t-il ?",
+    "countDone": "{a} ! Bravo !",
+    "countYes": "Oui ! {a} !",
+    "tapToCount": "Touche-les pour compter !",
+    "wordsIntro": "Touche une image pour entendre son nom !",
+    "findWord": "Trouve {w} !",
+    "yesWord": "Oui ! C’est {w} !",
+    "thatsWord": "Ça, c’est {w}.",
+    "whichMore": "De quel côté il y a plus de {pl} ?",
+    "moreYes": "Oui ! Ce côté-ci en a plus !",
+    "song": "La chanson des planètes !",
+    "whereLMR": "Où est {p} ? À gauche, au milieu ou à droite ?",
+    "whichAt": "Quelle planète est {pos} ?",
+    "isAt": "{p} est {pos} !",
+    "yesAt": "Oui ! {p} est {pos} !",
+    "thatsAt": "Ça, c’est {p}, {pos}.",
+    "whichOneAt": "Laquelle est {pos} ?",
+    "yesTheAt": "Oui ! {W} est {pos} !",
+    "thatsTheAt": "Ça, c’est {w}, {pos}.",
+    "eatOne": "{a}. La baleine de l’espace en mange une ! Combien en reste-t-il ?",
+    "eatMany": "{a}. La baleine de l’espace en mange {b} ! Combien en reste-t-il ?",
+    "rollOne": "{a}. Une roule et s’en va ! Combien en reste-t-il ?",
+    "rollMany": "{a}. {b} roulent et s’en vont ! Combien en reste-t-il ?",
+    "makeN": "Fais {a} !",
+    "makeHint": "Touche le plus pour en ajouter une. Touches-en une pour l’envoyer au loin.",
+    "goodnight": "Les planètes vont dormir. Bonne nuit, astronaute !"
+  },
+  "planets": {
+    "sun": {
+      "name": "le Soleil",
+      "label": "Soleil",
+      "fact": "Le Soleil est une étoile !"
+    },
+    "mercury": {
+      "name": "Mercure",
+      "label": "Mercure",
+      "fact": "Mercure est la planète la plus proche du Soleil."
+    },
+    "venus": {
+      "name": "Vénus",
+      "label": "Vénus",
+      "fact": "Vénus est la planète la plus chaude."
+    },
+    "earth": {
+      "name": "la Terre",
+      "label": "Terre",
+      "fact": "La Terre, c’est notre maison !"
+    },
+    "mars": {
+      "name": "Mars",
+      "label": "Mars",
+      "fact": "Mars est la planète rouge."
+    },
+    "jupiter": {
+      "name": "Jupiter",
+      "label": "Jupiter",
+      "fact": "Jupiter est la plus grosse planète."
+    },
+    "saturn": {
+      "name": "Saturne",
+      "label": "Saturne",
+      "fact": "Saturne a de beaux anneaux."
+    },
+    "uranus": {
+      "name": "Uranus",
+      "label": "Uranus",
+      "fact": "Uranus tourne sur le côté."
+    },
+    "neptune": {
+      "name": "Neptune",
+      "label": "Neptune",
+      "fact": "Neptune est la planète la plus venteuse."
+    }
+  },
+  "numbers": [
+    "zéro",
+    "un",
+    "deux",
+    "trois",
+    "quatre",
+    "cinq",
+    "six",
+    "sept",
+    "huit",
+    "neuf",
+    "dix"
+  ],
+  "objects": {
+    "star": [
+      "étoile",
+      "étoiles"
+    ],
+    "rocket": [
+      "fusée",
+      "fusées"
+    ],
+    "moon": [
+      "lune",
+      "lunes"
+    ]
+  },
+  "words": {
+    "rocket": "la fusée",
+    "star": "l’étoile",
+    "moon": "la lune",
+    "sun": "le soleil",
+    "planet": "la planète",
+    "astronaut": "l’astronaute",
+    "comet": "la comète",
+    "telescope": "le télescope",
+    "satellite": "le satellite",
+    "ring": "l’anneau"
+  },
+  "acts": {
+    "rocket": "La fusée vole !",
+    "star": "L’étoile brille !",
+    "moon": "La lune saute !",
+    "sun": "Le soleil brille !",
+    "planet": "La planète tourne !",
+    "astronaut": "L’astronaute fait coucou !",
+    "comet": "La comète file !",
+    "telescope": "Le télescope regarde !",
+    "satellite": "Le satellite tourne !",
+    "ring": "L’anneau tourne !"
+  },
+  "positions": [
+    "à gauche",
+    "au milieu",
+    "à droite"
+  ],
+  "posShort": [
+    "GAUCHE",
+    "MILIEU",
+    "DROITE"
+  ]
+}

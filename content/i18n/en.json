@@ -1,0 +1,177 @@
+{
+  "_meta": {
+    "lang": "en",
+    "note": "reviewed: key path -> reviewer. Anything missing is unreviewed. \"ai-*\" reviewers are not a person."
+  },
+  "_reviewed": {
+    "*": "michael"
+  },
+  "ui": {
+    "hello": "Hello!",
+    "sub": "Six space games for little astronauts. Tap one to play.",
+    "m_free": "Tap & Hear",
+    "m_free_s": "Planets say hello",
+    "m_find": "Find It",
+    "m_find_s": "Where is Saturn?",
+    "m_rocket": "Rocket Trip",
+    "m_rocket_s": "Fly past all eight",
+    "m_order": "Line Up",
+    "m_order_s": "Put them in order",
+    "m_count": "Count & Add",
+    "m_count_s": "Stars, rockets, moons",
+    "m_words": "Space Words",
+    "m_words_s": "Rocket, comet, moon",
+    "tapPlanet": "Tap a planet!",
+    "nameBang": "{p}!",
+    "whereIs": "Where is {p}?",
+    "yesThats": "Yes! That's {p}!",
+    "notThat": "That's {p}. Where is {q}?",
+    "fiveStars": "Five stars! Hooray!",
+    "rocketGo": "Tap to fly the rocket!",
+    "homeSun": "Home to the Sun! Tap to fly again!",
+    "allEight": "We visited all eight planets! Hooray!",
+    "lineUp": "Let's line up the planets! Who comes first?",
+    "whoFirst": "Who comes first?",
+    "whoNext": "Who comes next?",
+    "thatsP": "That's {p}.",
+    "didIt": "You did it! All the planets are in order!",
+    "countIntro": "Let's count the {pl}! Tap each one.",
+    "addOne": "{a}… and one more! How many now?",
+    "addMany": "{a}… and {b} more! How many now?",
+    "takeOne": "{a}. One flies away! How many are left?",
+    "takeMany": "{a}. {b} fly away! How many are left?",
+    "countDone": "{a}! Great counting!",
+    "countYes": "Yes! {a}!",
+    "tapToCount": "Tap them to count!",
+    "wordsIntro": "Tap a picture to hear its name!",
+    "findWord": "Find the {w}!",
+    "yesWord": "Yes! That's the {w}!",
+    "thatsWord": "That's the {w}.",
+    "whichMore": "Which side has more {pl}?",
+    "moreYes": "Yes! This side has more!",
+    "song": "The planet song!",
+    "whereLMR": "Where is {p}? On the left, in the middle, or on the right?",
+    "whichAt": "Which planet is {pos}?",
+    "isAt": "{p} is {pos}!",
+    "yesAt": "Yes! {p} is {pos}!",
+    "thatsAt": "That's {p}, {pos}.",
+    "whichOneAt": "Which one is {pos}?",
+    "yesTheAt": "Yes! The {w} is {pos}!",
+    "thatsTheAt": "That's the {w}, {pos}.",
+    "eatOne": "{a}. The space whale eats one! How many are left?",
+    "eatMany": "{a}. The space whale eats {b}! How many are left?",
+    "rollOne": "{a}. One rolls away! How many are left?",
+    "rollMany": "{a}. {b} roll away! How many are left?",
+    "makeN": "Make {a}!",
+    "makeHint": "Tap the plus to add one. Tap one to send it away.",
+    "goodnight": "The planets are going to sleep. Goodnight, astronaut!"
+  },
+  "planets": {
+    "sun": {
+      "name": "The Sun",
+      "label": "Sun",
+      "fact": "The Sun is a star!"
+    },
+    "mercury": {
+      "name": "Mercury",
+      "label": "Mercury",
+      "fact": "Mercury is the closest planet to the Sun."
+    },
+    "venus": {
+      "name": "Venus",
+      "label": "Venus",
+      "fact": "Venus is the hottest planet."
+    },
+    "earth": {
+      "name": "Earth",
+      "label": "Earth",
+      "fact": "Earth is our home!"
+    },
+    "mars": {
+      "name": "Mars",
+      "label": "Mars",
+      "fact": "Mars is the red planet."
+    },
+    "jupiter": {
+      "name": "Jupiter",
+      "label": "Jupiter",
+      "fact": "Jupiter is the biggest planet."
+    },
+    "saturn": {
+      "name": "Saturn",
+      "label": "Saturn",
+      "fact": "Saturn has beautiful rings."
+    },
+    "uranus": {
+      "name": "Uranus",
+      "label": "Uranus",
+      "fact": "Uranus spins on its side."
+    },
+    "neptune": {
+      "name": "Neptune",
+      "label": "Neptune",
+      "fact": "Neptune is the windiest planet."
+    }
+  },
+  "numbers": [
+    "zero",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+    "ten"
+  ],
+  "objects": {
+    "star": [
+      "star",
+      "stars"
+    ],
+    "rocket": [
+      "rocket",
+      "rockets"
+    ],
+    "moon": [
+      "moon",
+      "moons"
+    ]
+  },
+  "words": {
+    "rocket": "rocket",
+    "star": "star",
+    "moon": "moon",
+    "sun": "sun",
+    "planet": "planet",
+    "astronaut": "astronaut",
+    "comet": "comet",
+    "telescope": "telescope",
+    "satellite": "satellite",
+    "ring": "ring"
+  },
+  "acts": {
+    "rocket": "Rocket flies!",
+    "star": "Star twinkles!",
+    "moon": "Moon bounces!",
+    "sun": "Sun shines!",
+    "planet": "Planet spins!",
+    "astronaut": "Astronaut waves!",
+    "comet": "Comet zooms!",
+    "telescope": "Telescope looks!",
+    "satellite": "Satellite spins!",
+    "ring": "Ring spins!"
+  },
+  "positions": [
+    "on the left",
+    "in the middle",
+    "on the right"
+  ],
+  "posShort": [
+    "LEFT",
+    "MIDDLE",
+    "RIGHT"
+  ]
+}

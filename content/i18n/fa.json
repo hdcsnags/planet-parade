@@ -1,0 +1,216 @@
+{
+  "_meta": {
+    "lang": "fa",
+    "note": "reviewed: key path -> reviewer. Anything missing is unreviewed. \"ai-*\" reviewers are not a person."
+  },
+  "_reviewed": {
+    "ui.hello": "ai-council-2026-09-26",
+    "ui.sub": "ai-council-2026-09-26",
+    "ui.m_free": "ai-council-2026-09-26",
+    "ui.m_free_s": "ai-council-2026-09-26",
+    "ui.m_find": "ai-council-2026-09-26",
+    "ui.m_find_s": "ai-council-2026-09-26",
+    "ui.m_rocket": "ai-council-2026-09-26",
+    "ui.m_rocket_s": "ai-council-2026-09-26",
+    "ui.m_order": "ai-council-2026-09-26",
+    "ui.m_order_s": "ai-council-2026-09-26",
+    "ui.m_count": "ai-council-2026-09-26",
+    "ui.m_count_s": "ai-council-2026-09-26",
+    "ui.m_words": "ai-council-2026-09-26",
+    "ui.m_words_s": "ai-council-2026-09-26",
+    "ui.tapPlanet": "ai-council-2026-09-26",
+    "ui.nameBang": "ai-council-2026-09-26",
+    "ui.whereIs": "ai-council-2026-09-26",
+    "ui.yesThats": "ai-council-2026-09-26",
+    "ui.notThat": "ai-council-2026-09-26",
+    "ui.fiveStars": "ai-council-2026-09-26",
+    "ui.rocketGo": "ai-council-2026-09-26",
+    "ui.homeSun": "ai-council-2026-09-26",
+    "ui.allEight": "ai-council-2026-09-26",
+    "ui.lineUp": "ai-council-2026-09-26",
+    "ui.whoFirst": "ai-council-2026-09-26",
+    "ui.whoNext": "ai-council-2026-09-26",
+    "ui.thatsP": "ai-council-2026-09-26",
+    "ui.didIt": "ai-council-2026-09-26",
+    "ui.countIntro": "ai-council-2026-09-26",
+    "ui.addOne": "ai-council-2026-09-26",
+    "ui.addMany": "ai-council-2026-09-26",
+    "ui.takeOne": "ai-council-2026-09-26",
+    "ui.takeMany": "ai-council-2026-09-26",
+    "ui.countDone": "ai-council-2026-09-26",
+    "ui.countYes": "ai-council-2026-09-26",
+    "ui.tapToCount": "ai-council-2026-09-26",
+    "ui.wordsIntro": "ai-council-2026-09-26",
+    "ui.findWord": "ai-council-2026-09-26",
+    "ui.yesWord": "ai-council-2026-09-26",
+    "ui.thatsWord": "ai-council-2026-09-26"
+  },
+  "ui": {
+    "hello": "سلام!",
+    "sub": "شش تا بازی فضایی برای فضانوردهای کوچولو. یکی رو بزن تا بازی کنیم.",
+    "m_free": "بزن و گوش کن",
+    "m_free_s": "سیاره‌ها سلام می‌کنن",
+    "m_find": "پیداش کن",
+    "m_find_s": "زحل کجاست؟",
+    "m_rocket": "سفر با موشک",
+    "m_rocket_s": "برو پیش هر هشت تا",
+    "m_order": "به ترتیب",
+    "m_order_s": "به ترتیب بچینشون",
+    "m_count": "بشمار و جمع کن",
+    "m_count_s": "ستاره، موشک، ماه",
+    "m_words": "کلمه‌های فضایی",
+    "m_words_s": "موشک، ستاره‌ی دنباله‌دار، ماه",
+    "tapPlanet": "به یه سیاره دست بزن!",
+    "nameBang": "{p}!",
+    "whereIs": "{p} کجاست؟",
+    "yesThats": "آفرین! اینم {p}!",
+    "notThat": "اینم {p}. {q} کجاست؟",
+    "fiveStars": "پنج تا ستاره! هورا!",
+    "rocketGo": "بزن تا موشک پرواز کنه!",
+    "homeSun": "برگشتیم پیش خورشید! دوباره بزن تا پرواز کنیم!",
+    "allEight": "به هر هشت تا سیاره سر زدیم! هورا!",
+    "lineUp": "بیا سیاره‌ها رو به ترتیب بچینیم! کی اول میاد؟",
+    "whoFirst": "کی اول میاد؟",
+    "whoNext": "بعدی کیه؟",
+    "thatsP": "اینم {p}.",
+    "didIt": "آفرین! همه‌ی سیاره‌ها رو به ترتیب چیدی!",
+    "countIntro": "بیا {pl} رو بشمریم! به هر کدوم دست بزن.",
+    "addOne": "{a}… و یکی دیگه! حالا چند تا شد؟",
+    "addMany": "{a}… و {b} تا دیگه! حالا چند تا شد؟",
+    "takeOne": "{a}. یکی پرواز کرد! چند تا موند؟",
+    "takeMany": "{a}. {b} تا پرواز کردن! چند تا موند؟",
+    "countDone": "{a}! آفرین!",
+    "countYes": "آفرین! {a}!",
+    "tapToCount": "بهشون دست بزن تا بشمریم!",
+    "wordsIntro": "به یه عکس دست بزن تا اسمش رو بشنوی!",
+    "findWord": "{w} رو پیدا کن!",
+    "yesWord": "آفرین! {w}!",
+    "thatsWord": "اینم {w}.",
+    "whichMore": "کدوم طرف {pl} بیشتره؟",
+    "moreYes": "آفرین! این طرف بیشتره!",
+    "song": "آهنگ سیاره‌ها!",
+    "whereLMR": "{p} کجاست؟ سمت چپ، وسط، یا سمت راست؟",
+    "whichAt": "کدوم سیاره {pos}ه؟",
+    "isAt": "{p} {pos}ه!",
+    "yesAt": "آفرین! {p} {pos}ه!",
+    "thatsAt": "اینم {p}، {pos}.",
+    "whichOneAt": "کدومش {pos}ه؟",
+    "yesTheAt": "آفرین! {w} {pos}ه!",
+    "thatsTheAt": "اینم {w}، {pos}.",
+    "eatOne": "{a}. نهنگ فضایی یکی رو خورد! چند تا موند؟",
+    "eatMany": "{a}. نهنگ فضایی {b} تا رو خورد! چند تا موند؟",
+    "rollOne": "{a}. یکی قل خورد و رفت! چند تا موند؟",
+    "rollMany": "{a}. {b} تا قل خوردن و رفتن! چند تا موند؟",
+    "makeN": "{a} درست کن!",
+    "makeHint": "به بعلاوه بزن تا یکی اضافه شه. به یکی بزن تا بره.",
+    "goodnight": "سیاره‌ها می‌خوان بخوابن. شب بخیر، فضانورد کوچولو!"
+  },
+  "planets": {
+    "sun": {
+      "name": "خورشید",
+      "label": "خورشید",
+      "fact": "خورشید یه ستاره‌ست!"
+    },
+    "mercury": {
+      "name": "عطارد",
+      "label": "عطارد",
+      "fact": "عطارد از همه به خورشید نزدیک‌تره."
+    },
+    "venus": {
+      "name": "زهره",
+      "label": "زهره",
+      "fact": "زهره داغ‌ترین سیاره‌ست."
+    },
+    "earth": {
+      "name": "زمین",
+      "label": "زمین",
+      "fact": "زمین خونه‌ی ماست!"
+    },
+    "mars": {
+      "name": "مریخ",
+      "label": "مریخ",
+      "fact": "مریخ سیاره‌ی سرخه."
+    },
+    "jupiter": {
+      "name": "مشتری",
+      "label": "مشتری",
+      "fact": "مشتری بزرگ‌ترین سیاره‌ست."
+    },
+    "saturn": {
+      "name": "زحل",
+      "label": "زحل",
+      "fact": "زحل حلقه‌های قشنگی داره."
+    },
+    "uranus": {
+      "name": "اورانوس",
+      "label": "اورانوس",
+      "fact": "اورانوس به پهلو می‌چرخه."
+    },
+    "neptune": {
+      "name": "نپتون",
+      "label": "نپتون",
+      "fact": "نپتون پربادترین سیاره‌ست."
+    }
+  },
+  "numbers": [
+    "صفر",
+    "یک",
+    "دو",
+    "سه",
+    "چهار",
+    "پنج",
+    "شش",
+    "هفت",
+    "هشت",
+    "نه",
+    "ده"
+  ],
+  "objects": {
+    "star": [
+      "ستاره",
+      "ستاره‌ها"
+    ],
+    "rocket": [
+      "موشک",
+      "موشک‌ها"
+    ],
+    "moon": [
+      "ماه",
+      "ماه‌ها"
+    ]
+  },
+  "words": {
+    "rocket": "موشک",
+    "star": "ستاره",
+    "moon": "ماه",
+    "sun": "خورشید",
+    "planet": "سیاره",
+    "astronaut": "فضانورد",
+    "comet": "ستاره‌ی دنباله‌دار",
+    "telescope": "تلسکوپ",
+    "satellite": "ماهواره",
+    "ring": "حلقه"
+  },
+  "acts": {
+    "rocket": "موشک پرواز می‌کنه!",
+    "star": "ستاره چشمک می‌زنه!",
+    "moon": "ماه می‌پره!",
+    "sun": "خورشید می‌تابه!",
+    "planet": "سیاره می‌چرخه!",
+    "astronaut": "فضانورد دست تکون می‌ده!",
+    "comet": "ستاره‌ی دنباله‌دار تند می‌ره!",
+    "telescope": "تلسکوپ نگاه می‌کنه!",
+    "satellite": "ماهواره می‌چرخه!",
+    "ring": "حلقه می‌چرخه!"
+  },
+  "positions": [
+    "سمت چپ",
+    "وسط",
+    "سمت راست"
+  ],
+  "posShort": [
+    "چپ",
+    "وسط",
+    "راست"
+  ]
+}
