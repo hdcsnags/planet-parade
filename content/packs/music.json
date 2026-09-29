@@ -336,7 +336,7 @@
         "logic.6"
       ],
       "example": "Long, short, long, short: which train shows it?",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }

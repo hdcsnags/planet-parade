@@ -16,7 +16,6 @@ const ORDER = { number: 1, space: 2, logic: 3, science: 4, language: 5, music: 6
 function unsupported(l) {
   const p = l.params || {}, vs = l.variants || [], by = [].concat(p.by || [], ...vs.map(v => v.by || []));
   if (l.template === 'sort' && !p.set && by.some(a => !['kind', 'color', 'size'].includes(a))) return true;
-  if (l.template === 'pattern' && (p.token === 'rhythm' || vs.some(v => v.token === 'rhythm'))) return true;
   if (l.template === 'find_hear' && (['letter', 'sentence', 'description'].includes(p.promptKind))) return true; // authored per language / living-needs pictures
   return false;
 }

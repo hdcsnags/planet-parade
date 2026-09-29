@@ -249,7 +249,9 @@
     "pattern": {
       "next": "What comes next?",
       "missing": "What’s missing?",
-      "choo": "Choo choo!"
+      "choo": "Choo choo!",
+      "long": "long",
+      "short": "short"
     },
     "sort": {
       "go": "Put each one in its crater!",
@@ -502,6 +504,11 @@
       "iceWill": "The same ice cubes: one in the sun, one in the shade. Which will melt first? Guess!",
       "iceWhat": "Which one melted first?",
       "iceYes": "Yes! The one in the sun melted first. The sun warmed it!"
+    },
+    "rangoli": {
+      "go": "Finish the other wing so both sides match!",
+      "twin": "Look at the other side. Find its twin!",
+      "done": "Both wings match! Beautiful!"
     }
   },
   "strands": {

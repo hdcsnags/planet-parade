@@ -26,10 +26,11 @@ const TOKENS = {
   color: ['pink', 'blue', 'gold', 'green'],
   planet: ['mars', 'earth', 'neptune', 'jupiter'],
   shape: ['star', 'moon', 'rocket', 'ball'],
+  rhythm: ['long', 'short'], // music: a long note and a short note
 };
 export class Pattern extends Template {
   makeRound() {
-    const p = this.p, unit = p.unit || 'AB', n = p.cars || 6;
+    const p = this.p, unit = [].concat(p.unit || 'AB')[Math.floor(Math.random() * [].concat(p.unit || 'AB').length)], n = p.cars || 6;
     this.grow = unit.startsWith('grow');
     const pool = shuffle(TOKENS[p.token || 'color']);
     if (this.grow) {
@@ -49,12 +50,16 @@ export class Pattern extends Template {
     this.answerKey = key(ans);
     this.tiles = shuffle([...opts.values()]).map(o => makeTile(0, { item: o, key: key(o) }));
     this.filled = false; this.drive = 0;
+    if ((p.token || 'color') === 'rhythm') this.playRhythm();
     this.ask(t(p.blank === 'middle' ? 'tpl.pattern.missing' : 'tpl.pattern.next'));
   }
+  // rhythm cars: long = a held note, short = a quick one; the train plays its pattern (the blank is a rest)
+  playRhythm() { let at = .4; this.seq.forEach((o, i) => { if (i !== this.blankAt) tone(392, o.tok === 'long' ? .5 : .16, { vol: .2, delay: at }); at += o.tok === 'long' ? .7 : .35; }); }
   nameOf(o, lang = LANG) {
     if (this.grow) return fmt(o.count);
     const tok = o.tok, tp = this.p.token || 'color';
     if (tp === 'color') return lookup(`colors.${tok}`, lang);
+    if (tp === 'rhythm') return lookup(`tpl.pattern.${tok}`, lang);
     if (tp === 'planet') return cap(pname(PLANETS.find(pl => pl.id === tok), lang));
     return tok === 'ball' ? lookup('colors.blue', lang) : word(tok, lang).replace(/^(la |le |l’)/, '');
   }
@@ -71,6 +76,7 @@ export class Pattern extends Template {
       return;
     }
     const tp = this.p.token || 'color';
+    if (tp === 'rhythm') { c.fillStyle = '#6ef0c2'; if (o.tok === 'long') { c.beginPath(); c.roundRect ? c.roundRect(x - r * .8, y - r * .22, r * 1.6, r * .44, r * .22) : c.rect(x - r * .8, y - r * .22, r * 1.6, r * .44); c.fill(); } else { c.beginPath(); c.arc(x, y, r * .3, 0, TAU); c.fill(); } return; }
     if (tp === 'planet') drawPlanet(c, PLANETS.find(pl => pl.id === o.tok), x, y, r * (o.tok === 'jupiter' ? .9 : .8), tt, { face: true, blink: 1, happy: true });
     else if (tp === 'shape') drawObj(c, { kind: o.tok, color: o.tok === 'ball' ? 'blue' : 'gold' }, x, y, r, tt);
     else drawObj(c, { kind: 'ball', color: o.tok }, x, y, r, tt);

@@ -288,7 +288,9 @@
     "pattern": {
       "next": "Qu’est-ce qui vient ensuite ?",
       "missing": "Qu’est-ce qui manque ?",
-      "choo": "Tchou tchou !"
+      "choo": "Tchou tchou !",
+      "long": "long",
+      "short": "court"
     },
     "sort": {
       "go": "Mets chacune dans son cratère !",
@@ -541,6 +543,11 @@
       "iceWill": "Les mêmes glaçons : un au soleil, un à l’ombre. Lequel va fondre en premier ? Devine !",
       "iceWhat": "Lequel a fondu en premier ?",
       "iceYes": "Oui ! Celui au soleil a fondu en premier. Le soleil l’a réchauffé !"
+    },
+    "rangoli": {
+      "go": "Termine l’autre aile pour que les deux côtés soient pareils !",
+      "twin": "Regarde l’autre côté : trouve son jumeau !",
+      "done": "Les deux ailes sont pareilles ! Magnifique !"
     }
   },
   "strands": {
