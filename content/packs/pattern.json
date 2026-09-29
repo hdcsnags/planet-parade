@@ -1,0 +1,177 @@
+{
+  "$schema": "../schema/pack.schema.json",
+  "id": "pattern",
+  "strand": "logic",
+  "station": "earth",
+  "order": 4,
+  "name_key": "stations.pattern",
+  "levels": [
+    {
+      "id": "pattern.1",
+      "band": "2-3",
+      "skill": "ab-color",
+      "objective": "Continues an AB colour pattern",
+      "template": "pattern",
+      "params": {
+        "unit": "AB",
+        "token": "color",
+        "choices": 2,
+        "cars": 5
+      },
+      "generator": {
+        "kind": "random"
+      },
+      "mastery": {
+        "window": 5,
+        "need": 4,
+        "struggle": 3
+      }
+    },
+    {
+      "id": "pattern.2",
+      "band": "2-3",
+      "skill": "ab-planet",
+      "objective": "Continues an AB pattern of planets",
+      "template": "pattern",
+      "params": {
+        "unit": "AB",
+        "token": "planet",
+        "choices": 2,
+        "cars": 5
+      },
+      "generator": {
+        "kind": "random"
+      },
+      "mastery": {
+        "window": 5,
+        "need": 4,
+        "struggle": 3
+      }
+    },
+    {
+      "id": "pattern.3",
+      "band": "4-5",
+      "skill": "aab",
+      "objective": "Continues AAB patterns",
+      "template": "pattern",
+      "params": {
+        "unit": "AAB",
+        "token": "color",
+        "choices": 2,
+        "cars": 6
+      },
+      "generator": {
+        "kind": "random"
+      },
+      "mastery": {
+        "window": 5,
+        "need": 4,
+        "struggle": 3
+      }
+    },
+    {
+      "id": "pattern.4",
+      "band": "4-5",
+      "skill": "abb",
+      "objective": "Continues ABB patterns",
+      "template": "pattern",
+      "params": {
+        "unit": "ABB",
+        "token": "shape",
+        "choices": 3,
+        "cars": 6
+      },
+      "generator": {
+        "kind": "random"
+      },
+      "mastery": {
+        "window": 5,
+        "need": 4,
+        "struggle": 3
+      }
+    },
+    {
+      "id": "pattern.5",
+      "band": "4-5",
+      "skill": "abc",
+      "objective": "Continues ABC patterns",
+      "template": "pattern",
+      "params": {
+        "unit": "ABC",
+        "token": "shape",
+        "choices": 3,
+        "cars": 6
+      },
+      "generator": {
+        "kind": "random"
+      },
+      "mastery": {
+        "window": 5,
+        "need": 4,
+        "struggle": 3
+      }
+    },
+    {
+      "id": "pattern.6",
+      "band": "4-5",
+      "skill": "missing",
+      "objective": "Finds the missing piece of a pattern",
+      "template": "pattern",
+      "params": {
+        "unit": "AB",
+        "token": "planet",
+        "blank": "middle",
+        "choices": 3,
+        "cars": 6
+      },
+      "generator": {
+        "kind": "random"
+      },
+      "mastery": {
+        "window": 5,
+        "need": 4,
+        "struggle": 3
+      }
+    },
+    {
+      "id": "pattern.7",
+      "band": "6-7",
+      "skill": "grow-1",
+      "objective": "Continues a growing pattern (1, 2, 3…)",
+      "template": "pattern",
+      "params": {
+        "unit": "grow",
+        "choices": 3,
+        "cars": 4
+      },
+      "generator": {
+        "kind": "random"
+      },
+      "mastery": {
+        "window": 5,
+        "need": 4,
+        "struggle": 3
+      }
+    },
+    {
+      "id": "pattern.8",
+      "band": "6-7",
+      "skill": "grow-2",
+      "objective": "Continues a pattern that grows by 2",
+      "template": "pattern",
+      "params": {
+        "unit": "grow2",
+        "choices": 3,
+        "cars": 4
+      },
+      "generator": {
+        "kind": "random"
+      },
+      "mastery": {
+        "window": 5,
+        "need": 4,
+        "struggle": 3
+      }
+    }
+  ]
+}

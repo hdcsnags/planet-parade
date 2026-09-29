@@ -80,6 +80,11 @@ if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
       <div class="seg" id="segMax" role="group" aria-label="Highest number"><button data-m="3">3</button><button data-m="5">5</button><button data-m="10">10</button></div></div>
     <div class="opt"><div><b>Adding and taking away</b><span>How many join or fly away each time</span></div>
       <div class="seg" id="segStep" role="group" aria-label="Adding and taking away"><button data-s="1">Just 1</button><button data-s="3">Up to 3</button></div></div>
+    <div class="opt"><div><b>Learning path</b><span>Where each planet starts. “Try harder?” plays three quick harder rounds and moves up if they were easy. Your child never sees levels or scores.</span></div></div>
+    <div id="learnPath" class="learn"></div>
+    <div class="opt"><div><b>Child</b><span>Name and age band set good starting points. Kept on this device only.</span></div>
+      <div class="seg"><input id="childName" type="text" maxlength="24" placeholder="Name" aria-label="Child's name"><select id="childBand" aria-label="Age band"><option value="2-3">Age 2–3</option><option value="4-5">Age 4–5</option><option value="6-7">Age 6–7</option></select></div></div>
+    <p id="reviewNote" class="note" hidden></p>
     <div class="opt"><div><b>Play time</b><span>When time is up the planets yawn and say goodnight. Hold the gear to wake them.</span></div>
       <div class="seg" id="segSession" role="group" aria-label="Play time"><button data-min="0">Off</button><button data-min="10">10 min</button><button data-min="15">15 min</button><button data-min="20">20 min</button></div></div>
     <div class="opt"><div><b>Today</b><div class="today-list" id="todayText"></div></div></div>

@@ -8,11 +8,11 @@ import { FONT, PERSIAN_FONT } from '../core/util.js';
    The words live in content/i18n/{en,fr,fa}.json. One language per session, never mixed inside a
    sentence. French is Canadian-neutral; Farsi is conversational Iranian Persian. Review status per
    line is in each file's `_reviewed` map (see TRANSLATIONS.md). */
-const PACKS = { en, fr, fa };
+const LANG_PACKS = { en, fr, fa };
 // Legacy lookup shape used by the original six games: I18N.ui[key][lang], I18N.planets[id][lang], ...
 function byLang(section, isList) {
   const out = {};
-  for (const [l, pk] of Object.entries(PACKS)) {
+  for (const [l, pk] of Object.entries(LANG_PACKS)) {
     const sec = pk[section];
     if (isList) { out[l] = sec; continue; }
     for (const [k, v] of Object.entries(sec)) (out[k] ||= {})[l] = v;
@@ -26,12 +26,12 @@ const I18N = {
 // Nested lookup for new content keys like "tpl.tenframe.fill" (falls back to English).
 function lookup(path, lang) {
   const get = pk => path.split('.').reduce((o, k) => (o == null ? o : o[k]), pk);
-  const v = get(PACKS[lang]);
-  return v != null ? v : get(PACKS.en);
+  const v = get(LANG_PACKS[lang]);
+  return v != null ? v : get(LANG_PACKS.en);
 }
 // Review status for the grown-ups panel: lines not yet checked by a person.
 function unreviewedCount(lang) {
-  const pk = PACKS[lang], rev = pk._reviewed || {};
+  const pk = LANG_PACKS[lang], rev = pk._reviewed || {};
   if (rev['*'] && !String(rev['*']).startsWith('ai-')) return 0;
   let n = 0;
   const walk = (o, path) => {
@@ -78,4 +78,4 @@ const posWord = (i, lang = LANG) => I18N.positions[lang][i];
 const posLabel = (i, lang = LANG) => I18N.posShort[lang][i];
 const fontFor = () => LANG === 'fa' ? PERSIAN_FONT : FONT;
 
-export { FA_DIGITS, I18N, LANG, LANGS, PACKS, bang, byLang, cap, faDigits, fmt, fontFor, lookup, num, pfact, pinfo, plabel, plural, pname, posLabel, posWord, qty, setLang, t, unreviewedCount, word };
+export { FA_DIGITS, I18N, LANG, LANGS, LANG_PACKS, bang, byLang, cap, faDigits, fmt, fontFor, lookup, num, pfact, pinfo, plabel, plural, pname, posLabel, posWord, qty, setLang, t, unreviewedCount, word };

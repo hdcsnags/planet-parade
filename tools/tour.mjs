@@ -22,7 +22,7 @@ const ROUTES = [
   ['count-make', 'count_make', ['legacy'], ['en']],
   ['words', 'words', ['legacy'], ['en']],
   ['sleep', 'sleep', ['legacy'], ['en']],
-  ['grownups', 'freeplay_grownups', ['legacy'], ['en']],
+  ['grownups', 'freeplay_grownups', ['legacy', 'new'], ['en']],
   ['hub', 'hub', ['new'], L],
   ...['tenframe', 'numberline', 'compare', 'pattern', 'sort', 'rovercode'].flatMap(tp =>
     [1, 8].map(lv => [`${tp}-L${lv}`, `${tp}-L${lv}`, ['new'], L])),

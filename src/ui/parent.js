@@ -5,6 +5,7 @@ import { $ } from '../core/util.js';
 import { PLANETS } from '../engine/world.js';
 import { MODE_LABEL, applyLang, modeName, setMode } from '../hub/router.js';
 import { I18N, LANG, bang, cap, pname, setLang, t } from '../i18n/i18n.js';
+import { renderLearning } from './learning.js';
 import { drawIcons } from './menu-art.js';
 import { STANDALONE } from './studio.js';
 
@@ -61,7 +62,7 @@ function syncParent() {
   document.querySelectorAll('#segStep button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.s === settings.step));
   document.querySelectorAll('#segSession button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.min === settings.session));
   $('#studioBtn').hidden = !STANDALONE;
-  updateVoiceNote(); syncVoicePicker(); syncToday();
+  updateVoiceNote(); syncVoicePicker(); syncToday(); renderLearning();
 }
 function openParent() {
   // A grown-up opening the panel is what wakes the sleeping planets.
@@ -77,7 +78,7 @@ document.querySelectorAll('#segSession button').forEach(b => b.addEventListener(
 document.querySelectorAll('#segLang button').forEach(b => b.addEventListener('click', () => { settings.lang = b.dataset.lang; setLang(b.dataset.lang); saveSettings(); syncParent(); applyLang(); }));
 $('#closeParent').addEventListener('click', () => {
   $('#parent').hidden = true; gear.focus();
-  if (wakeOnClose) { wakeOnClose = false; setMode('menu'); }
+  if (wakeOnClose) { wakeOnClose = false; setMode('hub'); }
 });
 const fsBtn = $('#fsBtn');
 if (!document.documentElement.requestFullscreen) fsBtn.hidden = true;

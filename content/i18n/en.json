@@ -173,5 +173,91 @@
     "LEFT",
     "MIDDLE",
     "RIGHT"
-  ]
+  ],
+  "stations": {
+    "tenframe": "Mercury! Let’s count!",
+    "numberline": "Jupiter! Let’s hop on the number line!",
+    "compare": "Saturn! The balance scale!",
+    "pattern": "Earth! The pattern train!",
+    "sort": "Venus! Let’s sort into craters!",
+    "rovercode": "Mars! Let’s program the rover!",
+    "playground": "The playground!",
+    "sleeping": "This planet is still sleeping. Soon!"
+  },
+  "hub": {
+    "welcome": "Where shall we fly? Tap a planet!",
+    "back": "Great flying! Back to the map!",
+    "newMoon": "You earned a new moon!"
+  },
+  "colors": {
+    "gold": "yellow",
+    "pink": "pink",
+    "blue": "blue",
+    "green": "green"
+  },
+  "sizes": {
+    "big": "big",
+    "small": "small"
+  },
+  "tpl": {
+    "tenframe": {
+      "fill": "Put {a} in the frame!",
+      "count": "How many stars are in the frame?",
+      "full": "{a}! You did it!",
+      "bondFill": "{a}. Fill up the frame!",
+      "bondSay": "{x} and {y} make {z}!",
+      "bondAsk": "How many more to make {z}?",
+      "teenAsk": "How many stars in all?",
+      "teenSay": "Ten and {y} make {z}!"
+    },
+    "numberline": {
+      "hopN": "Hop {n} times!",
+      "startHop": "Start at {a}. Hop {b} more!",
+      "startBack": "Start at {a}. Hop back {b}!",
+      "landed": "We landed on {n}!",
+      "addSay": "{a} and {b} make {c}!",
+      "subSay": "{a} take away {b} is {c}!",
+      "predictAdd": "{a} plus {b}. Where will the rocket land?",
+      "predictSub": "{a} take away {b}. Where will the rocket land?",
+      "skipGo": "Count by {s}! Tap to hop!",
+      "skipNext": "{list}… what comes next?",
+      "skipDone": "We counted by {s}!"
+    },
+    "compare": {
+      "more": "Which side has more?",
+      "less": "Which side has less?",
+      "lessYes": "Yes! This side has less!",
+      "equalAsk": "Make them the same! Tap the lighter side.",
+      "equalDone": "Now they’re the same!",
+      "bigger": "Which number is bigger?",
+      "smaller": "Which number is smaller?",
+      "biggest": "Which is the biggest number?",
+      "isBigger": "{a} is bigger than {b}!",
+      "isSmaller": "{a} is smaller than {b}!",
+      "biggestYes": "{a} is the biggest!"
+    },
+    "pattern": {
+      "next": "What comes next?",
+      "missing": "What’s missing?",
+      "choo": "Choo choo!"
+    },
+    "sort": {
+      "go": "Put each one in its crater!",
+      "allDone": "All sorted!",
+      "isKind": "It’s a {o}!",
+      "isColor": "It’s {c}!",
+      "isSize": "It’s {s}!"
+    },
+    "rover": {
+      "goal": "Drive the rover to the blue sample!",
+      "plan": "Tap the arrows to make a plan. Then press the green button!",
+      "forward": "Forward!",
+      "left": "Turn left!",
+      "right": "Turn right!",
+      "go": "Go!",
+      "bump": "Bump! Let’s try again.",
+      "almost": "Almost! Let’s try again.",
+      "got": "We found the sample!"
+    }
+  }
 }

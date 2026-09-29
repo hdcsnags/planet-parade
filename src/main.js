@@ -8,6 +8,7 @@ import { T, advanceClock, camX, cx, setViewport } from './engine/stage.js';
 import { runTimers } from './engine/timers.js';
 import { M, MODES, applyLang, goToSleep, modeName, playing, setMode, wakeLock, wakeWanted } from './hub/router.js';
 import { LANGS, setLang } from './i18n/i18n.js';
+import { TEMPLATES } from './templates/index.js';
 import { drawIcons } from './ui/menu-art.js';
 
 /* ---------- boot ---------- */
@@ -20,14 +21,18 @@ addEventListener('resize', resize);
 resize();
 drawIcons();
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawIcons);
-// Plain-token deep links: #rocket, #words_find, #count_more-fa (mode_sub-lang).
-const [deepMain, deepLang] = (location.hash || '').slice(1).split('-');
-const [deepMode, deepSub] = deepMain.split('_');
-if (LANGS.includes(deepLang)) setLang(deepLang);
+// Deep links (plain tokens only): #hub · #freeplay · #rocket-fa · #find_where-fa · #freeplay_grownups
+// · #tenframe-L8-fr (a curriculum template at a given level: preview only, no progress saved).
+const tokens = (location.hash || '').slice(1).split('-').filter(Boolean);
+let deepLevel = null;
+for (const tk of tokens.slice(1)) { if (/^L\d+$/.test(tk)) deepLevel = +tk.slice(1); else if (LANGS.includes(tk)) setLang(tk); }
+const [deepMode, deepSub] = (tokens[0] || '').split('_');
 applyLang();
 // If play time ran out earlier today, the planets are still asleep until a grown-up wakes them.
 if (today.asleep) setMode('sleep');
-else setMode(MODES[deepMode] && deepMode !== 'menu' ? deepMode : 'menu', deepSub);
+else if (TEMPLATES[deepMode]) setMode('play', deepLevel ? `${deepMode}.${deepLevel}` : deepMode);
+else if (MODES[deepMode] && deepMode !== 'menu' && deepMode !== 'play') setMode(deepMode, deepSub);
+else setMode('hub');
 
 // Play time: counted only after the first touch and while the page is visible. When the grown-ups'
 // session length is reached, the gentle goodnight begins (never an abrupt cut).

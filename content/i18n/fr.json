@@ -212,5 +212,91 @@
     "GAUCHE",
     "MILIEU",
     "DROITE"
-  ]
+  ],
+  "stations": {
+    "tenframe": "Mercure ! On compte !",
+    "numberline": "Jupiter ! On saute sur la ligne des nombres !",
+    "compare": "Saturne ! La balance !",
+    "pattern": "La Terre ! Le petit train des motifs !",
+    "sort": "Vénus ! On range dans les cratères !",
+    "rovercode": "Mars ! On programme le rover !",
+    "playground": "Le terrain de jeux !",
+    "sleeping": "Cette planète dort encore. Bientôt !"
+  },
+  "hub": {
+    "welcome": "On vole où ? Touche une planète !",
+    "back": "Bravo ! On retourne à la carte !",
+    "newMoon": "Tu as gagné une nouvelle lune !"
+  },
+  "colors": {
+    "gold": "jaune",
+    "pink": "rose",
+    "blue": "bleue",
+    "green": "verte"
+  },
+  "sizes": {
+    "big": "grande",
+    "small": "petite"
+  },
+  "tpl": {
+    "tenframe": {
+      "fill": "Mets {a} dans le cadre !",
+      "count": "Combien d’étoiles dans le cadre ?",
+      "full": "{a} ! Tu as réussi !",
+      "bondFill": "{a}. Remplis le cadre !",
+      "bondSay": "{x} et {y}, ça fait {z} !",
+      "bondAsk": "Il en manque combien pour faire {z} ?",
+      "teenAsk": "Combien d’étoiles en tout ?",
+      "teenSay": "Dix et {y}, ça fait {z} !"
+    },
+    "numberline": {
+      "hopN": "Saute {n} fois !",
+      "startHop": "On part de {a}. Saute encore {b} fois !",
+      "startBack": "On part de {a}. Saute {b} fois en arrière !",
+      "landed": "On est arrivés sur {n} !",
+      "addSay": "{a} et {b}, ça fait {c} !",
+      "subSay": "{a} moins {b}, ça fait {c} !",
+      "predictAdd": "{a} plus {b}. Où la fusée va-t-elle arriver ?",
+      "predictSub": "{a} moins {b}. Où la fusée va-t-elle arriver ?",
+      "skipGo": "On compte de {s} en {s} ! Touche pour sauter !",
+      "skipNext": "{list}… et ensuite ?",
+      "skipDone": "On a compté de {s} en {s} !"
+    },
+    "compare": {
+      "more": "De quel côté il y en a plus ?",
+      "less": "De quel côté il y en a moins ?",
+      "lessYes": "Oui ! Ce côté-ci en a moins !",
+      "equalAsk": "Rends-les pareils ! Touche le côté le plus léger.",
+      "equalDone": "Maintenant, c’est pareil !",
+      "bigger": "Quel nombre est le plus grand ?",
+      "smaller": "Quel nombre est le plus petit ?",
+      "biggest": "Quel est le plus grand nombre ?",
+      "isBigger": "{a} est plus grand que {b} !",
+      "isSmaller": "{a} est plus petit que {b} !",
+      "biggestYes": "{a} est le plus grand !"
+    },
+    "pattern": {
+      "next": "Qu’est-ce qui vient ensuite ?",
+      "missing": "Qu’est-ce qui manque ?",
+      "choo": "Tchou tchou !"
+    },
+    "sort": {
+      "go": "Mets chacune dans son cratère !",
+      "allDone": "Tout est rangé !",
+      "isKind": "C’est une {o} !",
+      "isColor": "Elle est {c} !",
+      "isSize": "Elle est {s} !"
+    },
+    "rover": {
+      "goal": "Conduis le rover jusqu’à l’échantillon bleu !",
+      "plan": "Touche les flèches pour faire un plan. Puis appuie sur le bouton vert !",
+      "forward": "En avant !",
+      "left": "Tourne à gauche !",
+      "right": "Tourne à droite !",
+      "go": "C’est parti !",
+      "bump": "Boum ! On essaie encore.",
+      "almost": "Presque ! On essaie encore.",
+      "got": "On a trouvé l’échantillon !"
+    }
+  }
 }
