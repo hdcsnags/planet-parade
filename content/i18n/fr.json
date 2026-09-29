@@ -315,6 +315,13 @@
       "storyPart": "{w} fusées. {a} sont allées sur Mars. Combien sont allées sur la Lune ?",
       "storyWhole": "{a} fusées sont allées sur Mars et {b} sur la Lune. Combien de fusées en tout ?",
       "say": "{a} et {b}, ça fait {w} !"
+    },
+    "beads": {
+      "build": "Glisse les perles pour montrer {a} !",
+      "complement": "{a} perles. Il en manque combien pour faire {z} ?",
+      "compSay": "{a} et {b}, ça fait {z} !",
+      "fiveAnd": "Cinq et {b}, {n} !",
+      "ten": "Deux rangées pleines : dix !"
     }
   },
   "strands": {

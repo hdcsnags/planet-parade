@@ -276,6 +276,13 @@
       "storyPart": "{w} rockets. {a} flew to Mars. How many flew to the Moon?",
       "storyWhole": "{a} rockets flew to Mars and {b} to the Moon. How many rockets in all?",
       "say": "{a} and {b} make {w}!"
+    },
+    "beads": {
+      "build": "Slide the beads to show {a}!",
+      "complement": "{a} beads. How many more make {z}?",
+      "compSay": "{a} and {b} make {z}!",
+      "fiveAnd": "Five and {b}, {n}!",
+      "ten": "Two full rows: ten!"
     }
   },
   "strands": {

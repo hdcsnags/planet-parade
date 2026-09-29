@@ -32,7 +32,7 @@ const [deepMode, deepSub] = (tokens[0] || '').split('_');
 applyLang();
 // If play time ran out earlier today, the planets are still asleep until a grown-up wakes them.
 if (today.asleep) setMode('sleep');
-else if (TEMPLATES[deepMode]) setMode('play', `tpl:${deepMode}:${deepLevel === 'max' ? 'max' : 'min'}`);
+else if (TEMPLATES[tokens[0]]) setMode('play', `tpl:${tokens[0]}:${deepLevel === 'max' ? 'max' : 'min'}`); // ids like bead_frame contain '_'
 else if (PACKS.some(p => p.id === deepMode) && deepLevel) setMode('play', `preview:${deepMode}.${deepLevel}`);
 else if (MODES[deepMode] && deepMode !== 'menu' && deepMode !== 'play') setMode(deepMode, deepSub);
 else setMode('hub');

@@ -1,7 +1,7 @@
 // Planet Parade service worker: cache-first and versioned. A new version installs quietly in the
 // background and takes over on the NEXT launch (no skipWaiting / clients.claim), so a toddler is never
 // interrupted mid-game. Old caches are removed when the new version activates.
-const CACHE = 'planet-parade-35d3331ab6';
+const CACHE = 'planet-parade-cc5e336641';
 const ASSETS = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS.map(u => new Request(u, { cache: 'reload' })))));

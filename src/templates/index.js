@@ -1,3 +1,4 @@
+import { BeadFrame } from './beadframe.js';
 import { Bond } from './bond.js';
 import { Compare } from './compare.js';
 import { NumberLine } from './numberline.js';
@@ -25,4 +26,5 @@ export const TEMPLATES = {
   sort: Sort,
   rovercode: RoverCode,
   bond: Bond,
+  bead_frame: BeadFrame,
 };

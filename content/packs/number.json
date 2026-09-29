@@ -412,7 +412,7 @@
       "example": "Slide beads to show 7: one full row and two. How many more make 10?",
       "evidence": "moderate (soroban structure + rekenrek; Barner et al. 2016 is school-age)",
       "raise": "bead frame",
-      "status": "planned",
+      "status": "ready",
       "generator": {
         "kind": "random"
       }
