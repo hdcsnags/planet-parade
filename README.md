@@ -78,3 +78,11 @@ GitHub Pages ignores `_headers`; those caching and security headers apply only o
 3. Custom domains → Set up a domain.
 
 Regenerate the app icons (only if the art changes): `python tools/make_icons.py`.
+
+## Curriculum status
+
+`content/curriculum/curriculum.json` is the canonical ladder (6 strands, 75 levels), imported with
+`node tools/import-curriculum.mjs`. Now: 61 levels ready, 3 in Family Lab (observe_change: science.6,
+.7, .12, until each fact has a reviewed source), 11 planned (not shown): the per-language Language
+templates (sound_match, letter_path, word_builder, find_hear letters/sentences) need native-speaker
+authoring; tangram (space.9, .12); living-needs pictures (science.4).

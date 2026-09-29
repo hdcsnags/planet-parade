@@ -88,3 +88,9 @@ Farsi notes for reviewers:
 - The rover's «بپیچ به چپ / راست» are the rover's own turns, never mirrored.
 
 To mark a line as checked, add it to that file's `_reviewed`, e.g. `"tpl.rover.goal": "Maman Joon 2026-10-02"`.
+
+## Round 6 (curriculum templates)
+
+All `tpl.*` strings for the new templates (bond … rangoli, pattern rhythm) are machine-drafted in fr
+and fa and not yet checked by a person. Language-strand templates are deliberately not built until a
+native speaker authors their word lists.
