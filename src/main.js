@@ -10,6 +10,7 @@ import { runTimers } from './engine/timers.js';
 import { M, MODES, applyLang, goToSleep, modeName, playing, setMode, wakeLock, wakeWanted } from './hub/router.js';
 import { LANGS, setLang } from './i18n/i18n.js';
 import { TEMPLATES } from './templates/index.js';
+import { maybeFirstRun } from './ui/firstrun.js';
 import { drawIcons } from './ui/menu-art.js';
 
 /* ---------- boot ---------- */
@@ -36,6 +37,8 @@ else if (TEMPLATES[tokens[0]]) setMode('play', `tpl:${tokens[0]}:${deepLevel ===
 else if (PACKS.some(p => p.id === deepMode) && deepLevel) setMode('play', `preview:${deepMode}.${deepLevel}`);
 else if (MODES[deepMode] && deepMode !== 'menu' && deepMode !== 'play') setMode(deepMode, deepSub);
 else setMode('hub');
+// First launch on the map (bare link or #hub): one tap picks an age band and a starting point.
+if (modeName === 'hub') maybeFirstRun();
 
 // Play time: counted only after the first touch and while the page is visible. When the grown-ups'
 // session length is reached, the gentle goodnight begins (never an abrupt cut).

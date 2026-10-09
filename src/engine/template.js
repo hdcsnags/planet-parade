@@ -1,6 +1,6 @@
 import { boop } from '../audio/audio.js';
 import { say, showCaption } from '../audio/speech.js';
-import { LANG } from '../i18n/i18n.js';
+import { LANG, num, t } from '../i18n/i18n.js';
 import { celebrate } from './components.js';
 import { H, W } from './stage.js';
 
@@ -11,7 +11,8 @@ import { H, W } from './stage.js';
 //   * voice first: every prompt is spoken, and the caption stays on screen while she thinks;
 //   * never fail: a wrong pick wiggles and names itself, the prompt comes back, no penalty sound;
 //   * after two misses (or ~9 s of quiet) the right answer glows (`this.hint`), and that round no
-//     longer counts as a first try;
+//     longer counts as a first try; on the second miss a template that can explain does so out loud
+//     (`explain()`: count the set together, or say the number sentence), then the prompt returns;
 //   * the child never sees a level number or a score.
 
 
@@ -42,9 +43,13 @@ export class Template {
   repeat() { if (this.promptText) this.ask(this.promptText); }
   miss(line) {
     this.misses++; boop();
-    if (line) say(line, { onend: this.restorePrompt });
+    const second = this.misses === 2 && typeof this.explain === 'function';
     if (this.misses >= 2) this.hint = this.revealed = true;
+    if (line) say(line, { onend: second ? () => this.explain() : this.restorePrompt });
+    else if (second) this.explain();
   }
+  // "Let's count together: one, two, three. Three!" — spoken after the second miss by counting templates
+  together(n) { say(t('tpl.together', { list: Array.from({ length: n }, (_, i) => num(i + 1)).join(', '), n: num(n) }), { onend: this.restorePrompt }); }
   win(line, x = W / 2, y = H * .45) {
     if (this.busy) return;
     this.busy = true; this.promptText = '';

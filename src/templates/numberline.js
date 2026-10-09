@@ -97,6 +97,10 @@ export class NumberLine extends Template {
     }
     if (hitButton([this.hopBtn], x, y) || y > this.ly - 140) this.hop();
   }
+  explain() { // predict rounds: say the number sentence, then she taps it
+    if (this.phase !== 'predict' || this.op === 'skip') return;
+    say(t(this.op === 'add' ? 'tpl.numberline.addSay' : 'tpl.numberline.subSay', { a: cap(num(this.a)), b: num(this.b), c: fmt(this.result) }), { onend: this.restorePrompt });
+  }
   step(dt) {
     stepTiles(this.tiles, dt);
     if (this.hint) { const g = this.tiles.find(q => q.n === this.result); if (g) g.glow = 1; this.hopBtn.glow = 1; }

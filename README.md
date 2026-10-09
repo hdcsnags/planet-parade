@@ -24,6 +24,9 @@ installable app.
   - Line Up
   - Count & Add
   - Space Words
+- **First launch:** one tap picks an age band (and an optional name) and sets a starting point on
+  every planet; nothing else to configure. A new moon speaks one true fact about its planet. After a
+  second miss the game shows what is right: it counts the set together or says the number sentence.
 - **Grown-ups** (hold the gear):
   - language and voice picker
   - learning path per station (starting step and "Try harder?")

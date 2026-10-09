@@ -8,7 +8,8 @@ import { COLORS, burst, sparkle, trail } from '../engine/particles.js';
 import { H, W, camX, cx, setCamX } from '../engine/stage.js';
 import { after } from '../engine/timers.js';
 import { MOON_P, PLANETS, SUN } from '../engine/world.js';
-import { fontFor, lookup, plabel, t } from '../i18n/i18n.js';
+import { fontFor, lookup, pfact, plabel, t } from '../i18n/i18n.js';
+import { settings } from '../core/settings.js';
 import { childName, isMastered, isPending, isPlaced, playable } from '../progress/progress.js';
 import { setMode } from './router.js';
 
@@ -90,6 +91,8 @@ export function HubMode() {
       else if (a) { const s = stations.find(q => q.id === a); if (s) { at = s.id; saveAt(at); } }
       layout();
       if (litPop) after(.6, () => { const s = litPop.s; burst(s.x, s.y - s.R, 40, COLORS, 1); chime(783.99); s.body.bounce(6); });
+      // the moon is also a fact: a new moon unlocks one true thing about its planet (grown-ups' "Planet facts")
+      if (litPop && settings.facts && litPop.s.planet) after(1.8, () => say(pfact(litPop.s.planet)));
       if (!welcomed) { welcomed = true; after(.5, () => { const name = childName(); say(name ? t('hub.welcomeName', { name }) : t('hub.welcome')); }); }
     },
     layout,
