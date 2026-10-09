@@ -195,7 +195,10 @@
   "hub": {
     "welcome": "Where shall we fly? Tap a planet!",
     "back": "Great flying! Back to the map!",
-    "newMoon": "You earned a new moon!"
+    "newMoon": "You earned a new moon!",
+    "welcomeName": "Where shall we fly, {name}? Tap a planet!",
+    "backName": "Great flying, {name}! Back to the map!",
+    "newMoonName": "{name}, you earned a new moon!"
   },
   "colors": {
     "gold": "yellow",

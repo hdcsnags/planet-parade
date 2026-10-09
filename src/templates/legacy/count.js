@@ -76,7 +76,9 @@ function CountMode() {
   function makeTiles() {
     let d = answer + (Math.random() < .5 ? -1 : 1);
     if (d < 1 || d > Math.max(lvl, answer + 1)) d = answer === 1 ? 2 : answer - 1;
-    tiles = shuffle([answer, d]).map(n => ({ n, x: W / 2, y: H, w: 10, h: 10, scale: .01, sv: 0, wob: 0, glow: 0 }));
+    const opts = [answer, d];
+    if (settings.challenge) { let e = answer + (d < answer ? 1 : -1); if (e < 1) e = answer + 2; if (!opts.includes(e)) opts.push(e); }
+    tiles = shuffle(opts).map(n => ({ n, x: W / 2, y: H, w: 10, h: 10, scale: .01, sv: 0, wob: 0, glow: 0 }));
   }
   // The question stays on screen while she thinks; a spoken number briefly replaces it, then it returns.
   const ask = (text, extra) => { promptText = text; say(text, { persist: true, onend: extra }); };
@@ -287,7 +289,7 @@ function CountMode() {
       }
       counted++; o.counted = counted; o.sv += 5; o.happy = 1.4; logUse('nums', counted);
       chime(SCALE[Math.min(8, counted)]); sparkle(o.x, o.y - o.R, 8);
-      say(cap(num(counted)) + bang(), { onend: restorePrompt });
+      if (!settings.challenge) say(cap(num(counted)) + bang(), { onend: restorePrompt }); // Challenge: she counts in her head
       if (counted === live().length && counted === answer) { busy = true; after(.8, () => win()); }
     },
     update(dt) {

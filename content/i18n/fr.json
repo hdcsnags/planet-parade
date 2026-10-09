@@ -234,7 +234,10 @@
   "hub": {
     "welcome": "On vole où ? Touche une planète !",
     "back": "Bravo ! On retourne à la carte !",
-    "newMoon": "Tu as gagné une nouvelle lune !"
+    "newMoon": "Tu as gagné une nouvelle lune !",
+    "welcomeName": "On vole où, {name} ? Touche une planète !",
+    "backName": "Bravo, {name} ! On retourne à la carte !",
+    "newMoonName": "{name}, tu as gagné une nouvelle lune !"
   },
   "colors": {
     "gold": "jaune",

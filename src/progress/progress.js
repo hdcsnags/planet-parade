@@ -34,6 +34,8 @@ const save = () => { try { localStorage.setItem(KEY, JSON.stringify(data)); } ca
 
 export const profile = () => data.profiles[data.active];
 export function setProfile(fields) { Object.assign(profile(), fields); save(); }
+// The name she is greeted by. Several names separated by / , or | take turns at random; empty = no name.
+export function childName() { const names = String(profile().name || '').split(/\s*[/,|]\s*/).map(s => s.trim()).filter(Boolean); return names.length ? names[Math.floor(Math.random() * names.length)] : ''; }
 const lvState = id => (profile().levels[id] ||= { status: null, visits: [] });
 export const strandState = id => (profile().strands[id] ||= { advanced: false });
 export const isMastered = id => lvState(id).status === 'mastered';
