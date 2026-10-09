@@ -27,7 +27,10 @@ installable app.
 - **Grown-ups** (hold the gear):
   - language and voice picker
   - learning path per station (starting step and "Try harder?")
-  - child name and age band
+  - child name and age band (she is greeted by name on the map and after each visit; type several
+    names separated by `/` and they take turns)
+  - **Challenge**: she counts in her head (no spoken running count, numerals instead of dots, answer
+    before the rocket hops, at least three choices; also quiets Count & Add)
   - play-time limit with a gentle goodnight
   - a "Today" summary kept on the device only
   - the Recording Studio for family voices (offline file only)

@@ -53,6 +53,11 @@ export function renderLearning() {
     probe.onclick = () => { $('#parent').hidden = true; setMode('play', `probe:${pack.id}`); };
     box.appendChild(row);
   }
+  const ch = document.createElement('div'); ch.className = 'lrow';
+  ch.innerHTML = `<div><b>Challenge</b><span>She counts in her head: no spoken count while she taps, numerals instead of dot cards, she picks the answer before the rocket hops, and at least three choices. Also quiets the counting in Count &amp; Add.</span></div><div class="seg"><button data-a="challenge"></button></div>`;
+  const cb = ch.querySelector('button'); cb.setAttribute('aria-pressed', !!settings.challenge); cb.textContent = settings.challenge ? 'On' : 'Off';
+  cb.onclick = () => { settings.challenge = !settings.challenge; saveSettings(); renderLearning(); };
+  box.appendChild(ch);
   const lab = document.createElement('div'); lab.className = 'lrow';
   lab.innerHTML = `<div><b>Family Lab</b><span>Try activities that are built but still being tested with families.</span></div><div class="seg"><button data-a="lab"></button></div>`;
   const lb = lab.querySelector('button'); lb.setAttribute('aria-pressed', !!settings.familyLab); lb.textContent = settings.familyLab ? 'On' : 'Off';
@@ -66,7 +71,7 @@ export function renderLearning() {
   note.hidden = !(fr || fa);
   note.textContent = `Not yet checked by a person: ${fr} French and ${fa} Farsi lines. They are still spoken; see TRANSLATIONS.md to review them.`;
 }
-$('#childName').addEventListener('change', e => setProfile({ name: e.target.value.trim().slice(0, 24) }));
+$('#childName').addEventListener('change', e => setProfile({ name: e.target.value.trim().slice(0, 40) }));
 $('#childBand').addEventListener('change', e => { setProfile({ band: e.target.value }); renderLearning(); });
 
 export { SUGGESTION };

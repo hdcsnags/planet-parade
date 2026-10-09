@@ -2,7 +2,8 @@ import { say } from '../audio/speech.js';
 import { PACKS } from '../content/packs.js';
 import { setMode } from '../hub/router.js';
 import { t } from '../i18n/i18n.js';
-import { applyProbe, commitVisit, current, lastMasteredAt, nextAt, playable, rungOf, setRung } from '../progress/progress.js';
+import { applyProbe, childName, commitVisit, current, lastMasteredAt, nextAt, playable, rungOf, setRung } from '../progress/progress.js';
+import { settings } from '../core/settings.js';
 import { TEMPLATES } from '../templates/index.js';
 import { fireworks } from './particles.js';
 import { rungParams, topRung } from './ramp.js';
@@ -49,13 +50,17 @@ export function SessionRunner() {
     const main = item.role === 'main' && lv === target && !preview && !probe, r = main ? rung : topRung(lv);
     if (main) playedRung = r;
     tpl.p = { ...lv.params, ...variant, ...rungParams(lv, r) };
+    // Challenge (grown-ups switch): she counts in her head. No spoken running count, numerals instead
+    // of dots, the answer is chosen before the rocket hops, and at least three choices.
+    if (settings.challenge && !preview) tpl.p = { ...tpl.p, quiet: true, answer: 'numeral', predict: true, choices: Math.max(3, tpl.p.choices || 2) };
     tpl.transfer = !!item.transfer;
     tpl.nextRound();
   }
   function finish(newly) {
     ended = true;
     fireworks(newly ? 8 : 4);
-    say(newly ? t('hub.newMoon') : t('hub.back'));
+    const name = childName();
+    say(newly ? t(name ? 'hub.newMoonName' : 'hub.newMoon', { name }) : t(name ? 'hub.backName' : 'hub.back', { name }));
     after(3.2, () => setMode('hub', newly && target ? `lit.${target.station}` : backSub));
   }
   function endVisit() {

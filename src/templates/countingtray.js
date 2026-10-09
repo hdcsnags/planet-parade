@@ -72,9 +72,9 @@ export class CountingTray extends Template {
       else say(cap(num(this.done)) + bang());
       return;
     }
-    if (o.counted) { say(cap(num(o.counted)) + bang(), { onend: this.restorePrompt }); return; } // never recount
+    if (o.counted) { if (!this.p.quiet) say(cap(num(o.counted)) + bang(), { onend: this.restorePrompt }); return; } // never recount
     this.done++; o.counted = this.done; chime(SCALE[Math.min(8, this.done)]); sparkle(o.x, o.y - o.r, 6);
-    say(cap(num(this.done)) + bang(), { onend: this.restorePrompt });
+    if (!this.p.quiet) say(cap(num(this.done)) + bang(), { onend: this.restorePrompt }); // Challenge: she counts in her head
     if (this.done === this.k) {
       const p = this.p, opts = new Set([this.k]);
       for (let d = 1; opts.size < (p.choices || 2); d++) { opts.add(this.k + d); if (opts.size < (p.choices || 2) && this.k - d > 0) opts.add(this.k - d); }

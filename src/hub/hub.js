@@ -9,7 +9,7 @@ import { H, W, camX, cx, setCamX } from '../engine/stage.js';
 import { after } from '../engine/timers.js';
 import { MOON_P, PLANETS, SUN } from '../engine/world.js';
 import { fontFor, lookup, plabel, t } from '../i18n/i18n.js';
-import { isMastered, isPending, isPlaced, playable } from '../progress/progress.js';
+import { childName, isMastered, isPending, isPlaced, playable } from '../progress/progress.js';
 import { setMode } from './router.js';
 
 // The Space Map: a scrolling solar system where every planet is a station. Tap a station and the
@@ -90,10 +90,10 @@ export function HubMode() {
       else if (a) { const s = stations.find(q => q.id === a); if (s) { at = s.id; saveAt(at); } }
       layout();
       if (litPop) after(.6, () => { const s = litPop.s; burst(s.x, s.y - s.R, 40, COLORS, 1); chime(783.99); s.body.bounce(6); });
-      if (!welcomed) { welcomed = true; after(.5, () => say(t('hub.welcome'))); }
+      if (!welcomed) { welcomed = true; after(.5, () => { const name = childName(); say(name ? t('hub.welcomeName', { name }) : t('hub.welcome')); }); }
     },
     layout,
-    repeat() { say(t('hub.welcome')); },
+    repeat() { const name = childName(); say(name ? t('hub.welcomeName', { name }) : t('hub.welcome')); },
     // tap = press; the action happens on release so a drag can scroll the map instead
     tap(x, y) { drag = { x0: x - camX, cam0: camX, moved: false, wx: x, wy: y }; },
     move(sx) { if (!drag) return; const dx = sx - drag.x0; if (Math.abs(dx) > 12) drag.moved = true; if (drag.moved) setCamX(clamp(drag.cam0 - dx, 0, Math.max(0, worldW - W))); },
