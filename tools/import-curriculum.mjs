@@ -59,7 +59,7 @@ for (const s of C.strands) {
     const lv = {
       id: l.id, n: l.n, track: l.track, age: l.age, band: bandOf(l.age), skill: l.skill,
       objective: typeof l.objective === 'string' ? l.objective : l.objective.en,
-      template: l.template, params: l.params, ...(l.variants ? { variants: l.variants } : {}),
+      template: l.template, params: l.params, ...(l.variants ? { variants: l.variants } : {}), ...(l.ramp ? { ramp: l.ramp } : {}),
       mastery: { rule: l.mastery.rule, ...m }, station: l.station, requires: l.requires || [],
       ...(l.example ? { example: l.example } : {}), ...(l.evidence ? { evidence: l.evidence } : {}), ...(l.raise ? { raise: l.raise } : {}),
       status: unsupported(l) ? 'planned' : (BUILT[l.template] || 'planned'),

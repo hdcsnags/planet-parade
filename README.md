@@ -36,8 +36,9 @@ installable app.
 ```
 src/            ES modules: core, i18n, audio + speech, engine (stage, art, template, session, components),
                 templates/ (six curriculum templates + legacy/ original games), hub/ (Space Map, router), ui/
-content/packs/  one JSON pack per strand: 8 levels each (age band, skill, objective, template, params,
-                items or a generator, mastery rule); items carry `source` for facts and `reviewed_by`
+content/packs/  one JSON pack per strand: levels (age band, skill, objective, template, params, an optional
+                `ramp` of difficulty rungs, items or a generator, mastery rule); items carry `source`
+                for facts and `reviewed_by`
 content/i18n/   en.json · fr.json · fa.json (every spoken line; `_reviewed` records who checked it)
 content/schema/ pack.schema.json
 tools/          validate.mjs · fonts.mjs · postbuild.mjs · tour.mjs · seed-packs.mjs · make_icons.py
@@ -58,12 +59,25 @@ Content rules enforced by `npm run validate`:
 - level ids are unique
 - templates exist
 - every rover puzzle is solvable within its slots
+- every `ramp` rung is an object whose numeric ranges stay inside the level's own range
 - en, fr and fa have the same keys
 - every key the code uses exists
 - facts need an `https://` source
 
 Lines not yet checked by a person are allowed during the family phase. The build log counts them,
 and the grown-ups panel flags them.
+
+## The ramp inside a level
+
+A level is not one flat difficulty. `src/engine/ramp.js` gives every level rungs: the Number pack
+authors its own (`ramp` in `content/packs/number.json`, mirrored in `curriculum.json`); every other
+generated level gets a gentle rung (lower half of each range, one fewer choice, one smaller step) and
+then its full objective. In a visit, two first-try rounds in a row climb a rung and two misses in a
+row ease one; the highest rung she reaches is remembered, so the next visit starts there. Only a
+visit that ends on the top rung counts toward the two-day mastery rule. Once a visit passes, the
+station moves on to the next level for the rest of that day ("pending", a brighter ring segment on
+the map), and the moon arrives when she passes it again on another day. She never sees any of this;
+the grown-ups panel shows "gentle start / building up / full level" and whether a moon is waiting.
 
 ## Publishing
 **GitHub Pages (live):** `.github/workflows/pages.yml` runs on every push to `main`: `npm ci` → validate

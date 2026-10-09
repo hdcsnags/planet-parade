@@ -23,6 +23,15 @@ for (const { f, p } of packs) {
     if (ids.has(lv.id)) errors.push(`${f}: duplicate level id ${lv.id}`); ids.add(lv.id);
     // planned levels may name a template that is not built yet; ready/lab levels must be playable
     if (lv.status !== 'planned' && !templates.has(lv.template)) errors.push(`${f}: ${lv.id} is ${lv.status} but template "${lv.template}" is not registered`);
+    if (lv.ramp) { // difficulty rungs: objects only, gentlest first, numeric ranges stay [min,max] inside the level's own range
+      for (const [i, r] of lv.ramp.entries()) {
+        if (!r || typeof r !== 'object' || Array.isArray(r)) { errors.push(`${f}: ${lv.id} ramp[${i}] is not an object`); continue; }
+        for (const [k, val] of Object.entries(r)) {
+          const base = (lv.params || {})[k];
+          if (Array.isArray(val) && val.length === 2 && Array.isArray(base) && base.length === 2 && (val[0] < base[0] || val[1] > base[1] || val[0] > val[1])) errors.push(`${f}: ${lv.id} ramp[${i}].${k} ${JSON.stringify(val)} leaves the level's range ${JSON.stringify(base)}`);
+        }
+      }
+    }
     if (lv.template === 'rovercode') for (const [i, it] of (lv.items || []).entries()) {
       const plan = roverSolve(it, lv.params.cols, lv.params.rows, 12);
       if (!plan) errors.push(`${f}: ${lv.id} item ${i} has no solution`);

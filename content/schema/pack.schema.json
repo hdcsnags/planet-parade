@@ -224,6 +224,14 @@
             "type": "object"
           }
         },
+        "ramp": {
+          "type": "array",
+          "minItems": 2,
+          "description": "difficulty rungs, gentlest first; each overlays params; the last is the full objective (src/engine/ramp.js)",
+          "items": {
+            "type": "object"
+          }
+        },
         "example": {
           "type": "string"
         },
