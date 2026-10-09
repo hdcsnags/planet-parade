@@ -194,6 +194,7 @@ Interaction: tap or tap-then-tap, targets ≥64 px. No double-tap, required hold
 3. **Visit.** 3–5 items, under 3 minutes: one warm-up from a mastered level, then current-level items, plus at most one look-ahead item after 3 of 4 first-try, counting only toward advancing (Fable's 70/20/10, adapted).
 4. **Support.** After 2 consecutive misses: speak the true answer, cut choices to 2, drop one CPA stage or show counters. After 3 misses in the window: offer the prerequisite **for this visit only**; mastery is never erased. (`recordResult` currently steps back permanently.)
 5. **Independence.** Challenge, motor support and language are set separately, so a toddler can do L10 bonds with big counters and no digits (Astra).
+6. **Ramp (built 2026-10-09).** Every level has rungs (`ramp`, gentlest first, the last is the objective; `src/engine/ramp.js`). Two first-try rounds in a row climb a rung, two misses in a row ease one for the visit; the highest rung is kept. A visit counts for M only if it ends on the top rung. A passing visit makes the level *pending*: it satisfies `requires`, the station plays the next level for the rest of that day, and the second passing day earns the moon. Number authors its rungs; other generated levels get a generic gentle rung plus the objective. This replaces the flat uniform draw that let a strong child clear a visit without ever meeting the top of the level. Look-ahead items and choice-cutting support (items 3 and 4) are still only specified.
 
 ## Space Map
 

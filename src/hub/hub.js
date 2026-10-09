@@ -9,7 +9,7 @@ import { H, W, camX, cx, setCamX } from '../engine/stage.js';
 import { after } from '../engine/timers.js';
 import { MOON_P, PLANETS, SUN } from '../engine/world.js';
 import { fontFor, lookup, plabel, t } from '../i18n/i18n.js';
-import { isMastered, isPlaced, playable } from '../progress/progress.js';
+import { isMastered, isPending, isPlaced, playable } from '../progress/progress.js';
 import { setMode } from './router.js';
 
 // The Space Map: a scrolling solar system where every planet is a station. Tap a station and the
@@ -138,11 +138,12 @@ function drawStation(c, s, tt, litT) {
   else s.body.draw(c, tt);
   if (s.here.length) {
     const n = s.here.length;
-    // ring of level segments: mastered glow gold, placed (starting point / probe) a soft gold
+    // ring of level segments: mastered glow gold, pending (one good visit, waiting for another day)
+    // a brighter gold, placed (starting point / probe) a soft gold
     for (let i = 0; i < n; i++) {
       const a0 = -Math.PI / 2 + i / n * TAU + .06, a1 = -Math.PI / 2 + (i + 1) / n * TAU - .06, id = s.here[i].l.id;
       c.beginPath(); c.arc(x, y, R * 1.28, a0, a1); c.lineWidth = 7; c.lineCap = 'round';
-      c.strokeStyle = isMastered(id) ? '#ffc93c' : isPlaced(id) ? 'rgba(255,201,60,.35)' : 'rgba(255,255,255,.14)'; c.stroke();
+      c.strokeStyle = isMastered(id) ? '#ffc93c' : isPending(id) ? 'rgba(255,201,60,.65)' : isPlaced(id) ? 'rgba(255,201,60,.35)' : 'rgba(255,255,255,.14)'; c.stroke();
     }
     // a moon for every mastered level (placed levels add none; the newest pops in)
     const moons = s.here.filter(x => isMastered(x.l.id)).length;

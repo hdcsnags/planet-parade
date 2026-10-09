@@ -3,10 +3,12 @@ import { saveSettings, settings } from '../core/settings.js';
 import { $ } from '../core/util.js';
 import { setMode } from '../hub/router.js';
 import { unreviewedCount } from '../i18n/i18n.js';
-import { current, profile, setAdvanced, setProfile, setStart, startIndex, strandState } from '../progress/progress.js';
+import { rungWord } from '../engine/ramp.js';
+import { current, isPending, profile, rungOf, setAdvanced, setProfile, setStart, startIndex, strandState } from '../progress/progress.js';
 
 // Grown-ups panel: the learning path, one row per strand. It shows what she's working on (a
-// descriptive capability, never a score), where the strand starts (moved with −/+ by example), the
+// descriptive capability, never a score, plus where she is on that step's ramp and whether a good
+// visit is waiting for its second day), where the strand starts (moved with −/+ by example), the
 // Advanced switch (the advanced track opens only with it AND every prerequisite satisfied), and
 // "Try harder?": a 3-round placement probe (prerequisite, target, transfer).
 // Also: the council's suggested start (a suggestion, never applied automatically), the Family Lab
@@ -38,7 +40,8 @@ export function renderLearning() {
     const row = document.createElement('div'); row.className = 'lrow';
     row.innerHTML = `<div><b></b><span class="now"></span><span class="ex"></span></div><div class="seg"><button data-a="down" aria-label="Start easier">−</button><button data-a="up" aria-label="Start harder">+</button><button data-a="adv" aria-pressed="false">Advanced</button><button data-a="probe">Try harder?</button></div>`;
     row.querySelector('b').textContent = `${pack.name.en} · ${built} of ${n} steps ready`;
-    row.querySelector('.now').textContent = cur ? `Now: ${cur.objective} (step ${cur.n}, ${cur.track})` : built ? 'Everything ready here is done. More steps are coming.' : 'Coming soon: these activities are still being built.';
+    const rw = cur ? rungWord(cur, rungOf(cur.id)) : '', pend = cur && isPending(cur.id) ? ' · one good visit done; another day earns the moon' : '';
+    row.querySelector('.now').textContent = cur ? `Now: ${cur.objective} (step ${cur.n}, ${cur.track}${rw ? ', ' + rw : ''})${pend}` : built ? 'Everything ready here is done. More steps are coming.' : 'Coming soon: these activities are still being built.';
     const startLv = pack.levels[Math.min(si, n - 1)];
     row.querySelector('.ex').textContent = si > 0 ? `Starts at step ${si + 1}. Before that counts as “she can already do this”, e.g. ${pack.levels[si - 1].example || pack.levels[si - 1].objective}` : `Starts at step 1 (${startLv.example || startLv.objective})`;
     const [down, up, adv, probe] = row.querySelectorAll('button');
