@@ -71,6 +71,7 @@ export class Subitize extends Template {
       this.win(five ? t('tpl.beads.fiveAnd', { b: num(this.n - 5), n: num(this.n) }) : t('countYes', { a: num(this.n) }));
     } else { tl.wob = 1; this.miss(t('tpl.subitize.peekHint')); }
   }
+  explain() { this.covered = false; this.together(this.n); } // uncover for good and count the lights together
   step(dt) { stepTiles(this.tiles, dt); if (this.hint) { const g = this.tiles.find(q => q.n === this.n); if (g) g.glow = 1; } this.peekBtn.sv += (-160 * (this.peekBtn.scale - 1) - 11 * this.peekBtn.sv) * dt; this.peekBtn.scale += this.peekBtn.sv * dt; }
   render(tt) {
     const c = cx, b = this.box, u = Math.min(b.w / 2.6, b.h / 1.5);

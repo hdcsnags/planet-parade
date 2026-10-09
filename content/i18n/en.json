@@ -512,7 +512,8 @@
       "go": "Finish the other wing so both sides match!",
       "twin": "Look at the other side. Find its twin!",
       "done": "Both wings match! Beautiful!"
-    }
+    },
+    "together": "Let's count together: {list}. {n}!"
   },
   "strands": {
     "number": "Number",

@@ -1,3 +1,4 @@
+import { say } from '../audio/speech.js';
 import { TAU, clamp, pick, randInt, shuffle } from '../core/util.js';
 import { roundRect } from '../engine/art.js';
 import { drawObj, drawTile, hitTile, layoutTiles, makeTile, stepTiles } from '../engine/components.js';
@@ -66,6 +67,7 @@ export class Bond extends Template {
       this.miss(cap(nw(tl.n)) + (this.misses >= 1 ? '' : '.'));
     }
   }
+  explain() { this.revealed2 = true; say(t('tpl.bond.say', { a: cap(nw(this.a)), b: nw(this.b), w: nw(this.w) }), { onend: this.restorePrompt }); } // lift the dome and say the bond
   step(dt) { stepTiles(this.tiles, dt); if (this.hint) { const g = this.tiles.find(q => q.n === this.answer); if (g) g.glow = 1; } }
   // draw a quantity inside a box: objects (concrete), dots (pictorial) or a numeral (abstract)
   fill(c, n, x, y, w, h, tt, unknown) {

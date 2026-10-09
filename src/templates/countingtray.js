@@ -82,6 +82,7 @@ export class CountingTray extends Template {
       this.ask(t('tpl.tray.pick'));
     }
   }
+  explain() { if (this.tiles.length && this.mode !== 'give') this.together(this.k); }
   step(dt) {
     this.things.forEach(o => { o.sv += (-160 * (o.scale - 1) - 11 * o.sv) * dt; o.scale += o.sv * dt; });
     stepTiles(this.tiles, dt);

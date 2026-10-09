@@ -97,6 +97,18 @@ export function setStart(pack, idx) {
   });
   save();
 }
+// First-launch age band: start each strand at its first level meant for that age (guide ages in the
+// packs; never a gate afterwards) and open the advanced track from 4 up. Mastered levels stay.
+const AGE_FLOOR = { '2-3': 0, '4-5': 4, '6-7': 5 };
+export function applyBand(band) {
+  const floor = AGE_FLOOR[band] ?? 0;
+  for (const pack of PACKS) {
+    let idx = pack.levels.findIndex(l => parseFloat(String(l.age || '0')) >= floor);
+    if (idx < 0) idx = pack.levels.length - 1;
+    setStart(pack, idx);
+    setAdvanced(pack.strand, floor >= 4);
+  }
+}
 export function startIndex(pack) { const i = pack.levels.findIndex(l => !satisfied(l.id)); return i < 0 ? pack.levels.length : i; }
 // Placement probe result (prerequisite, target, transfer): 3/3 places the target (provisional).
 export function applyProbe(target, results) {

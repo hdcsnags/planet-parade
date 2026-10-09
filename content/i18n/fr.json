@@ -551,7 +551,8 @@
       "go": "Termine l’autre aile pour que les deux côtés soient pareils !",
       "twin": "Regarde l’autre côté : trouve son jumeau !",
       "done": "Les deux ailes sont pareilles ! Magnifique !"
-    }
+    },
+    "together": "On compte ensemble : {list}. {n} !"
   },
   "strands": {
     "number": "Nombres",

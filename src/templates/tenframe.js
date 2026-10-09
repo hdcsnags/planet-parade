@@ -141,6 +141,14 @@ export class TenFrame extends Template {
     if (hit && hit.on && !hit.pre) { const last = [...this.cells].reverse().find(c => c.on && !c.pre); last.on = false; say(cap(num(this.count)) + bang()); return; }
     this.fillNext();
   }
+  explain() {
+    if (!this.tiles.length) return;
+    const m = this.p.mode;
+    if (m === 'count') this.together(this.target);
+    else if (m === 'bondPick') say(t('tpl.tenframe.bondSay', { x: cap(num(this.k)), y: num(this.target), z: num(this.whole) }), { onend: this.restorePrompt });
+    else if (m === 'teen') say(t('tpl.tenframe.teenSay', { y: num(this.k), z: fmt(this.target) }), { onend: this.restorePrompt });
+    else if (m === 'makeTen') say(t('tpl.tenframe.makeTenSay', { a: cap(num(this.k)), x: num(10 - this.k), y: num(this.bb - (10 - this.k)), s: fmt(this.target) }), { onend: this.restorePrompt });
+  }
   step(dt) { this.cells.forEach(c => spring(c, dt)); stepTiles(this.tiles, dt); if (this.hint) { const g = this.tiles.find(q => q.n === this.target); if (g) g.glow = 1; } }
   render(tt) {
     const c = cx, cs = this.cs;
